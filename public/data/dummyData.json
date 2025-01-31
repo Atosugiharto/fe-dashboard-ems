@@ -1,0 +1,1697 @@
+{
+  "success": true,
+  "data": {
+    "dailyKWH": {
+      "DailyAktualKWH": {
+        "kWh AHU3-GL": {
+          "no_kWh_Meter": 6,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9528.1,
+          "costPLN": 9864247.26,
+          "count": 7
+        },
+        "kWh AHU4-GL": {
+          "no_kWh_Meter": 7,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9500.26,
+          "costPLN": 9835425,
+          "count": 7
+        },
+        "kWh PP-GL": {
+          "no_kWh_Meter": 1,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9322.32,
+          "costPLN": 9651211.44,
+          "count": 7
+        },
+        "kWh LP-GR": {
+          "no_kWh_Meter": 3,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9547.82,
+          "costPLN": 9884671.32,
+          "count": 7
+        },
+        "kWh LP-GL": {
+          "no_kWh_Meter": 2,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9561.55,
+          "costPLN": 9898883.61,
+          "count": 7
+        },
+        "kWh AHU1-GL": {
+          "no_kWh_Meter": 4,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9472.46,
+          "costPLN": 9806652.57,
+          "count": 7
+        },
+        "kWh AHU2-GL": {
+          "no_kWh_Meter": 5,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9313.34,
+          "costPLN": 9641918.73,
+          "count": 7
+        },
+        "Power Quality LVMDP": {
+          "no_kWh_Meter": 9,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9549.6,
+          "costPLN": 9886509.99,
+          "count": 7
+        },
+        "kWhP-Outgoing": {
+          "no_kWh_Meter": 10,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9513.98,
+          "costPLN": 9849637.26,
+          "count": 7
+        },
+        "kWh SDP/B": {
+          "no_kWh_Meter": 11,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9502.7,
+          "costPLN": 9837959.34,
+          "count": 7
+        },
+        "Panel PD-LT.1": {
+          "no_kWh_Meter": 12,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9394.03,
+          "costPLN": 9725453.52,
+          "count": 7
+        },
+        "Panel PD-MZ": {
+          "no_kWh_Meter": 13,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9553.39,
+          "costPLN": 9890435.76,
+          "count": 7
+        },
+        "Panel AHU2-LT2": {
+          "no_kWh_Meter": 15,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9628.42,
+          "costPLN": 9968106.6,
+          "count": 7
+        },
+        "Panel PP-LT2": {
+          "no_kWh_Meter": 17,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9477.94,
+          "costPLN": 9812317.62,
+          "count": 7
+        },
+        "Panel AHU1-LT2": {
+          "no_kWh_Meter": 16,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9305.57,
+          "costPLN": 9633868.41,
+          "count": 7
+        },
+        "Panel LP-LT2": {
+          "no_kWh_Meter": 18,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9658.99,
+          "costPLN": 9999761.22,
+          "count": 7
+        },
+        "P-Electronic": {
+          "no_kWh_Meter": 20,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9598.22,
+          "costPLN": 9936849.27,
+          "count": 7
+        },
+        "Panel LP-MEZ": {
+          "no_kWh_Meter": 19,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9568.9,
+          "costPLN": 9906486.6,
+          "count": 7
+        },
+        "Panel PD-LT3": {
+          "no_kWh_Meter": 21,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9396.43,
+          "costPLN": 9727938.06,
+          "count": 7
+        },
+        "Panel P-Kitchen 4": {
+          "no_kWh_Meter": 22,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9365.81,
+          "costPLN": 9696233.67,
+          "count": 7
+        },
+        "Panel AHU2-LT3": {
+          "no_kWh_Meter": 24,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9409.82,
+          "costPLN": 9741802.59,
+          "count": 7
+        },
+        "Panel AHU1-LT3": {
+          "no_kWh_Meter": 23,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9841.73,
+          "costPLN": 10188944.22,
+          "count": 7
+        },
+        "Panel PP-LT3": {
+          "no_kWh_Meter": 25,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9482.21,
+          "costPLN": 9816740.25,
+          "count": 7
+        },
+        "Panel LP-LT3": {
+          "no_kWh_Meter": 26,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9218.06,
+          "costPLN": 9543277.35,
+          "count": 7
+        },
+        "Panel PP-Lift Service": {
+          "no_kWh_Meter": 27,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9526.75,
+          "costPLN": 9862855.77,
+          "count": 7
+        },
+        "Panel PP-Lift Passenger": {
+          "no_kWh_Meter": 28,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9720.62,
+          "costPLN": 10063567.68,
+          "count": 7
+        },
+        "Panel PD-LT4": {
+          "no_kWh_Meter": 29,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9583.78,
+          "costPLN": 9921891.66,
+          "count": 7
+        },
+        "Panel AHU1-LT4": {
+          "no_kWh_Meter": 31,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9485.57,
+          "costPLN": 9820218.78,
+          "count": 7
+        },
+        "Panel PP-LT4": {
+          "no_kWh_Meter": 33,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9515.57,
+          "costPLN": 9851277.33,
+          "count": 7
+        },
+        "Panel PP-PF": {
+          "no_kWh_Meter": 30,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9570.38,
+          "costPLN": 9908027.13,
+          "count": 7
+        },
+        "Panel AHU2-LT4": {
+          "no_kWh_Meter": 32,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9613.82,
+          "costPLN": 9952999.77,
+          "count": 7
+        },
+        "Panel LP-LT4": {
+          "no_kWh_Meter": 34,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9434.59,
+          "costPLN": 9767444.43,
+          "count": 7
+        },
+        "Panel AHU2-LT5": {
+          "no_kWh_Meter": 36,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9621.5,
+          "costPLN": 9960950.76,
+          "count": 7
+        },
+        "Panel P-AC Server LT 5": {
+          "no_kWh_Meter": 37,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9567.55,
+          "costPLN": 9905095.32,
+          "count": 7
+        },
+        "Panel AHU1-LT5": {
+          "no_kWh_Meter": 35,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9424.32,
+          "costPLN": 9756810.03,
+          "count": 7
+        },
+        "Panel PP-LT5": {
+          "no_kWh_Meter": 38,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9651.41,
+          "costPLN": 9991909.62,
+          "count": 7
+        },
+        "Panel LP-LT5": {
+          "no_kWh_Meter": 39,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9691.34,
+          "costPLN": 10033254.57,
+          "count": 7
+        },
+        "Panel AHU1-LT6": {
+          "no_kWh_Meter": 40,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9669.46,
+          "costPLN": 10010594.49,
+          "count": 7
+        },
+        "Panel AHU2-LT6": {
+          "no_kWh_Meter": 41,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9848.21,
+          "costPLN": 10195652.7,
+          "count": 7
+        },
+        "Panel PP-LT6": {
+          "no_kWh_Meter": 42,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9780.82,
+          "costPLN": 10125883.26,
+          "count": 7
+        },
+        "Panel LP-LT6": {
+          "no_kWh_Meter": 43,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9196.13,
+          "costPLN": 9520567.32,
+          "count": 7
+        },
+        "Panel AHU2-LT7": {
+          "no_kWh_Meter": 45,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9687.36,
+          "costPLN": 10029130.02,
+          "count": 7
+        },
+        "Panel AHU1-LT7": {
+          "no_kWh_Meter": 44,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9853.1,
+          "costPLN": 10200721.41,
+          "count": 7
+        },
+        "Panel PP-LT7": {
+          "no_kWh_Meter": 46,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9578.64,
+          "costPLN": 9916574.43,
+          "count": 7
+        },
+        "Panel LP-LT7": {
+          "no_kWh_Meter": 47,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9709.87,
+          "costPLN": 10052436.3,
+          "count": 7
+        },
+        "Panel P-Lift 1": {
+          "no_kWh_Meter": 57,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9449.76,
+          "costPLN": 9783147.51,
+          "count": 7
+        },
+        "Panel P-Lift 2": {
+          "no_kWh_Meter": 58,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9267.36,
+          "costPLN": 9594312.42,
+          "count": 7
+        },
+        "Panel P-Chiller 2,3": {
+          "no_kWh_Meter": 48,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9579.02,
+          "costPLN": 9916971.9,
+          "count": 7
+        },
+        "Panel P-Lift 3": {
+          "no_kWh_Meter": 59,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9310.66,
+          "costPLN": 9639135.93,
+          "count": 7
+        },
+        "Panel P-Chiller 1": {
+          "no_kWh_Meter": 49,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9471.55,
+          "costPLN": 9805708.26,
+          "count": 7
+        },
+        "Panel PP-Roof": {
+          "no_kWh_Meter": 50,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9498.91,
+          "costPLN": 9834033.51,
+          "count": 7
+        },
+        "Panel LP-Roof": {
+          "no_kWh_Meter": 51,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9606.43,
+          "costPLN": 9945346.83,
+          "count": 7
+        },
+        "Panel LP-Press Fan": {
+          "no_kWh_Meter": 52,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9303.65,
+          "costPLN": 9631880.7,
+          "count": 7
+        },
+        "Panel P-Lighting": {
+          "no_kWh_Meter": 53,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9460.32,
+          "costPLN": 9794080.08,
+          "count": 7
+        },
+        "Panel P-CHWP 1": {
+          "no_kWh_Meter": 54,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9482.83,
+          "costPLN": 9817386.3,
+          "count": 7
+        },
+        "Panel P-CHWP 2": {
+          "no_kWh_Meter": 55,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9715.2,
+          "costPLN": 10057952.19,
+          "count": 7
+        },
+        "Panel P-CHWP 3": {
+          "no_kWh_Meter": 56,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9598.8,
+          "costPLN": 9937445.67,
+          "count": 7
+        },
+        "Panel P-Koperasi": {
+          "no_kWh_Meter": 62,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9564.82,
+          "costPLN": 9902262.75,
+          "count": 7
+        },
+        "Panel P-Carpool": {
+          "no_kWh_Meter": 61,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9623.66,
+          "costPLN": 9963186.84,
+          "count": 7
+        },
+        "Panel P-Transfer Pump": {
+          "no_kWh_Meter": 63,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9456.62,
+          "costPLN": 9790253.79,
+          "count": 7
+        },
+        "Panel P-STP": {
+          "no_kWh_Meter": 64,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9558.19,
+          "costPLN": 9895405.05,
+          "count": 7
+        },
+        "Panel P-Hydrant": {
+          "no_kWh_Meter": 14,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "kWhPLN": 9426.1,
+          "costPLN": 9758648.76,
+          "count": 7
+        }
+      }
+    },
+    "monthlyKWH": {
+      "MonthlyAktualKWH": {
+        "kWh AHU3-GL": {
+          "no_kWh_Meter": 6,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1210639.82,
+          "costPLN": 1253351640.48,
+          "count": 4
+        },
+        "kWh LP-GL": {
+          "no_kWh_Meter": 2,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1124964.27,
+          "costPLN": 1164652583.49,
+          "count": 4
+        },
+        "kWh LP-GR": {
+          "no_kWh_Meter": 3,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1112846.22,
+          "costPLN": 1152107479.8,
+          "count": 4
+        },
+        "kWh AHU4-GL": {
+          "no_kWh_Meter": 7,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1106989.02,
+          "costPLN": 1146043325.16,
+          "count": 4
+        },
+        "kWh AHU1-GL": {
+          "no_kWh_Meter": 4,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1115855.1,
+          "costPLN": 1155222946.89,
+          "count": 4
+        },
+        "kWh AHU2-GL": {
+          "no_kWh_Meter": 5,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1094760.54,
+          "costPLN": 1133383731.21,
+          "count": 4
+        },
+        "kWh PP-GL": {
+          "no_kWh_Meter": 1,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1083125.52,
+          "costPLN": 1121338186.92,
+          "count": 4
+        },
+        "Power Quality LVMDP": {
+          "no_kWh_Meter": 9,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1004328.82,
+          "costPLN": 1039761149.73,
+          "count": 4
+        },
+        "kWh SDP/B": {
+          "no_kWh_Meter": 11,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 996607.5,
+          "costPLN": 1031767648.14,
+          "count": 4
+        },
+        "kWhP-Outgoing": {
+          "no_kWh_Meter": 10,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1001321.82,
+          "costPLN": 1036648085.1,
+          "count": 4
+        },
+        "Panel PD-MZ": {
+          "no_kWh_Meter": 13,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1001691.87,
+          "costPLN": 1037031182.64,
+          "count": 4
+        },
+        "Panel PD-LT.1": {
+          "no_kWh_Meter": 12,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 985533.15,
+          "costPLN": 1020302780.88,
+          "count": 4
+        },
+        "P-Electronic": {
+          "no_kWh_Meter": 20,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 906727.98,
+          "costPLN": 938717383.95,
+          "count": 4
+        },
+        "Panel AHU1-LT2": {
+          "no_kWh_Meter": 16,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 978172.53,
+          "costPLN": 1012682038.41,
+          "count": 4
+        },
+        "Panel AHU2-LT2": {
+          "no_kWh_Meter": 15,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1009976.1,
+          "costPLN": 1045608022.44,
+          "count": 4
+        },
+        "Panel PP-LT2": {
+          "no_kWh_Meter": 17,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 987184.02,
+          "costPLN": 1022011641.3,
+          "count": 4
+        },
+        "Panel LP-MEZ": {
+          "no_kWh_Meter": 19,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 931398.82,
+          "costPLN": 964258532.36,
+          "count": 4
+        },
+        "Panel LP-LT2": {
+          "no_kWh_Meter": 18,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 1012737.63,
+          "costPLN": 1048467428.58,
+          "count": 4
+        },
+        "Panel P-Kitchen 4": {
+          "no_kWh_Meter": 22,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 873103.53,
+          "costPLN": 903906429.63,
+          "count": 4
+        },
+        "Panel PD-LT3": {
+          "no_kWh_Meter": 21,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 873722.67,
+          "costPLN": 904547965.26,
+          "count": 4
+        },
+        "Panel AHU1-LT3": {
+          "no_kWh_Meter": 23,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 912284.61,
+          "costPLN": 944470342.62,
+          "count": 4
+        },
+        "Panel AHU2-LT3": {
+          "no_kWh_Meter": 24,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 874859.58,
+          "costPLN": 905724661.23,
+          "count": 4
+        },
+        "Panel LP-LT3": {
+          "no_kWh_Meter": 26,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 855277.02,
+          "costPLN": 885451577.79,
+          "count": 4
+        },
+        "Panel PP-LT3": {
+          "no_kWh_Meter": 25,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 887057.73,
+          "costPLN": 918352758.81,
+          "count": 4
+        },
+        "Panel PP-Lift Service": {
+          "no_kWh_Meter": 27,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 878859.51,
+          "costPLN": 909865514.61,
+          "count": 4
+        },
+        "Panel PD-LT4": {
+          "no_kWh_Meter": 29,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 830884.14,
+          "costPLN": 860198023.08,
+          "count": 4
+        },
+        "Panel PP-Lift Passenger": {
+          "no_kWh_Meter": 28,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 905627.1,
+          "costPLN": 937577312.64,
+          "count": 4
+        },
+        "Panel AHU2-LT4": {
+          "no_kWh_Meter": 32,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 777574.62,
+          "costPLN": 805007490.57,
+          "count": 4
+        },
+        "Panel AHU1-LT4": {
+          "no_kWh_Meter": 31,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 770791.41,
+          "costPLN": 797985207.9,
+          "count": 4
+        },
+        "Panel LP-LT4": {
+          "no_kWh_Meter": 34,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 760151.79,
+          "costPLN": 786969669.87,
+          "count": 4
+        },
+        "Panel PP-PF": {
+          "no_kWh_Meter": 30,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 772256.7,
+          "costPLN": 799501806.81,
+          "count": 4
+        },
+        "Panel PP-LT4": {
+          "no_kWh_Meter": 33,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 771898.05,
+          "costPLN": 799130588.13,
+          "count": 4
+        },
+        "Panel AHU2-LT5": {
+          "no_kWh_Meter": 36,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 774563.58,
+          "costPLN": 801889916.76,
+          "count": 4
+        },
+        "Panel P-AC Server LT 5": {
+          "no_kWh_Meter": 37,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 772856.91,
+          "costPLN": 800123025.24,
+          "count": 4
+        },
+        "Panel AHU1-LT5": {
+          "no_kWh_Meter": 35,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 724784.56,
+          "costPLN": 750355238.07,
+          "count": 4
+        },
+        "Panel PP-LT5": {
+          "no_kWh_Meter": 38,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 665901.09,
+          "costPLN": 689394056.58,
+          "count": 4
+        },
+        "Panel AHU1-LT6": {
+          "no_kWh_Meter": 40,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 666743.34,
+          "costPLN": 690265885.41,
+          "count": 4
+        },
+        "Panel LP-LT5": {
+          "no_kWh_Meter": 39,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 669417.06,
+          "costPLN": 693034005.33,
+          "count": 4
+        },
+        "Panel AHU2-LT6": {
+          "no_kWh_Meter": 41,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 677767.89,
+          "costPLN": 701679270.3,
+          "count": 4
+        },
+        "Panel PP-LT6": {
+          "no_kWh_Meter": 42,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 672814.38,
+          "costPLN": 696551108.94,
+          "count": 4
+        },
+        "Panel LP-LT6": {
+          "no_kWh_Meter": 43,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 637942.77,
+          "costPLN": 660449369.88,
+          "count": 4
+        },
+        "Panel AHU1-LT7": {
+          "no_kWh_Meter": 44,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 675607.5,
+          "costPLN": 699442970.49,
+          "count": 4
+        },
+        "Panel AHU2-LT7": {
+          "no_kWh_Meter": 45,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 667114.44,
+          "costPLN": 690650359.38,
+          "count": 4
+        },
+        "Panel PP-LT7": {
+          "no_kWh_Meter": 46,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 663057.36,
+          "costPLN": 686450025.27,
+          "count": 4
+        },
+        "Panel LP-LT7": {
+          "no_kWh_Meter": 47,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 672481.23,
+          "costPLN": 696206137.5,
+          "count": 4
+        },
+        "Panel P-Lift 1": {
+          "no_kWh_Meter": 57,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 589471.56,
+          "costPLN": 610268339.43,
+          "count": 4
+        },
+        "Panel P-Lift 2": {
+          "no_kWh_Meter": 58,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 527926.08,
+          "costPLN": 546551410.5,
+          "count": 4
+        },
+        "Panel P-Lift 3": {
+          "no_kWh_Meter": 59,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 530596.74,
+          "costPLN": 549316256.49,
+          "count": 4
+        },
+        "Panel P-Chiller 2,3": {
+          "no_kWh_Meter": 48,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 545082.54,
+          "costPLN": 564313283.1,
+          "count": 4
+        },
+        "Panel P-Chiller 1": {
+          "no_kWh_Meter": 49,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 544808.91,
+          "costPLN": 564029883.78,
+          "count": 4
+        },
+        "Panel LP-Roof": {
+          "no_kWh_Meter": 51,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 545684.91,
+          "costPLN": 564936790.11,
+          "count": 4
+        },
+        "Panel PP-Roof": {
+          "no_kWh_Meter": 50,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 542382.51,
+          "costPLN": 561517881.27,
+          "count": 4
+        },
+        "Panel LP-Press Fan": {
+          "no_kWh_Meter": 52,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 534985.17,
+          "costPLN": 553859325.66,
+          "count": 4
+        },
+        "Panel P-Lighting": {
+          "no_kWh_Meter": 53,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 538431.84,
+          "costPLN": 557427714.96,
+          "count": 4
+        },
+        "Panel P-CHWP 1": {
+          "no_kWh_Meter": 54,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 541565.79,
+          "costPLN": 560672348.7,
+          "count": 4
+        },
+        "Panel P-CHWP 2": {
+          "no_kWh_Meter": 55,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 551846.4,
+          "costPLN": 571315537.23,
+          "count": 4
+        },
+        "Panel P-CHWP 3": {
+          "no_kWh_Meter": 56,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 546716.88,
+          "costPLN": 566005052.79,
+          "count": 4
+        },
+        "Panel P-Carpool": {
+          "no_kWh_Meter": 61,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 548786.7,
+          "costPLN": 568148129.88,
+          "count": 4
+        },
+        "Panel P-Koperasi": {
+          "no_kWh_Meter": 62,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 487489.98,
+          "costPLN": 504688417.65,
+          "count": 4
+        },
+        "Panel P-Transfer Pump": {
+          "no_kWh_Meter": 63,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 426290.94,
+          "costPLN": 441330672.15,
+          "count": 4
+        },
+        "Panel P-STP": {
+          "no_kWh_Meter": 64,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 430590.87,
+          "costPLN": 445782211.65,
+          "count": 4
+        },
+        "Panel P-Hydrant": {
+          "no_kWh_Meter": 14,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "kWhPLN": 423949.86,
+          "costPLN": 438906627,
+          "count": 4
+        }
+      }
+    },
+    "dailyPlanCostKWH": {
+      "DailyPlanKWH": [
+        {
+          "fiscal_year": "2024-2025",
+          "date": "2025-01-27T00:00:00.000Z",
+          "daily_cost": 24327623.57,
+          "daily_kwh": 22410.02
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "date": "2025-01-28T00:00:00.000Z",
+          "daily_cost": 24327623.57,
+          "daily_kwh": 22410.02
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "date": "2025-01-29T00:00:00.000Z",
+          "daily_cost": 24327623.57,
+          "daily_kwh": 22410.02
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "date": "2025-01-30T00:00:00.000Z",
+          "daily_cost": 24327623.57,
+          "daily_kwh": 22410.02
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "date": "2025-01-31T00:00:00.000Z",
+          "daily_cost": 24327623.57,
+          "daily_kwh": 22410.02
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "date": "2025-02-01T00:00:00.000Z",
+          "daily_cost": 24327623.57,
+          "daily_kwh": 22410.02
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "date": "2025-02-02T00:00:00.000Z",
+          "daily_cost": 24327623.57,
+          "daily_kwh": 22410.02
+        }
+      ]
+    },
+    "monthlyPlanCostKWH": {
+      "MonthlyPlanKWH": [
+        {
+          "fiscal_year": "2024-2025",
+          "month": "April",
+          "total_cost": 362163946.2,
+          "total_kwh": 333616.65
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "Mei",
+          "total_cost": 465266475.05,
+          "total_kwh": 428592.23
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "Juni",
+          "total_cost": 443079854.92,
+          "total_kwh": 408154.45
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "Juli",
+          "total_cost": 525953406.59,
+          "total_kwh": 484495.58
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "Agustus",
+          "total_cost": 505724429.41,
+          "total_kwh": 465861.13
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "September",
+          "total_cost": 463308832.1,
+          "total_kwh": 426788.9
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "Oktober",
+          "total_cost": 525953406.59,
+          "total_kwh": 484495.58
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "November",
+          "total_cost": 483537809.28,
+          "total_kwh": 445423.35
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "Desember",
+          "total_cost": 465266475.05,
+          "total_kwh": 428592.23
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "Januari",
+          "total_cost": null,
+          "total_kwh": null
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "Februari",
+          "total_cost": null,
+          "total_kwh": null
+        },
+        {
+          "fiscal_year": "2024-2025",
+          "month": "Maret",
+          "total_cost": null,
+          "total_kwh": null
+        }
+      ]
+    },
+    "HourlysolarPVData": {
+      "HourlyAktualSolarPV": [
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T00:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T01:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T02:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T03:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T04:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T05:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T06:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T07:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T08:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T09:00:00.000Z",
+          "PVProd": 7693.27,
+          "cost_PLN": 7968535.2
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T10:00:00.000Z",
+          "PVProd": 7693.27,
+          "cost_PLN": 7968535.2
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T11:00:00.000Z",
+          "PVProd": 7683.9,
+          "cost_PLN": 7958829.94
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T12:00:00.000Z",
+          "PVProd": 7683.9,
+          "cost_PLN": 7958829.94
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T13:00:00.000Z",
+          "PVProd": 7683.9,
+          "cost_PLN": 7958829.94
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T14:00:00.000Z",
+          "PVProd": 7683.9,
+          "cost_PLN": 7958829.94
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T15:00:00.000Z",
+          "PVProd": 7683.9,
+          "cost_PLN": 7958829.94
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T16:00:00.000Z",
+          "PVProd": 7683.9,
+          "cost_PLN": 7958829.94
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T17:00:00.000Z",
+          "PVProd": 7683.9,
+          "cost_PLN": 7958829.94
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T18:00:00.000Z",
+          "PVProd": 7683.9,
+          "cost_PLN": 7958829.94
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T19:00:00.000Z",
+          "PVProd": 7683.9,
+          "cost_PLN": 7958829.94
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T20:00:00.000Z",
+          "PVProd": 7683.9,
+          "cost_PLN": 7958829.94
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T21:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T22:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T23:00:00.000Z",
+          "PVProd": 7715.76,
+          "cost_PLN": 7991829.89
+        }
+      ]
+    },
+    "DailysolarPVData": {
+      "DailyAktualSolarPV": [
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-27T00:00:00.000Z",
+          "PVProd": 183185.82,
+          "cost_PLN": 189740208.57
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T00:00:00.000Z",
+          "PVProd": 183185.82,
+          "cost_PLN": 189740208.57
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-29T00:00:00.000Z",
+          "PVProd": 183185.82,
+          "cost_PLN": 189740208.57
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-30T00:00:00.000Z",
+          "PVProd": 183185.82,
+          "cost_PLN": 189740208.57
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-31T00:00:00.000Z",
+          "PVProd": 183185.82,
+          "cost_PLN": 189740208.57
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-02-01T00:00:00.000Z",
+          "PVProd": 183185.82,
+          "cost_PLN": 189740208.57
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-02-02T00:00:00.000Z",
+          "PVProd": 183185.82,
+          "cost_PLN": 189740208.57
+        }
+      ]
+    },
+    "MonthlysolarPV": {
+      "MonthlyAktualSolarPV": [
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "PVProd": 23651865.18,
+          "cost_PLN": 24498128910.33
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-02-23T00:00:00.000Z",
+          "PVProd": 23651865.18,
+          "cost_PLN": 24498128910.33
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-03-23T00:00:00.000Z",
+          "PVProd": 23651865.18,
+          "cost_PLN": 24498128910.33
+        },
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-04-23T00:00:00.000Z",
+          "PVProd": 23651865.18,
+          "cost_PLN": 24498128910.33
+        }
+      ]
+    },
+    "dailyTabelData": {
+      "DailyTabel": [
+        {
+          "totalPLNKWH": "810304.38",
+          "totalPanelKWH": "615008.23",
+          "totalPLNCost": "15280937.12",
+          "totalPVIncome": "202283846.25",
+          "RECexpe": "28360653300.00",
+          "EmisiPLN": "704.99",
+          "EEI": "10695847652.08",
+          "log_waktu": "2025-01-28 00:00:00"
+        }
+      ]
+    },
+    "monthlyTabeldata": {
+      "MonthlyTabel": [
+        {
+          "totalPLNKWH": "31915366.96",
+          "totalPanelKWH": "24259872.12",
+          "totalPLNCost": "604651475.41",
+          "totalPVIncome": "7929408446.58",
+          "RECexpe": "1075983006333.20",
+          "EmisiPLN": "27767.71",
+          "EEI": "421276141644.30",
+          "log_waktu": "2025-01-23 00:00:00"
+        }
+      ]
+    },
+    "yearlyTabeldata": {
+      "YearlyTabel": [
+        {
+          "totalPLNKWH": "5361781649.28",
+          "totalPanelKWH": "4075658516.16",
+          "totalPLNCost": "101581447868.88",
+          "totalPVIncome": "1332140619025.44",
+          "RECexpe": "180765145063977.41",
+          "EmisiPLN": "4664975.28",
+          "EEI": "70774391796242.19",
+          "log_waktu": "2025-01-23 00:00:00"
+        }
+      ]
+    },
+    "HourlyManagementData": {
+      "HourlyData": [
+        {
+          "totalPLNKWH": "32550.34",
+          "totalPanelKWH": "24593.60",
+          "totalPLNCost": "611070.29",
+          "totalPVIncome": "8241432.16",
+          "RECexpe": "1139261900.00",
+          "EmisiPLN": "28.32",
+          "EEI": "429657652.43",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32550.34",
+          "totalPanelKWH": "24593.60",
+          "totalPLNCost": "611070.29",
+          "totalPVIncome": "8241432.16",
+          "RECexpe": "1139261900.00",
+          "EmisiPLN": "28.32",
+          "EEI": "429657652.43",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32550.34",
+          "totalPanelKWH": "24593.60",
+          "totalPLNCost": "611070.29",
+          "totalPVIncome": "8241432.16",
+          "RECexpe": "1139261900.00",
+          "EmisiPLN": "28.32",
+          "EEI": "429657652.43",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32512.06",
+          "totalPanelKWH": "24609.87",
+          "totalPLNCost": "611474.60",
+          "totalPVIncome": "8184930.36",
+          "RECexpe": "1137922100.00",
+          "EmisiPLN": "28.29",
+          "EEI": "429152364.47",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32512.06",
+          "totalPanelKWH": "24609.87",
+          "totalPLNCost": "611474.60",
+          "totalPVIncome": "8184930.36",
+          "RECexpe": "1137922100.00",
+          "EmisiPLN": "28.29",
+          "EEI": "429152364.47",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32512.06",
+          "totalPanelKWH": "24609.87",
+          "totalPLNCost": "611474.60",
+          "totalPVIncome": "8184930.36",
+          "RECexpe": "1137922100.00",
+          "EmisiPLN": "28.29",
+          "EEI": "429152364.47",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32430.01",
+          "totalPanelKWH": "24613.26",
+          "totalPLNCost": "611558.88",
+          "totalPVIncome": "8096433.31",
+          "RECexpe": "1135050350.00",
+          "EmisiPLN": "28.21",
+          "EEI": "428069321.70",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32430.01",
+          "totalPanelKWH": "24613.26",
+          "totalPLNCost": "611558.88",
+          "totalPVIncome": "8096433.31",
+          "RECexpe": "1135050350.00",
+          "EmisiPLN": "28.21",
+          "EEI": "428069321.70",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32452.18",
+          "totalPanelKWH": "24613.94",
+          "totalPLNCost": "611575.57",
+          "totalPVIncome": "8118692.23",
+          "RECexpe": "1135826300.00",
+          "EmisiPLN": "28.23",
+          "EEI": "428361961.04",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32248.31",
+          "totalPanelKWH": "24616.19",
+          "totalPLNCost": "611631.63",
+          "totalPVIncome": "7905197.25",
+          "RECexpe": "1128690850.00",
+          "EmisiPLN": "28.06",
+          "EEI": "425670919.85",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32248.31",
+          "totalPanelKWH": "24616.19",
+          "totalPLNCost": "611631.63",
+          "totalPVIncome": "7905197.25",
+          "RECexpe": "1128690850.00",
+          "EmisiPLN": "28.06",
+          "EEI": "425670919.85",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32248.31",
+          "totalPanelKWH": "24616.19",
+          "totalPLNCost": "611631.63",
+          "totalPVIncome": "7905197.25",
+          "RECexpe": "1128690850.00",
+          "EmisiPLN": "28.06",
+          "EEI": "425670919.85",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32248.31",
+          "totalPanelKWH": "24616.19",
+          "totalPLNCost": "611631.63",
+          "totalPVIncome": "7905197.25",
+          "RECexpe": "1128690850.00",
+          "EmisiPLN": "28.06",
+          "EEI": "425670919.85",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32248.31",
+          "totalPanelKWH": "24616.19",
+          "totalPLNCost": "611631.63",
+          "totalPVIncome": "7905197.25",
+          "RECexpe": "1128690850.00",
+          "EmisiPLN": "28.06",
+          "EEI": "425670919.85",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32290.17",
+          "totalPanelKWH": "24596.90",
+          "totalPLNCost": "611152.19",
+          "totalPVIncome": "7968535.20",
+          "RECexpe": "1130155950.00",
+          "EmisiPLN": "28.09",
+          "EEI": "426223463.06",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32290.17",
+          "totalPanelKWH": "24596.90",
+          "totalPLNCost": "611152.19",
+          "totalPVIncome": "7968535.20",
+          "RECexpe": "1130155950.00",
+          "EmisiPLN": "28.09",
+          "EEI": "426223463.06",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32290.17",
+          "totalPanelKWH": "24596.90",
+          "totalPLNCost": "611152.19",
+          "totalPVIncome": "7968535.20",
+          "RECexpe": "1130155950.00",
+          "EmisiPLN": "28.09",
+          "EEI": "426223463.06",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32290.17",
+          "totalPanelKWH": "24596.90",
+          "totalPLNCost": "611152.19",
+          "totalPVIncome": "7968535.20",
+          "RECexpe": "1130155950.00",
+          "EmisiPLN": "28.09",
+          "EEI": "426223463.06",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32289.52",
+          "totalPanelKWH": "24605.62",
+          "totalPLNCost": "611368.85",
+          "totalPVIncome": "7958829.94",
+          "RECexpe": "1130133200.00",
+          "EmisiPLN": "28.09",
+          "EEI": "426214883.20",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32289.52",
+          "totalPanelKWH": "24605.62",
+          "totalPLNCost": "611368.85",
+          "totalPVIncome": "7958829.94",
+          "RECexpe": "1130133200.00",
+          "EmisiPLN": "28.09",
+          "EEI": "426214883.20",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32289.52",
+          "totalPanelKWH": "24605.62",
+          "totalPLNCost": "611368.85",
+          "totalPVIncome": "7958829.94",
+          "RECexpe": "1130133200.00",
+          "EmisiPLN": "28.09",
+          "EEI": "426214883.20",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32289.52",
+          "totalPanelKWH": "24605.62",
+          "totalPLNCost": "611368.85",
+          "totalPVIncome": "7958829.94",
+          "RECexpe": "1130133200.00",
+          "EmisiPLN": "28.09",
+          "EEI": "426214883.20",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32289.52",
+          "totalPanelKWH": "24605.62",
+          "totalPLNCost": "611368.85",
+          "totalPVIncome": "7958829.94",
+          "RECexpe": "1130133200.00",
+          "EmisiPLN": "28.09",
+          "EEI": "426214883.20",
+          "log_waktu": "2025-01-28"
+        },
+        {
+          "totalPLNKWH": "32289.52",
+          "totalPanelKWH": "24605.62",
+          "totalPLNCost": "611368.85",
+          "totalPVIncome": "7958829.94",
+          "RECexpe": "1130133200.00",
+          "EmisiPLN": "28.09",
+          "EEI": "426214883.20",
+          "log_waktu": "2025-01-28"
+        }
+      ]
+    },
+    "DailyManagementData": {
+      "DailyData": [
+        {
+          "totalPLNKWH": "647939.65",
+          "totalPanelKWH": "492038.33",
+          "totalPLNCost": "12225537.96",
+          "totalPVIncome": "161479469.21",
+          "RECexpe": "22677887750.00",
+          "EmisiPLN": "563.72",
+          "EEI": "8552667312.69",
+          "log_waktu": "2025-01-27 00:00:00"
+        },
+        {
+          "totalPLNKWH": "810304.38",
+          "totalPanelKWH": "615008.23",
+          "totalPLNCost": "15280937.12",
+          "totalPVIncome": "202283846.25",
+          "RECexpe": "28360653300.00",
+          "EmisiPLN": "704.99",
+          "EEI": "10695847652.08",
+          "log_waktu": "2025-01-28 00:00:00"
+        },
+        {
+          "totalPLNKWH": "907779.03",
+          "totalPanelKWH": "688804.09",
+          "totalPLNCost": "17114522.48",
+          "totalPVIncome": "226809863.37",
+          "RECexpe": "31772266050.00",
+          "EmisiPLN": "789.80",
+          "EEI": "11982492562.39",
+          "log_waktu": "2025-01-29 00:00:00"
+        },
+        {
+          "totalPLNKWH": "1330381.63",
+          "totalPanelKWH": "1008649.70",
+          "totalPLNCost": "25061636.92",
+          "totalPVIncome": "333243498.49",
+          "RECexpe": "46563357050.00",
+          "EmisiPLN": "1157.47",
+          "EEI": "17560758135.86",
+          "log_waktu": "2025-01-30 00:00:00"
+        },
+        {
+          "totalPLNKWH": "774002.13",
+          "totalPanelKWH": "590816.31",
+          "totalPLNCost": "14679848.46",
+          "totalPVIncome": "189740208.57",
+          "RECexpe": "27090074550.00",
+          "EmisiPLN": "673.47",
+          "EEI": "10216665575.46",
+          "log_waktu": "2025-01-31 00:00:00"
+        },
+        {
+          "totalPLNKWH": "774002.13",
+          "totalPanelKWH": "590816.31",
+          "totalPLNCost": "14679848.46",
+          "totalPVIncome": "189740208.57",
+          "RECexpe": "27090074550.00",
+          "EmisiPLN": "673.47",
+          "EEI": "10216665575.46",
+          "log_waktu": "2025-02-01 00:00:00"
+        },
+        {
+          "totalPLNKWH": "774002.13",
+          "totalPanelKWH": "590816.31",
+          "totalPLNCost": "14679848.46",
+          "totalPVIncome": "189740208.57",
+          "RECexpe": "27090074550.00",
+          "EmisiPLN": "673.47",
+          "EEI": "10216665575.46",
+          "log_waktu": "2025-02-02 00:00:00"
+        }
+      ]
+    },
+    "MonthlyManagementData": {
+      "MonthlyData": [
+        {
+          "totalPLNKWH": "31915366.96",
+          "totalPanelKWH": "24259872.12",
+          "totalPLNCost": "604651475.41",
+          "totalPVIncome": "7929408446.58",
+          "RECexpe": "1075983006333.20",
+          "EmisiPLN": "27767.71",
+          "EEI": "421276141644.30",
+          "log_waktu": "2025-01-23 00:00:00"
+        },
+        {
+          "totalPLNKWH": "31915366.96",
+          "totalPanelKWH": "24259872.12",
+          "totalPLNCost": "604651475.41",
+          "totalPVIncome": "7929408446.58",
+          "RECexpe": "1075983006333.20",
+          "EmisiPLN": "27767.71",
+          "EEI": "421276141644.30",
+          "log_waktu": "2025-02-23 00:00:00"
+        },
+        {
+          "totalPLNKWH": "31915366.96",
+          "totalPanelKWH": "24259872.12",
+          "totalPLNCost": "604651475.41",
+          "totalPVIncome": "7929408446.58",
+          "RECexpe": "1075983006333.20",
+          "EmisiPLN": "27767.71",
+          "EEI": "421276141644.30",
+          "log_waktu": "2025-03-23 00:00:00"
+        },
+        {
+          "totalPLNKWH": "31915366.96",
+          "totalPanelKWH": "24259872.12",
+          "totalPLNCost": "604651475.41",
+          "totalPVIncome": "7929408446.58",
+          "RECexpe": "1075983006333.20",
+          "EmisiPLN": "27767.71",
+          "EEI": "421276141644.30",
+          "log_waktu": "2025-04-23 00:00:00"
+        }
+      ]
+    },
+    "dailyTabelSolarPV": {
+      "DailyTabelSolarPV": [
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-28T00:00:00.000Z",
+          "PVProd": 183185.82,
+          "cost_PLN": 189740208.57
+        }
+      ]
+    },
+    "monthlyTabelSolarPV": {
+      "MonthlyTabelSolarPV": [
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "PVProd": 23651865.18,
+          "cost_PLN": 24498128910.33
+        }
+      ]
+    },
+    "yearlyTabelSolarPV": {
+      "YearlyTabelSolarPV": [
+        {
+          "nama_kWh_Meter": "kWh PLTS",
+          "no_kWh_Meter": 8,
+          "log_waktu": "2025-01-23T00:00:00.000Z",
+          "PVProd": 2634597.92,
+          "cost_PLN": 2728705074
+        }
+      ]
+    }
+  }
+}
