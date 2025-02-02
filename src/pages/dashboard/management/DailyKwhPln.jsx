@@ -11,7 +11,7 @@ const DailyKwhPln = () => {
   const options = {
     chart: {
       type: "bar",
-      height: 250, // Set the height to match KwhFloor component
+      height: 250, // Set the height to match KwhPerEquipment component
       toolbar: {
         show: true,
       },
@@ -58,7 +58,8 @@ const DailyKwhPln = () => {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "50%",
+        columnWidth: "40%", // Adjust column width to match the KwhPerEquipment style
+        dataLabels: { position: "top" },
       },
     },
     dataLabels: {
@@ -66,20 +67,36 @@ const DailyKwhPln = () => {
     },
     colors: ["#FFA500", "#00FF00"], // Warna bar (orange dan hijau)
     fill: {
-      opacity: 1, // Set opacity to 1 for consistent opacity with KwhFloor
+      type: "pattern",
+      pattern: {
+        style: ["horizontalLines", "horizontalLines"],
+        width: 5,
+        height: 10,
+        strokeWidth: 15,
+      },
+      opacity: 0.8,
+      colors: ["#FFA500", "#00FF00"], // Matching fill color with the bars
     },
+    stroke: { width: 0 },
     tooltip: {
       theme: "dark", // Tooltip dengan tema gelap
-      style: {
-        fontSize: "12px",
+      custom: ({ series, dataPointIndex }) => {
+        const total = series.reduce(
+          (sum, serie) => sum + parseFloat(serie[dataPointIndex]),
+          0
+        );
+        return `
+          <div style="background: #222; padding: 8px 12px; border-radius: 5px; color: #fff; font-size: 12px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);">
+            <strong style="display: block; font-size: 14px; margin-bottom: 5px;">Total Consumption</strong>
+            <span style="font-size: 13px;">${formatNumberForDisplay(
+              total
+            )}</span>
+          </div>
+        `;
       },
     },
     legend: {
-      show: true,
-      position: "bottom",
-      labels: {
-        colors: "#D1D5DB",
-      },
+      labels: { colors: "#D1D5DB" },
     },
   };
 
@@ -88,14 +105,15 @@ const DailyKwhPln = () => {
       name: "Energy Consumption Plan",
       data: [
         2000, 3204, 2910, 4656, 3974, 6359, 6360, 10176, 10179, 10179, 6362,
-        2426, 3883, 4500, 4800, 5000, 5200, 5500, 5700, 5900, 6100, 6300, 6500, 6700
+        2426, 3883, 4500, 4800, 5000, 5200, 5500, 5700, 5900, 6100, 6300, 6500,
+        6700,
       ],
     },
     {
       name: "Energy Consumption Actual",
       data: [
         1500, 3000, 2500, 4000, 3500, 6200, 6200, 9000, 9500, 10000, 6000, 2000,
-        3500, 4000, 4200, 4400, 4600, 4800, 5000, 5200, 5400, 5600, 5800, 6000
+        3500, 4000, 4200, 4400, 4600, 4800, 5000, 5200, 5400, 5600, 5800, 6000,
       ],
     },
   ];
@@ -107,25 +125,19 @@ const DailyKwhPln = () => {
         <div className="flex gap-4 items-center">
           <div className="flex gap-2 items-center">
             <label htmlFor="">Date</label>
-            <select
-              className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer"
-            >
+            <select className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer">
               <option value="monthly">1</option>
             </select>
           </div>
           <div className="flex gap-2 items-center">
             <label htmlFor="">Month</label>
-            <select
-              className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer"
-            >
+            <select className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer">
               <option value="monthly">Apr</option>
             </select>
           </div>
           <div className="flex gap-2 items-center">
             <label htmlFor="">Year</label>
-            <select
-              className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer"
-            >
+            <select className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer">
               <option value="monthly">2025</option>
             </select>
           </div>
@@ -135,7 +147,7 @@ const DailyKwhPln = () => {
         options={options}
         series={series}
         type="bar"
-        height={250} // Adjust height to match KwhFloor component
+        height={250} // Adjust height to match KwhPerEquipment component
       />
     </div>
   );

@@ -20,18 +20,13 @@ const KwhPerEquipment = () => {
     chart: {
       type: "bar",
       height: 250,
-      toolbar: {
-        show: true,
-      },
-    },
-    dataLabels: {
-      enabled: false,
+      toolbar: { show: true },
     },
     xaxis: {
       categories: Array.from(
         { length: 24 },
         (_, i) => `${i.toString().padStart(2, "0")}:00`
-      ), // Jam 00:00 - 23:00,
+      ),
       labels: {
         style: {
           fontSize: "12px",
@@ -42,16 +37,10 @@ const KwhPerEquipment = () => {
     yaxis: {
       title: {
         text: "Total Consumption (kWh)",
-        style: {
-          color: "#D1D5DB",
-          fontSize: "12px",
-        },
+        style: { color: "#D1D5DB", fontSize: "12px" },
       },
       labels: {
-        style: {
-          colors: "#D1D5DB",
-          fontSize: "12px",
-        },
+        style: { colors: "#D1D5DB", fontSize: "12px" },
         formatter: (value) => formatNumberForDisplay(value),
       },
     },
@@ -59,22 +48,46 @@ const KwhPerEquipment = () => {
       bar: {
         borderRadius: 0,
         horizontal: false,
+        columnWidth: "40%",
+        dataLabels: { position: "top" },
       },
     },
     colors: ["#FFA500", "#00FF00"],
     fill: {
-      opacity: 1,
-    },
-    legend: {
-      labels: {
-        colors: "#D1D5DB",
+      type: "pattern",
+      pattern: {
+        style: ["horizontalLines", "horizontalLines"],
+        width: 5,
+        height: 10,
+        strokeWidth: 15,
       },
+      opacity: 0.8,
+      colors: ["#FFA500", "#00FF00"],
+    },
+    stroke: { width: 0 },
+    legend: {
+      labels: { colors: "#D1D5DB" },
     },
     tooltip: {
       theme: "dark",
-      style: {
-        fontSize: "12px",
+      custom: ({ series, dataPointIndex }) => {
+        const total = series.reduce(
+          (sum, serie) => sum + parseFloat(serie[dataPointIndex]),
+          0
+        );
+        return `
+          <div style="background: #222; padding: 8px 12px; border-radius: 5px; color: #fff; font-size: 12px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);">
+            <strong style="display: block; font-size: 14px; margin-bottom: 5px;">Total Consumption</strong>
+            <span style="font-size: 13px;">${formatNumberForDisplay(
+              total
+            )}</span>
+          </div>
+        `;
       },
+    },
+    dataLabels: {
+      enabled: false,
+      formatter: (value) => formatNumberForDisplay(value),
     },
   };
 

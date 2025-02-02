@@ -38,11 +38,12 @@ const DailyEmission = () => {
     chart: {
       type: "bar",
       toolbar: { show: true },
+      height: Labeling.chart.height, // Match height with the first component
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "50%",
+        columnWidth: "40%", // Match with the first component's columnWidth
         endingShape: "flat",
       },
     },
@@ -87,7 +88,14 @@ const DailyEmission = () => {
       },
     },
     fill: {
-      opacity: 1,
+      type: "pattern",
+      pattern: {
+        style: ["horizontalLines"],
+        width: 5,
+        height: 10,
+        strokeWidth: 15,
+      },
+      opacity: 0.5,
       colors: ["#808080"], // Color for emissions
     },
     legend: {

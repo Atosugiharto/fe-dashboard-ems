@@ -14,19 +14,22 @@ const DailySolarPv = () => {
       .map((_, i) => (i + 1).toString());
   };
 
+  const numStacks = 10; // Jumlah potongan tiap bar agar mirip equalizer
   const getData = () => {
-    const categories = Array.from({ length: 24 }, (_, i) => `${i}:00`); // Data jam 00:00 - 23:00
-    const seriesData = Array.from({ length: 24 }, () => Math.floor(Math.random() * 100) + 1); // Random data
+    const categories = Array.from({ length: 24 }, (_, i) => `${i}:00`);
+    const rawData = Array.from(
+      { length: 24 },
+      () => Math.floor(Math.random() * 20000) + 1
+    );
 
-    return {
-      categories,
-      series: [
-        {
-          name: "Solar PV Produce",
-          data: seriesData,
-        },
-      ],
-    };
+    const series = Array.from({ length: numStacks }, (_, i) => ({
+      name: `Stack ${i + 1}`,
+      data: rawData.map((value) =>
+        value > i * 2000 ? Math.min(2000, value - i * 2000) : 0
+      ),
+    }));
+
+    return { categories, series };
   };
 
   const data = getData();
@@ -35,28 +38,44 @@ const DailySolarPv = () => {
     chart: {
       type: "bar",
       toolbar: { show: true },
+      stacked: true,
     },
     plotOptions: {
       bar: {
         horizontal: false,
         columnWidth: "50%",
-        endingShape: "flat",
+        borderRadius: 0,
       },
     },
     dataLabels: {
       enabled: false,
-      formatter: (val) => `${val.toFixed(2)}`, // Menampilkan value di atas bar
-      style: {
-        colors: ["#000"], // Warna teks
-      },
     },
     tooltip: {
-      theme: "dark", // Tema gelap untuk tooltip
-      style: {
-        fontSize: "12px",
-        fontFamily: "Helvetica, Arial, sans-serif",
+      theme: "dark",
+      custom: ({ series, dataPointIndex }) => {
+        const total = series.reduce(
+          (sum, serie) => sum + serie[dataPointIndex],
+          0
+        );
+
+        return `
+          <div style="
+            background: #222; 
+            padding: 8px 12px; 
+            border-radius: 5px; 
+            color: #fff; 
+            font-size: 12px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+          ">
+            <strong style="display: block; font-size: 14px; margin-bottom: 5px;">Solar PV Produce</strong>
+            <span style="font-size: 13px;">${formatNumberForDisplay(
+              total
+            )}</span>
+          </div>
+        `;
       },
     },
+
     xaxis: {
       categories: data.categories,
       title: {
@@ -88,11 +107,15 @@ const DailySolarPv = () => {
       },
     },
     fill: {
-      opacity: 1,
+      opacity: 0.8,
       colors: ["#FFA500"], // Warna bar
     },
     legend: {
       show: false,
+    },
+    stroke: {
+      width: 4,
+      colors: ["transparent"],
     },
   };
 

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import Labeling from "../../../share-components/Labeling";
 import { formatNumberForDisplay } from "../../../share-components/Helper";
 
 const MonthlyKwhPln = () => {
@@ -20,11 +19,17 @@ const MonthlyKwhPln = () => {
       series: [
         {
           name: "Energy Consumption Plan",
-          data: Array.from({ length: days.length }, () => Math.floor(Math.random() * 5000) + 1000),
+          data: Array.from(
+            { length: days.length },
+            () => Math.floor(Math.random() * 5000) + 1000
+          ),
         },
         {
           name: "Energy Consumption Actual",
-          data: Array.from({ length: days.length }, () => Math.floor(Math.random() * 4500) + 900),
+          data: Array.from(
+            { length: days.length },
+            () => Math.floor(Math.random() * 4500) + 900
+          ),
         },
       ],
     };
@@ -33,9 +38,17 @@ const MonthlyKwhPln = () => {
   const data = getData(year, month);
 
   const options = {
-    chart: { type: "bar", toolbar: { show: true } },
+    chart: {
+      type: "bar",
+      toolbar: { show: true },
+      height: 250, // Match the height to be consistent
+    },
     plotOptions: {
-      bar: { horizontal: false, columnWidth: "50%", endingShape: "flat" },
+      bar: {
+        horizontal: false,
+        columnWidth: "40%", // Adjust to match the KwhPerEquipment style
+        dataLabels: { position: "top" },
+      },
     },
     dataLabels: { enabled: false },
     xaxis: {
@@ -47,12 +60,49 @@ const MonthlyKwhPln = () => {
       labels: { style: { colors: "#D1D5DB" } },
     },
     yaxis: {
-      title: { text: "Energy Consumption (kWh)", style: { color: "#D1D5DB", fontSize: "12px" } },
-      labels: { style: { colors: "#D1D5DB" }, formatter: (value) => formatNumberForDisplay(value) },
+      title: {
+        text: "Energy Consumption (kWh)",
+        style: { color: "#D1D5DB", fontSize: "12px" },
+      },
+      labels: {
+        style: { colors: "#D1D5DB" },
+        formatter: (value) => formatNumberForDisplay(value),
+      },
     },
-    fill: { opacity: 1, colors: ["#FFA500", "#00FF00"] },
-    legend: { position: "bottom", horizontalAlign: "center", labels: { colors: "#D1D5DB" } },
-    tooltip: { theme: "dark", style: { fontSize: "12px" } },
+    fill: {
+      type: "pattern",
+      pattern: {
+        style: ["horizontalLines", "horizontalLines"],
+        width: 5,
+        height: 10,
+        strokeWidth: 15,
+      },
+      opacity: 0.8,
+      colors: ["#FFA500", "#00FF00"], // Matching bar colors
+    },
+    legend: {
+      position: "bottom",
+      horizontalAlign: "center",
+      labels: { colors: "#D1D5DB" },
+    },
+    tooltip: {
+      theme: "dark",
+      custom: ({ series, dataPointIndex }) => {
+        const total = series.reduce(
+          (sum, serie) => sum + parseFloat(serie[dataPointIndex]),
+          0
+        );
+        return `
+          <div style="background: #222; padding: 8px 12px; border-radius: 5px; color: #fff; font-size: 12px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);">
+            <strong style="display: block; font-size: 14px; margin-bottom: 5px;">Total Consumption</strong>
+            <span style="font-size: 13px;">${formatNumberForDisplay(
+              total
+            )}</span>
+          </div>
+        `;
+      },
+    },
+    stroke: { width: 0 },
   };
 
   return (
@@ -68,7 +118,20 @@ const MonthlyKwhPln = () => {
               value={month}
               onChange={(e) => setMonth(parseInt(e.target.value))}
             >
-              {["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"].map((m, index) => (
+              {[
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
+                "Jan",
+                "Feb",
+                "Mar",
+              ].map((m, index) => (
                 <option key={index} value={index}>
                   {m}
                 </option>
@@ -91,7 +154,12 @@ const MonthlyKwhPln = () => {
           </div>
         </div>
       </div>
-      <ReactApexChart options={options} series={data.series} type="bar" height={Labeling.chart.height} />
+      <ReactApexChart
+        options={options}
+        series={data.series}
+        type="bar"
+        height={250}
+      />
     </div>
   );
 };

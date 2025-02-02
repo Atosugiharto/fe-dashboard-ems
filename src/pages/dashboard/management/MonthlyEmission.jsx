@@ -55,14 +55,17 @@ const MonthlyEmission = () => {
       labels: { style: { colors: "#d1d5db", fontSize: "12px" } },
     },
     yaxis: {
-      title: { text: "Emissions (Ton)", style: { color: "#d1d5db", fontSize: "12px" } },
+      title: {
+        text: "Emissions (Ton)",
+        style: { color: "#d1d5db", fontSize: "12px" },
+      },
       labels: {
         style: { colors: "#d1d5db", fontSize: "12px" },
         formatter: (value) => formatNumberForDisplay(value),
       },
       logarithmic: true,
     },
-    plotOptions: { bar: { columnWidth: "50%" } },
+    plotOptions: { bar: { columnWidth: "40%" } }, // 40% to match previous bar style
     dataLabels: { enabled: false },
     annotations: {
       yaxis: [
@@ -78,7 +81,7 @@ const MonthlyEmission = () => {
       ],
     },
     tooltip: { theme: "dark", style: { fontSize: "12px" } },
-    colors: ["#000", "#D1D5DB", "red"],
+    colors: ["#000", "#D1D5DB", "red"], // Maintain the same color scheme as original
     legend: {
       show: true,
       position: "bottom",

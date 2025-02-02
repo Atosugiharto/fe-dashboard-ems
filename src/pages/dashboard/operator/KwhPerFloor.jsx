@@ -43,11 +43,11 @@ const KwhPerFloor = () => {
           color: "#D1D5DB",
           fontSize: "12px",
         },
-    },
-    labels: {
+      },
+      labels: {
         style: {
-            colors: "#D1D5DB",
-            fontSize: "12px",
+          colors: "#D1D5DB",
+          fontSize: "12px",
         },
         formatter: (value) => formatNumberForDisplay(value),
       },
@@ -56,11 +56,25 @@ const KwhPerFloor = () => {
       bar: {
         borderRadius: 0,
         horizontal: false,
+        columnWidth: "40%", // Menyesuaikan lebar bar
+        dataLabels: {
+          position: "top",
+        },
       },
     },
-    colors: ["#FFA500", "#00FF00"],
+    colors: ["#FFA500", "#00FF00"], // Warna untuk Plan & Actual
     fill: {
-      opacity: 1,
+      type: "pattern",
+      pattern: {
+        style: ["horizontalLines", "horizontalLines"], // Pola garis horizontal
+        width: 5,
+        height: 10,
+        strokeWidth: 15,
+      },
+      opacity: 0.8,
+    },
+    stroke: {
+      width: 0,
     },
     legend: {
       labels: {
@@ -69,8 +83,26 @@ const KwhPerFloor = () => {
     },
     tooltip: {
       theme: "dark",
-      style: {
-        fontSize: "12px",
+      custom: ({ series, dataPointIndex }) => {
+        const total = series.reduce(
+          (sum, serie) => sum + serie[dataPointIndex],
+          0
+        );
+        return `
+          <div style="
+            background: #222; 
+            padding: 8px 12px; 
+            border-radius: 5px; 
+            color: #fff; 
+            font-size: 12px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+          ">
+            <strong style="display: block; font-size: 14px; margin-bottom: 5px;">Total Consumption</strong>
+            <span style="font-size: 13px;">${formatNumberForDisplay(
+              total
+            )}</span>
+          </div>
+        `;
       },
     },
     dataLabels: {

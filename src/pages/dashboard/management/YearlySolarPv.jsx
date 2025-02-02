@@ -26,11 +26,11 @@ const YearlySolarPv = () => {
     ); // Random production data for each month
 
     return {
-      categories: monthNames, // Categories for each month
+      categories: monthNames,
       series: [
         {
           name: "Solar PV Produce",
-          data: productionData, // Data for each month
+          data: productionData,
         },
       ],
     };
@@ -46,7 +46,7 @@ const YearlySolarPv = () => {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "50%",
+        columnWidth: "40%", // Menyesuaikan dengan YearlyKwhPln
         endingShape: "flat",
       },
     },
@@ -58,13 +58,13 @@ const YearlySolarPv = () => {
       title: {
         text: "Months",
         style: {
-          color: "#D1D5DB", // X-axis label color
+          color: "#D1D5DB",
           fontSize: "14px",
         },
       },
       labels: {
         style: {
-          colors: "#D1D5DB", // X-axis label color
+          colors: "#D1D5DB",
         },
       },
     },
@@ -72,20 +72,27 @@ const YearlySolarPv = () => {
       title: {
         text: "Solar PV Produce",
         style: {
-          color: "#D1D5DB", // Y-axis label color
+          color: "#D1D5DB",
           fontSize: "12px",
         },
       },
       labels: {
         style: {
-          colors: "#D1D5DB", // Y-axis label color
+          colors: "#D1D5DB",
         },
         formatter: (value) => formatNumberForDisplay(value),
       },
     },
     fill: {
-      opacity: 1,
-      colors: ["#FFA500"], // Bar color
+      type: "pattern",
+      pattern: {
+        style: ["horizontalLines"],
+        width: 5,
+        height: 10,
+        strokeWidth: 15,
+      },
+      opacity: 0.8,
+      colors: ["#FFA500", "#00FF00"], // Warna bar disamakan dengan YearlyKwhPln
     },
     tooltip: {
       theme: "dark",
@@ -95,7 +102,9 @@ const YearlySolarPv = () => {
       },
     },
     legend: {
-      show: false,
+      position: "bottom",
+      horizontalAlign: "center",
+      labels: { colors: "#D1D5DB" },
     },
   };
 
