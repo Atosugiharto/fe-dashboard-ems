@@ -58,7 +58,7 @@ const Header = () => {
       </div>
 
       {/* Judul di tengah */}
-      <h1 className="text-lg font-bold hidden lg:absolute left-1/2 transform -translate-x-1/2">
+      <h1 className="text-lg font-bold hidden lg:block absolute left-1/2 transform -translate-x-1/2">
         SUMMARY - ENERGY MANAGEMENT SYSTEM
       </h1>
 
