@@ -7,11 +7,11 @@ import {
 
 import Login from "./pages/auth/Login";
 import NotFoundPage from "./pages/404/NotFoundPage";
-import { DashboardManagement } from "./pages/dashboard/management";
 import { DashboardOperator } from "./pages/dashboard/operator";
 import InputSetting from "./pages/input-setting";
 import Layout from "./share-components/MenuDate";
 import EqualizerBarChart from "./pages/percobaan/EqualizerBarChart";
+import { DashboardManagement } from "./pages/dashboard-new-concept/management";
 
 function App() {
   return (
