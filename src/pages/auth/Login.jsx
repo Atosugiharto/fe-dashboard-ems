@@ -20,7 +20,7 @@ export default function Login() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6"
+                className="block text-sm 4k:text-4xl font-medium leading-6"
               >
                 Email address
               </label>
@@ -31,7 +31,7 @@ export default function Login() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-dongker sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md 4k:rounded-xl border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-dongker sm:text-sm 4k:text-4xl sm:leading-6"
                 />
               </div>
             </div>
@@ -40,11 +40,11 @@ export default function Login() {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6"
+                  className="block text-sm 4k:text-4xl font-medium leading-6"
                 >
                   Password
                 </label>
-                {/* <div className="text-sm">
+                {/* <div className="text-sm 4k:text-4xl">
                   <a
                     href="#"
                     className="font-semibold text-dongker hover:text-dongker"
@@ -60,7 +60,7 @@ export default function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-dongker sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md 4k:rounded-xl border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-dongker sm:text-sm 4k:text-4xl sm:leading-6"
                 />
               </div>
             </div>
@@ -68,7 +68,7 @@ export default function Login() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-dongker px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-dongker focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dongker"
+                className="flex w-full justify-center rounded-md 4k:rounded-xl bg-dongker px-3 py-1.5 text-sm 4k:text-4xl font-semibold leading-6 text-white shadow-sm hover:bg-dongker focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dongker"
               >
                 Login
               </button>

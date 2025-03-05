@@ -1,34 +1,92 @@
-import { formatNumberForDisplay } from "../../../share-components/Helper";
+import { Paid } from "@mui/icons-material";
+import { formatNumberForDisplayDynamic } from "../../../share-components/Helper";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { baseApiUrl } from "../../../share-components/api";
 
 const CostTable = () => {
-  const data = [
-    { label: "Today", pln: 6168675, solarPV: 114868 },
-    { label: "This Month", pln: 250959000, solarPV: 4741387 },
-    { label: "This Year", pln: 2762717797, solarPV: 52478829 },
-  ];
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [todayRes, monthRes, yearRes] = await Promise.all([
+          axios.get(`${baseApiUrl}/tableDashboardDailyCost`),
+          axios.get(`${baseApiUrl}/tableDashboardMonthlyCost`),
+          axios.get(`${baseApiUrl}/tableDashboardYearlyCost`),
+        ]);
+
+        const formattedData = [
+          {
+            label: "Today",
+            pln: todayRes?.data?.data?.totalPLNCost || 0,
+            nettoff: todayRes?.data?.data?.totalNetOffCost || 0,
+            total: todayRes?.data?.data?.total || 0,
+          },
+          {
+            label: "This Month",
+            pln: monthRes?.data?.data?.totalPLNCost || 0,
+            nettoff: monthRes?.data?.data?.totalNetOffCost || 0,
+            total: monthRes?.data?.data?.total || 0,
+          },
+          {
+            label: "This Year",
+            pln: yearRes?.data?.data?.totalPLNCost || 0,
+            nettoff: yearRes?.data?.data?.totalNetOffCost || 0,
+            total: yearRes?.data?.data?.total || 0,
+          },
+        ];
+
+        setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div className="">
-      <h2 className="text-white text-lg font-semibold flex items-center mb-3">
-        <span className="mr-2">💰</span> Cost (IDR)
+    <div>
+      <h2 className="text-white text-lg 4k:text-4xl font-semibold flex items-center mb-3">
+        <span className="mr-2">
+          <Paid />
+        </span>
+        Cost (in Mio IDR)
       </h2>
-      <table className="w-full border border-gray-700 border-collapse">
+      <table className="w-full border-collapse">
         <thead>
-          <tr className="bg-gray-800 text-white">
-            <th className="py-2 px-4 text-left border border-gray-700"> </th>
-            <th className="py-2 px-4 text-yellow-400 border border-gray-700">PLN</th>
-            <th className="py-2 px-4 text-green-400 border border-gray-700">Solar PV</th>
+          <tr className="bg-dashboard-table-abu-muda text-white">
+            <th className="py-2 px-4 text-left"></th>
+            <th className="py-2 px-4 text-dashboard-bar-kuning">Total</th>
+            <th className="py-2 px-4 text-dashboard-text-table-oren">PLN</th>
+            <th className="py-2 px-4 text-dashboard-gauge-hijau">
+              <p>Net Off</p>
+              <p className="text-[9px]">(Solar PV)</p>
+            </th>
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => (
-            <tr key={index} className="border border-gray-700">
-              <td className="py-2 px-4 font-semibold text-white border border-gray-700">{row.label}</td>
-              <td className="py-2 px-4 text-center text-yellow-400 border border-gray-700">
-                Rp.{formatNumberForDisplay(row.pln)}
+          {data?.map((row, index) => (
+            <tr
+              key={index}
+              className={
+                index % 2 === 0
+                  ? "bg-dashboard-table-abu-tua"
+                  : "bg-dashboard-table-abu-muda"
+              }
+            >
+              <td className="py-2 px-4 font-semibold text-white">
+                {row?.label}
               </td>
-              <td className="py-2 px-4 text-center text-green-400 border border-gray-700">
-                Rp.{formatNumberForDisplay(row.solarPV)}
+              <td className="py-2 px-4 text-center text-dashboard-bar-kuning">
+                Rp.{formatNumberForDisplayDynamic(row?.total)}
+              </td>
+              <td className="py-2 px-4 text-center text-dashboard-text-table-oren border-gray-700">
+                <p>Rp.{formatNumberForDisplayDynamic(row?.pln)}</p>
+              </td>
+              <td className="py-2 px-4 text-center text-dashboard-gauge-hijau">
+                <p>Rp.{formatNumberForDisplayDynamic(row?.nettoff)}</p>
               </td>
             </tr>
           ))}

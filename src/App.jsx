@@ -10,8 +10,12 @@ import NotFoundPage from "./pages/404/NotFoundPage";
 import { DashboardOperator } from "./pages/dashboard/operator";
 import InputSetting from "./pages/input-setting";
 import Layout from "./share-components/MenuDate";
-import EqualizerBarChart from "./pages/percobaan/EqualizerBarChart";
 import { DashboardManagement } from "./pages/dashboard-new-concept/management";
+import { Emission } from "./pages/emission";
+import { Cost } from "./pages/cost";
+import { Pln } from "./pages/pln";
+import { SolarPv } from "./pages/solar-pv";
+import { SummaryAllFloors } from "./pages/summary-all-floors";
 
 function App() {
   return (
@@ -27,7 +31,11 @@ function App() {
             />
             <Route path="dashboard-operator" element={<DashboardOperator />} />
             <Route path="input-setting" element={<InputSetting />} />
-            <Route path="equalizer" element={<EqualizerBarChart />} />
+            <Route path="emission" element={<Emission />} />
+            <Route path="cost" element={<Cost />} />
+            <Route path="pln" element={<Pln />} />
+            <Route path="solar-pv" element={<SolarPv />} />
+            <Route path="summary-all-floors" element={<SummaryAllFloors />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

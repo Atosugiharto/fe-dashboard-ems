@@ -108,13 +108,15 @@ const MonthlyKwhPln = () => {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-bold text-gray-300">Monthly kWh PLN</h2>
+        <h2 className="text-lg 4k:text-4xl font-bold text-gray-300">
+          Monthly kWh PLN
+        </h2>
         <div className="flex gap-4 items-center">
           <div className="flex gap-2 items-center">
             <label htmlFor="month">Month</label>
             <select
               id="month"
-              className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer"
+              className="px-3 py-1 bg-blue-500 text-white rounded-md 4k:rounded-xl cursor-pointer"
               value={month}
               onChange={(e) => setMonth(parseInt(e.target.value))}
             >
@@ -142,7 +144,7 @@ const MonthlyKwhPln = () => {
             <label htmlFor="year">Year</label>
             <select
               id="year"
-              className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer"
+              className="px-3 py-1 bg-blue-500 text-white rounded-md 4k:rounded-xl cursor-pointer"
               value={year}
               onChange={(e) => setYear(parseInt(e.target.value))}
             >

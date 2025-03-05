@@ -1,13 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import ohcReducer from "./slices/ohcSlice";
-import sidebarReducer from "./slices/sidebarSlice";
-import dataReducer from "./slices/dataSlice";
+import dashboardReducer from "./slices/dashboardSlice";
 
 const store = configureStore({
   reducer: {
-    ohc: ohcReducer,
-    sidebar: sidebarReducer,
-    data: dataReducer,
+    dashboard: dashboardReducer,
   },
 });
 

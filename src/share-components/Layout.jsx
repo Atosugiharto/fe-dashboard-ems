@@ -147,7 +147,7 @@ export default function Layout() {
                                         isActive
                                           ? "bg-sidebar"
                                           : "hover:bg-sidebar",
-                                        "group flex items-center gap-x-3 rounded-md p-2 text-medium text-sm 4k:text-2xl leading-6 text-dongker"
+                                        "group flex items-center gap-x-3 rounded-md 4k:rounded-xl p-2 text-medium text-sm 4k:text-4xl 4k:text-2xl leading-6 text-dongker"
                                       )
                                     }
                                   >
@@ -166,7 +166,7 @@ export default function Layout() {
                                             item.current
                                               ? "bg-sidebar"
                                               : "hover:bg-sidebar",
-                                            "flex items-center w-full text-left rounded-md p-2 gap-x-3 text-medium text-sm 4k:text-2xl leading-6 text-dongker"
+                                            "flex items-center w-full text-left rounded-md 4k:rounded-xl p-2 gap-x-3 text-medium text-sm 4k:text-4xl 4k:text-2xl leading-6 text-dongker"
                                           )}
                                         >
                                           <item.icon
@@ -197,7 +197,7 @@ export default function Layout() {
                                                   subItem.current
                                                     ? "bg-sidebar"
                                                     : "hover:bg-sidebar",
-                                                  "block rounded-md py-2 pr-2 pl-9 text-medium text-sm 4k:text-2xl leading-6 text-dongker"
+                                                  "block rounded-md 4k:rounded-xl py-2 pr-2 pl-9 text-medium text-sm 4k:text-4xl 4k:text-2xl leading-6 text-dongker"
                                                 )}
                                               >
                                                 {subItem.name}
@@ -251,7 +251,7 @@ export default function Layout() {
                             className={({ isActive }) =>
                               classNames(
                                 isActive ? "bg-sidebar" : "hover:bg-sidebar",
-                                "group flex items-center gap-x-3 rounded-md p-2 text-medium text-md 4k:text-3xl leading-6 text-dongker"
+                                "group flex items-center gap-x-3 rounded-md 4k:rounded-xl p-2 text-medium text-md 4k:text-3xl leading-6 text-dongker"
                               )
                             }
                           >
@@ -270,7 +270,7 @@ export default function Layout() {
                                     item.current
                                       ? "bg-sidebar"
                                       : "hover:bg-sidebar",
-                                    "flex items-center w-full text-left rounded-md p-2 gap-x-3 text-medium text-md 4k:text-3xl leading-6 text-dongker"
+                                    "flex items-center w-full text-left rounded-md 4k:rounded-xl p-2 gap-x-3 text-medium text-md 4k:text-3xl leading-6 text-dongker"
                                   )}
                                 >
                                   <item.icon
@@ -298,7 +298,7 @@ export default function Layout() {
                                           subItem.current
                                             ? "bg-sidebar"
                                             : "hover:bg-sidebar",
-                                          "block rounded-md py-2 4k:py-3 pr-2 pl-9 text-medium text-md 4k:text-3xl leading-6 text-dongker items-center"
+                                          "block rounded-md 4k:rounded-xl py-2 4k:py-3 pr-2 pl-9 text-medium text-md 4k:text-3xl leading-6 text-dongker items-center"
                                         )}
                                       >
                                         <subItem.icon

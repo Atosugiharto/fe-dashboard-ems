@@ -6,7 +6,7 @@ const TotalCaseChart = () => {
   const [fontSize, setFontSize] = useState({
     xaxis: "12px",
     yaxis: "12px",
-    title: "text-lg",
+    title: "text-lg 4k:text-4xl",
     legend: "12px",
   });
 
@@ -16,8 +16,8 @@ const TotalCaseChart = () => {
         // For larger screens (4K resolution)
         setChartHeight(400);
         setFontSize({
-          xaxis: "17px",
-          yaxis: "17px",
+          xaxis: "26px",
+          yaxis: "26px",
           title: "text-3xl",
           legend: "18px",
         });
@@ -27,7 +27,7 @@ const TotalCaseChart = () => {
         setFontSize({
           xaxis: "12px",
           yaxis: "12px",
-          title: "text-lg",
+          title: "text-lg 4k:text-4xl",
           legend: "12px",
         });
       }

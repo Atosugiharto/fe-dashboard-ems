@@ -121,23 +121,25 @@ const DailyKwhPln = () => {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-bold text-gray-300">Daily kWh PLN</h2>
+        <h2 className="text-lg 4k:text-4xl font-bold text-gray-300">
+          Daily kWh PLN
+        </h2>
         <div className="flex gap-4 items-center">
           <div className="flex gap-2 items-center">
             <label htmlFor="">Date</label>
-            <select className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer">
+            <select className="px-3 py-1 bg-blue-500 text-white rounded-md 4k:rounded-xl cursor-pointer">
               <option value="monthly">1</option>
             </select>
           </div>
           <div className="flex gap-2 items-center">
             <label htmlFor="">Month</label>
-            <select className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer">
+            <select className="px-3 py-1 bg-blue-500 text-white rounded-md 4k:rounded-xl cursor-pointer">
               <option value="monthly">Apr</option>
             </select>
           </div>
           <div className="flex gap-2 items-center">
             <label htmlFor="">Year</label>
-            <select className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer">
+            <select className="px-3 py-1 bg-blue-500 text-white rounded-md 4k:rounded-xl cursor-pointer">
               <option value="monthly">2025</option>
             </select>
           </div>

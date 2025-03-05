@@ -1,3 +1,5 @@
+import moment from "moment/moment";
+
 export function convertSecondsToTime(totalSeconds) {
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -18,9 +20,35 @@ export const formatNumberForDisplay = (number) =>
     maximumFractionDigits: 2,
   }).format(number);
 
+export const formatNumberForDisplayDynamic = (number) => {
+  if (isNaN(number) || typeof number === "string") {
+    return number; // Jika bukan angka, kembalikan nilai asli
+  }
+
+  return new Intl.NumberFormat("id-ID", {
+    minimumFractionDigits: number % 1 === 0 ? 0 : 2, // Jika desimalnya 0, tidak tampilkan
+    maximumFractionDigits: 2,
+  }).format(number);
+};
+
 export const formatArrayNumber = (series) => {
   return series.map((item) => ({
     ...item,
     data: item.data.map((value) => formatNumber(value)),
   }));
+};
+
+export const formatMonth = (monthsArray) => {
+  return monthsArray?.map((date) => {
+    // Cek apakah format sesuai "YYYY-MM"
+    const isValidFormat = moment(date, "YYYY-MM", true).isValid();
+    return isValidFormat ? moment(date, "YYYY-MM").format("MMM") : date;
+  });
+};
+
+export const formatFiscalYears = (fiscalYearsArray) => {
+  return fiscalYearsArray?.map((fiscalYear) => {
+    const yearPart = fiscalYear.split("-")[0]; // Ambil tahun pertama
+    return `FY'${yearPart.slice(2)}`; // Ambil 2 digit terakhir
+  });
 };

@@ -6,6 +6,17 @@ import {
 } from "../../share-components/dummyData";
 import axios from "axios";
 import { baseApiUrl } from "../../share-components/api";
+import { SaveOutlined, X } from "@mui/icons-material";
+import {
+  DocumentArrowDownIcon,
+  PencilIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
+import { dataTable } from "./data";
+import ConsumptionPlan from "./ConsumptionPlan";
+import TablePlan from "./TablePlan";
+import { saveAs } from "file-saver";
+import * as XLSX from "xlsx";
 
 const InputSetting = () => {
   const [holidays, setHolidays] = useState([]);
@@ -15,6 +26,53 @@ const InputSetting = () => {
   const [endYear, setEndYear] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [inputValue, setInputValue] = useState(5000);
+
+  const handleEdit = () => setIsEditing(true);
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  const handleSave = () => {
+    setIsEditing(false);
+  };
+
+  const addTotalRow = (data) => {
+    if (data.some((row) => row.month === "TOTAL")) return;
+    const totalRow = data.reduce(
+      (acc, curr) => {
+        acc.weekdayQty += curr.weekdayQty;
+        acc.weekdayCost += curr.weekdayCost;
+        acc.weekdayKWh += curr.weekdayKWh;
+        acc.holidayQty += curr.holidayQty;
+        acc.holidayCost += curr.holidayCost;
+        acc.holidayKWh += curr.holidayKWh;
+        acc.totalDay += curr.totalDay;
+        acc.totalCost += curr.totalCost;
+        acc.totalKWh += curr.totalKWh;
+        return acc;
+      },
+      {
+        month: "TOTAL",
+        weekdayQty: 0,
+        weekdayCost: 0,
+        weekdayKWh: 0,
+        holidayQty: 0,
+        holidayCost: 0,
+        holidayKWh: 0,
+        totalDay: 0,
+        totalCost: 0,
+        totalKWh: 0,
+      }
+    );
+
+    // Tambahkan totalRow ke dalam dataTable
+    data.push(totalRow);
+  };
+
+  // Panggil fungsi untuk menambahkan baris TOTAL ke dataTable
+  addTotalRow(dataTable);
 
   // Menambahkan Hari Libur
   const addHariLibur = async (holidayDate, fiscalYear, description, state) => {
@@ -136,7 +194,7 @@ const InputSetting = () => {
       daysInMonth[10] = 29; // Februari pada tahun kabisat
     }
 
-    const weekDays = ["S", "M", "T", "W", "T", "F", "S"]; // Singkatan hari
+    const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
     const monthRows = [];
     let monthIndex = 0; // Mulai dari April
@@ -145,9 +203,9 @@ const InputSetting = () => {
       const monthRow = (
         <div
           key={monthIndex}
-          className="grid grid-cols-1 lg:grid-cols-4 gap-2 lg:gap-4 mb-4"
+          className="grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-4 mb-4"
         >
-          {Array.from({ length: 4 }, (_, colIndex) => {
+          {Array.from({ length: 6 }, (_, colIndex) => {
             if (monthIndex >= 12) return null; // Jika sudah lebih dari 12 bulan
             const currentMonth = months[monthIndex];
             const currentYear = monthIndex < 8 ? startYearNum : endYearNum; // April - Desember = startYear, Januari - Maret = endYear
@@ -169,8 +227,10 @@ const InputSetting = () => {
               return (
                 <button
                   key={day}
-                  className={`p-2 border rounded text-center ${
-                    isSelected ? "bg-red-500 text-white" : "bg-white"
+                  className={`rounded text-center ${
+                    isSelected
+                      ? " text-oren text-opacity-90 bg-oren bg-opacity-30 rounded-full"
+                      : "text-white"
                   }`}
                   onClick={() => handleDateClick(date)}
                 >
@@ -182,11 +242,14 @@ const InputSetting = () => {
             monthIndex++; // Pindah ke bulan berikutnya
 
             return (
-              <div key={monthName} className="border p-2 rounded bg-white">
-                <h3 className="text-lg font-bold">{monthName}</h3>
-                <div className="grid grid-cols-7 gap-1 text-center font-semibold">
+              <div key={monthName} className="p-2 rounded bg-kartu text-white">
+                <h3 className="text-md font-medium">{monthName}</h3>
+                <div className="grid grid-cols-7 gap-1 text-center font-medium">
                   {weekDays.map((day, i) => (
-                    <span key={i} className="p-2">
+                    <span
+                      key={i}
+                      className="text-[10px] text-tombol-abu-tua text-opacity-50 py-2"
+                    >
                       {day}
                     </span>
                   ))}
@@ -204,103 +267,240 @@ const InputSetting = () => {
     return monthRows;
   };
 
-  console.log(holidays, "holidays");
+  const downloadExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(dataTable, {
+      header: [
+        "month",
+        "weekdayQty",
+        "weekdayCost",
+        "weekdayKWh",
+        "holidayQty",
+        "holidayCost",
+        "holidayKWh",
+        "totalDay",
+        "totalCost",
+        "totalKWh",
+      ],
+    });
+
+    // Menyesuaikan header menjadi nama yang sesuai
+    XLSX.utils.sheet_add_aoa(
+      worksheet,
+      [
+        [
+          "Month",
+          "Weekday Qty",
+          "Weekday Cost (IDR)",
+          "Weekday kWh",
+          "Holiday Qty",
+          "Holiday Cost (IDR)",
+          "Holiday kWh",
+          "Total Day",
+          "Total Cost (IDR)",
+          "Total kWh",
+        ],
+      ],
+      { origin: "A1" }
+    );
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Result Plan");
+
+    // Konversi ke file dan simpan
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    const data = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(data, "Result_Plan_This_Year.xlsx");
+  };
 
   return (
-    <div className="p-6 bg-gray-100">
-      <h2 className="text-2xl font-bold mb-4">Input Setting</h2>
-
-      {/* ==================== add fiscal year ==================== */}
-      <div className="mb-4">
-        <label className="block mb-1">Input Fiscal Year:</label>
-        <div className="lg:flex lg:space-x-2 gap-2">
-          <input
-            type="text"
-            className="border rounded p-2"
-            placeholder="2024"
-            value={startYear} // Display only the start year
-            onChange={(e) => setStartYear(e.target.value)}
-          />
-          <span className="self-center">-</span>
-          <input
-            type="text"
-            className="border rounded p-2"
-            placeholder="2025"
-            value={endYear} // Display only the end year
-            onChange={(e) => setEndYear(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="mb-4 lg:flex items-center gap-4">
-        <label className="block mb-1">Start Date:</label>
-        <input
-          type="date"
-          className="border rounded p-2"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-        <label className="block mb-1 mt-2">End Date:</label>
-        <input
-          type="date"
-          className="border rounded p-2"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-        <button className="mt-2 bg-blue-500 text-white rounded p-2">
-          Save
-        </button>
+    <div className="text-white">
+      <div className="flex items-center justify-center my-2">
+        <h2 className="inline-block text-center p-2 rounded-sm bg-latar-huruf text-white font-bold text-lg 4k:text-4xl uppercase">
+          Input Setting
+        </h2>
       </div>
 
-      {/* =================== add hari libur ==================== */}
-      <div className="flex items-center gap-10 mb-4 mt-10">
-        <h2 className="text-2xl font-bold">Input Hari Libur</h2>
-        <div className="flex items-center gap-2">
-          <label className="">Fiscal Year</label>
-          <select
-            className="border rounded p-2"
-            name="holidays"
-            id="holidays"
-            value={selectedFiscalYear}
-            onChange={(e) => setSelectedFiscalYear(e.target.value)}
-          >
-            <option value="" disabled hidden>
-              Choose
-            </option>
-            {fiscalYearOption.listFiscalYear?.map((item, index) => (
-              <option key={index} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-      <div className="mb-4">{renderCalendar()}</div>
+      <div className="p-6 bg-latar-bar-abu rounded-sm">
+        <div className="p-6 bg-outlet rounded-sm ">
+          {/* ==================== add fiscal year ==================== */}
+          <div className="mb-4">
+            <label className="block mb-2 font-semibold">
+              Input Fiscal Year
+            </label>
+            <div className="flex gap-2 items-center">
+              <div>
+                <select
+                  className="border rounded p-2 text-black"
+                  name="fiscalYear"
+                  id="fiscalYear"
+                  value={selectedFiscalYear}
+                  onChange={(e) => setSelectedFiscalYear(e.target.value)}
+                >
+                  <option value="" disabled hidden>
+                    Choose
+                  </option>
+                  {fiscalYearOption?.listFiscalYear?.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-      {/* =================== add cost plan ==================== */}
-      <div className="lg:flex items-center justify-between mt-10 lg:justify-start lg:gap-10">
-        <div className="mb-4">
-          <label className="block mb-1">Input Cost Pertahun:</label>
-          <input
-            type="text"
-            className="border rounded p-2"
-            placeholder="Rp135.000.000"
-          />
-          <button className="mt-2 bg-blue-500 text-white rounded p-2">
-            Update
-          </button>
-        </div>
+              <div>
+                <button className="bg-blue-500 text-white rounded p-2">
+                  <SaveOutlined className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+          </div>
 
-        {/* =================== add cap emisi carbon ==================== */}
-        <div className="mb-4">
-          <label className="block mb-1">Input Cap Emisi Carbon:</label>
-          <input
-            type="text"
-            className="border rounded p-2"
-            placeholder="5.000 TonCO2"
-          />
-          <button className="mt-2 bg-blue-500 text-white rounded p-2">
-            Update
-          </button>
+          <div className="mb-4 lg:flex items-center gap-6">
+            {/* Cost This Year */}
+            <div>
+              <label className="block mb-2 font-semibold">
+                Cost This Year (IDR)
+              </label>
+              <div className="flex items-center gap-2">
+                <div className="relative">
+                  <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white">
+                    Rp.
+                  </span>
+                  <input
+                    type="text"
+                    value={inputValue}
+                    readOnly
+                    className="rounded-sm p-2 pl-8 bg-latar-input"
+                  />
+                </div>
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="bg-latar-header text-white rounded p-2"
+                >
+                  <PencilIcon className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+
+            {/* Cap Emission Carbon */}
+            <div>
+              <label className="block mb-2 font-semibold">
+                Cap Emission Carbon
+              </label>
+              <div className="flex items-center gap-2">
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={inputValue}
+                    readOnly
+                    className="rounded-sm p-2 pr-8 bg-latar-input"
+                  />
+                  <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white">
+                    TonCO2
+                  </span>
+                </div>
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="bg-latar-header text-white rounded p-2"
+                >
+                  <PencilIcon className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {isEditing && (
+            <div className="mb-4 lg:flex items-center gap-6">
+              {/* Cost This Year */}
+              <div>
+                <label className="block mb-2 font-semibold">
+                  Cost This Year (IDR)
+                </label>
+                <div className="flex items-center gap-2">
+                  <div className="relative">
+                    <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-black">
+                      Rp.
+                    </span>
+                    <input
+                      type="text"
+                      className="rounded-sm p-2 pl-8 bg-white text-black"
+                    />
+                  </div>
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className="bg-blue-500 text-white rounded p-2"
+                  >
+                    <SaveOutlined className="h-6 w-6" />
+                  </button>
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className="bg-red-600 text-white rounded p-2"
+                  >
+                    <XMarkIcon className="h-6 w-6" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Cap Emission Carbon */}
+              <div>
+                <label className="block mb-2 font-semibold">
+                  Cap Emission Carbon
+                </label>
+                <div className="flex items-center gap-2">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      className="rounded-sm p-2 pr-8 bg-white text-black"
+                    />
+                    <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black">
+                      TonCO2
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className="bg-blue-500 text-white rounded p-2"
+                  >
+                    <SaveOutlined className="h-6 w-6" />
+                  </button>
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className="bg-red-600 text-white rounded p-2"
+                  >
+                    <XMarkIcon className="h-6 w-6" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="my-4">{renderCalendar()}</div>
+
+          <div className="flex justify-between items-center mb-4">
+            <div className="text-md font-bold">Result Plan This Year</div>
+
+            <div>
+              <button
+                onClick={downloadExcel}
+                className="bg-latar-icon-hijau text-white rounded p-2"
+              >
+                <DocumentArrowDownIcon className="h-6 w-6" />
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-8 gap-4">
+            <div className="lg:col-span-5">
+              <TablePlan data={dataTable} />
+            </div>
+
+            <div className="lg:col-span-3 p-4 rounded-md 4k:rounded-xl bg-latar-bar-input-setting">
+              <ConsumptionPlan />
+            </div>
+          </div>
         </div>
       </div>
     </div>

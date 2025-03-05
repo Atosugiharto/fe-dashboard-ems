@@ -1,134 +1,230 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Chart from "react-apexcharts";
-import { formatNumberForDisplay } from "../../../share-components/Helper";
-
-const dataByYear = {
-  2023: {
-    actual: [
-      244.94, 208.48, 236.91, 229.86, 268.82, 203.4, 225.43, 211.52, 232.08,
-      207.53, 232.51, 214.94,
-    ],
-    planning: [
-      250.53, 264.1, 264.71, 217.27, 222.67, 238.09, 291.35, 247.87, 297.3,
-      295.35, 235.7, 218.99,
-    ],
-  },
-  2024: {
-    actual: [
-      260.12, 220.45, 245.67, 240.21, 275.43, 215.32, 230.98, 220.76, 245.12,
-      215.87, 240.23, 225.65,
-    ],
-    planning: [
-      270.65, 280.2, 275.4, 230.5, 235.8, 250.6, 300.7, 260.1, 310.8, 305.6,
-      245.9, 230.3,
-    ],
-  },
-  2025: {
-    actual: [
-      275.4, 230.8, 260.1, 250.3, 285.7, 225.6, 245.9, 230.2, 260.3, 225.4,
-      250.1, 235.6,
-    ],
-    planning: [
-      290.1, 295.5, 280.3, 245.6, 250.8, 265.9, 320.1, 280.5, 330.2, 315.7,
-      260.8, 250.5,
-    ],
-  },
-};
-
-const threshold = 280;
+import * as XLSX from "xlsx";
+import {
+  formatMonth,
+  formatNumberForDisplayDynamic,
+} from "../../../share-components/Helper";
+import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
+import GlobalVariable from "../../../share-components/GlobalVariable";
+import { baseApiUrl } from "../../../share-components/api";
 
 const MonthlyElectricity = () => {
-  const [selectedYear, setSelectedYear] = useState(2023);
+  const [selectedYear, setSelectedYear] = useState("2024-2025");
+  const [actualData, setActualData] = useState([]);
+  const [planningData, setPlanningData] = useState([]);
+  const [dataMonth, setDataMonth] = useState([
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+    "Jan",
+    "Feb",
+    "Mar",
+  ]);
 
-  const actualData = dataByYear[selectedYear].actual;
-  const planningData = dataByYear[selectedYear].planning;
+  const [responsive, setResponsive] = useState({
+    chartHeight: 250,
+    xaxis: "12px",
+    yaxis: "12px",
+    annotations: "10px",
+    iconSize: 25,
+    title: "text-lg",
+  });
 
-  const planningVisibleData = planningData.map((value, index) =>
-    value > actualData[index] ? value - actualData[index] : 0
+  useEffect(() => {
+    const updateResponsiveSettings = () => {
+      if (window.innerWidth >= 3840) {
+        // For 4K resolution
+        setResponsive({
+          chartHeight: 500,
+          xaxis: "26px",
+          yaxis: "26px",
+          annotations: "15px",
+          iconSize: 60,
+          title: "text-3xl",
+        });
+      } else {
+        // Default settings for smaller screens
+        setResponsive({
+          chartHeight: 250,
+          xaxis: "12px",
+          yaxis: "12px",
+          annotations: "10px",
+          iconSize: 25,
+          title: "text-lg",
+        });
+      }
+    };
+
+    // Initial check
+    updateResponsiveSettings();
+
+    // Add resize listener
+    window.addEventListener("resize", updateResponsiveSettings);
+
+    // Cleanup listener on unmount
+    return () => window.removeEventListener("resize", updateResponsiveSettings);
+  }, []);
+
+  // Fungsi untuk fetch data dari API
+  const fetchData = async () => {
+    try {
+      const response = await axios.post(`${baseApiUrl}/chartDashboardMonthly`, {
+        fiscalReq: selectedYear,
+      });
+
+      if (response?.data) {
+        const data = response?.data?.data;
+        const actual = data?.map((data) => data?.totalConsumptionActual);
+        const plan = data?.map((data) => data?.totalConsumptionPlan);
+        const month = data?.map((data) => data?.month);
+        setActualData(actual);
+        setPlanningData(plan);
+        setDataMonth(month);
+      }
+    } catch (error) {
+      setActualData([]);
+      setPlanningData([]);
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  // Fetch data saat pertama kali render dan saat selectedYear berubah
+  useEffect(() => {
+    fetchData();
+  }, [selectedYear]);
+
+  const planningExcessData = planningData?.map((plan, index) =>
+    plan > actualData[index] ? plan - actualData[index] : 0
+  );
+  const actualExcessData = actualData?.map((actual, index) =>
+    actual > planningData[index] ? actual - planningData[index] : 0
+  );
+  const baseData = actualData?.map((actual, index) =>
+    Math.min(actual, planningData[index])
   );
 
+  const series = [
+    { name: "Total Consumption Actual", data: baseData },
+    { name: "Total Consumption Planning", data: planningExcessData },
+    { name: "Total Consumption Actual Excess", data: actualExcessData },
+  ];
+
   const options = {
-    chart: {
-      type: "bar",
-      toolbar: { show: false },
-      stacked: true,
-    },
-    colors: ["#d38a0a", "#24282c"],
+    chart: { type: "bar", stacked: true },
+    colors: [
+      GlobalVariable.dashboardColor.barKuning,
+      GlobalVariable.dashboardColor.barAbu,
+      GlobalVariable.dashboardColor.barMerah,
+    ],
     plotOptions: { bar: { horizontal: false, columnWidth: "80%" } },
-    dataLabels: {
-      enabled: true,
-      style: {
-        colors: ["#fff"],
-        fontSize: "7px",
-      },
-      formatter: (val, { seriesIndex, dataPointIndex }) =>
-        formatNumberForDisplay(seriesIndex === 1 ? planningData[dataPointIndex] : val),
-    },
-    annotations: {
-      yaxis: [
-        {
-          y: threshold,
-          borderColor: "red",
-          label: {
-            borderColor: "red",
-            style: { color: "#fff", background: "red" },
-            text: `Avg Last Year (${formatNumberForDisplay(threshold)})`,
-          },
-        },
-      ],
-    },
+    dataLabels: { enabled: false },
     tooltip: {
+      style: {
+        fontSize: responsive.xaxis,
+      },
       y: {
-        formatter: (val, { seriesIndex, dataPointIndex }) =>
-          `${formatNumberForDisplay(seriesIndex === 1 ? planningData[dataPointIndex] : val)} kWh`,
+        formatter: (val, { seriesIndex, dataPointIndex }) => {
+          if (seriesIndex === 0)
+            return `${formatNumberForDisplayDynamic(
+              actualData[dataPointIndex]
+            )} kWh`;
+          if (seriesIndex === 1 && planningExcessData[dataPointIndex] > 0)
+            return `${formatNumberForDisplayDynamic(
+              planningData[dataPointIndex]
+            )} kWh`;
+          if (seriesIndex === 2 && actualExcessData[dataPointIndex] > 0)
+            return `${formatNumberForDisplayDynamic(
+              actualData[dataPointIndex]
+            )} kWh`;
+          return "";
+        },
       },
     },
     legend: {
-      labels: { colors: "#fff" },
-      markers: {
-        radius: "100%", // Membuat bentuknya bulat
-      },
+      labels: { colors: "#fff", fontSize: responsive.xaxis },
+      markers: { shape: "circle" },
       position: "bottom",
     },
     xaxis: {
-      categories: [
-        "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"
-      ],
-      labels: { style: { colors: "#fff" } },
+      categories: formatMonth(dataMonth),
+      labels: { style: { colors: "#fff", fontSize: responsive.xaxis } },
     },
     yaxis: {
-      title: { text: "kWh", style: { color: "#fff" } },
+      title: {
+        text: "kWh",
+        style: { color: "#fff", fontSize: responsive.yaxis },
+      },
       labels: {
-        style: { colors: "#fff" },
-        formatter: (value) => formatNumberForDisplay(value),
+        formatter: formatNumberForDisplayDynamic,
+        style: { colors: "#fff", fontSize: responsive.yaxis },
       },
     },
     grid: { show: true, strokeDashArray: 2 },
+    markers: { size: 4, shape: "circle", strokeWidth: 0 },
   };
 
-  const series = [
-    { name: "Actual", data: actualData },
-    { name: "Planning", data: planningVisibleData },
-  ];
+  const downloadExcel = () => {
+    const headers = ["Month", "Actual (kWh)", "Planning (kWh)"];
+    const months = formatMonth(dataMonth);
+
+    const data = months.map((month, index) => ({
+      Month: month,
+      "Actual (kWh)": actualData[index] || 0,
+      "Planning (kWh)": planningData[index] || 0,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(
+      [headers, ...data.map(Object.values)],
+      { skipHeader: true }
+    );
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      `Electricity_${selectedYear}`
+    );
+    XLSX.writeFile(workbook, `Monthly_Electricity_${selectedYear}.xlsx`);
+  };
 
   return (
     <div>
       <div className="flex justify-between items-center mb-1">
-        <h3 className="text-white font-bold">Monthly Electricity Consumption</h3>
-        <div>
+        <h3 className="text-white font-bold">
+          Monthly Electricity Consumption
+        </h3>
+        <div className="flex gap-2">
           <select
             id="year"
-            className="text-xs px-3 py-1 bg-latar-select text-white rounded-md cursor-pointer font-medium"
+            className="text-xs px-3 py-1 4k:text-3xl 4k:px-6 4k:py-2 bg-latar-select text-white rounded-md cursor-pointer font-medium"
             value={selectedYear}
-            onChange={(e) => setSelectedYear(Number(e.target.value))}
+            onChange={(e) => setSelectedYear(e.target.value)}
           >
-            <option value={2023}>FY&lsquo;23</option>
-            <option value={2024}>FY&lsquo;24</option>
-            <option value={2025}>FY&lsquo;25</option>
+            <option value={"2023-2024"}>FY&lsquo;23</option>
+            <option value={"2024-2025"}>FY&lsquo;24</option>
+            <option value={"2025-2026"}>FY&lsquo;25</option>
           </select>
+          <button
+            onClick={downloadExcel}
+            className="bg-latar-icon-hijau text-white rounded p-1"
+          >
+            <DocumentArrowDownIcon className="h-4 w-auto 4k:h-14" />
+          </button>
         </div>
       </div>
-      <Chart options={options} series={series} type="bar" height={250} />
+      <Chart
+        options={options}
+        series={series}
+        type="bar"
+        height={responsive.chartHeight}
+      />
     </div>
   );
 };

@@ -99,13 +99,20 @@ const CurrentPln = () => {
     },  
   ];  
   
-  return (  
-    <div className="p-4">  
-      <div className="flex justify-between items-center mb-4">  
-        <h2 className="text-lg font-bold text-gray-300">Daily Current PLN</h2>  
-      </div>  
-      <Chart options={options} series={series} type="area" height={Labeling.chart.height} />  
-    </div>  
+  return (
+    <div className="p-4">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg 4k:text-4xl font-bold text-gray-300">
+          Daily Current PLN
+        </h2>
+      </div>
+      <Chart
+        options={options}
+        series={series}
+        type="area"
+        height={Labeling.chart.height}
+      />
+    </div>
   );  
 };  
   

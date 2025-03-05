@@ -111,13 +111,15 @@ const YearlySolarPv = () => {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-bold text-gray-300">Yearly Solar PV</h2>
+        <h2 className="text-lg 4k:text-4xl font-bold text-gray-300">
+          Yearly Solar PV
+        </h2>
         <div className="flex gap-2 items-center">
           <label htmlFor="">Year</label>
           <select
             value={year}
             onChange={(e) => setYear(parseInt(e.target.value))}
-            className="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer"
+            className="px-3 py-1 bg-blue-500 text-white rounded-md 4k:rounded-xl cursor-pointer"
           >
             <option value={2023}>2023</option>
             <option value={2024}>2024</option>
