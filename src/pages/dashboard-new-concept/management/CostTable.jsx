@@ -1,49 +1,66 @@
 import { Paid } from "@mui/icons-material";
-import { formatNumberForDisplayDynamic } from "../../../share-components/Helper";
+import {
+  fetchTimeApi,
+  formatNumberForDisplayDynamic,
+} from "../../../share-components/Helper";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../../../share-components/api";
+import { useRef } from "react";
 
 const CostTable = () => {
   const [data, setData] = useState([]);
 
+  const fetchData = async () => {
+    try {
+      const [todayRes, monthRes, yearRes] = await Promise.all([
+        axios.get(`${baseApiUrl}/tableDashboardDailyCost`),
+        axios.get(`${baseApiUrl}/tableDashboardMonthlyCost`),
+        axios.get(`${baseApiUrl}/tableDashboardYearlyCost`),
+      ]);
+
+      const formattedData = [
+        {
+          label: "Today",
+          pln: todayRes?.data?.data?.totalPLNCost || 0,
+          nettoff: todayRes?.data?.data?.totalNetOffCost || 0,
+          total: todayRes?.data?.data?.total || 0,
+        },
+        {
+          label: "This Month",
+          pln: monthRes?.data?.data?.totalPLNCost || 0,
+          nettoff: monthRes?.data?.data?.totalNetOffCost || 0,
+          total: monthRes?.data?.data?.total || 0,
+        },
+        {
+          label: "This Year",
+          pln: yearRes?.data?.data?.totalPLNCost || 0,
+          nettoff: yearRes?.data?.data?.totalNetOffCost || 0,
+          total: yearRes?.data?.data?.total || 0,
+        },
+      ];
+
+      setData(formattedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const intervalRef = useRef(null);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [todayRes, monthRes, yearRes] = await Promise.all([
-          axios.get(`${baseApiUrl}/tableDashboardDailyCost`),
-          axios.get(`${baseApiUrl}/tableDashboardMonthlyCost`),
-          axios.get(`${baseApiUrl}/tableDashboardYearlyCost`),
-        ]);
-
-        const formattedData = [
-          {
-            label: "Today",
-            pln: todayRes?.data?.data?.totalPLNCost || 0,
-            nettoff: todayRes?.data?.data?.totalNetOffCost || 0,
-            total: todayRes?.data?.data?.total || 0,
-          },
-          {
-            label: "This Month",
-            pln: monthRes?.data?.data?.totalPLNCost || 0,
-            nettoff: monthRes?.data?.data?.totalNetOffCost || 0,
-            total: monthRes?.data?.data?.total || 0,
-          },
-          {
-            label: "This Year",
-            pln: yearRes?.data?.data?.totalPLNCost || 0,
-            nettoff: yearRes?.data?.data?.totalNetOffCost || 0,
-            total: yearRes?.data?.data?.total || 0,
-          },
-        ];
-
-        setData(formattedData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
 
   return (

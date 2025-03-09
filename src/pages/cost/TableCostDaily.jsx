@@ -3,12 +3,16 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { baseApiUrl } from "../../share-components/api";
-import { formatNumberForDisplayDynamic } from "../../share-components/Helper";
+import {
+  fetchTimeApi,
+  formatNumberForDisplayDynamic,
+} from "../../share-components/Helper";
 import moment from "moment";
+import { useRef } from "react";
 
 const TableCostDaily = () => {
   const [data, setData] = useState(null);
-  const today = moment().format('YYYY-MM');
+  const today = moment().format("YYYY-MM");
   const [responsive, setResponsive] = useState({
     iconSize: 25,
   });
@@ -38,69 +42,86 @@ const TableCostDaily = () => {
     return () => window.removeEventListener("resize", updateResponsiveSettings);
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(`${baseApiUrl}/tableDailyCost`, {
-          date: today,
-        });
-        const result = response?.data?.data;
+  const fetchData = async () => {
+    try {
+      const response = await axios.post(`${baseApiUrl}/tableDailyCost`, {
+        date: today,
+      });
+      const result = response?.data?.data;
 
-        if (result) {
-          const formattedData = [
-            {
-              label: "Total Energy",
-              planning: formatNumberForDisplayDynamic(result?.totalEnergy?.planCost) || 0,
-              actual: formatNumberForDisplayDynamic(result?.totalEnergy?.totalCostAct) || 0,
-              eval: result?.totalEnergy?.evalValue,
-            },
-            {
-              label: " • PLN",
-              planning: `${formatNumberForDisplayDynamic(result?.detil?.planPLN) || 0} (${
-                result?.detil?.percentagePlanPLN || 0
-              }%)`,
-              actual: `${formatNumberForDisplayDynamic(result?.detil?.actPLN) || 0} (${
-                result?.detil?.percentageActPLN || 0
-              }%)`,
-              eval: result?.detil?.evalValuePLN,
-            },
-            {
-              label: " • Solar PV Net Off",
-              planning: `${formatNumberForDisplayDynamic(result?.detil?.planSolarPV) || 0} (${
-                result?.detil?.percentagePlanSolarPV || 0
-              }%)`,
-              actual: `${formatNumberForDisplayDynamic(result?.detil?.actSolarPV) || 0} (${
-                result?.detil?.percentageActSolarPV || 0
-              }%)`,
-              eval: result?.detil?.evalValueSolarPV,
-            },
-            {
-              label: "NetZero Emission Net Off",
-              planning: "",
-              actual: "",
-              eval: null,
-            },
-            {
-              label: " • REC",
-              planning: `${formatNumberForDisplayDynamic(result?.detil?.planREC) || 0} (${
-                result?.detil?.percentagePlanREC || 0
-              }%)`,
-              actual: `${formatNumberForDisplayDynamic(result?.detil?.planREC) || 0} (${
-                result?.detil?.percentageActREC || 0
-              }%)`,
-              eval: result?.detil?.evalValueRECexp,
-            },
-          ];
+      if (result) {
+        const formattedData = [
+          {
+            label: "Total Energy",
+            planning:
+              formatNumberForDisplayDynamic(result?.totalEnergy?.planCost) || 0,
+            actual:
+              formatNumberForDisplayDynamic(
+                result?.totalEnergy?.totalCostAct
+              ) || 0,
+            eval: result?.totalEnergy?.evalValue,
+          },
+          {
+            label: " • PLN",
+            planning: `${
+              formatNumberForDisplayDynamic(result?.detil?.planPLN) || 0
+            } (${result?.detil?.percentagePlanPLN || 0}%)`,
+            actual: `${
+              formatNumberForDisplayDynamic(result?.detil?.actPLN) || 0
+            } (${result?.detil?.percentageActPLN || 0}%)`,
+            eval: result?.detil?.evalValuePLN,
+          },
+          {
+            label: " • Solar PV Net Off",
+            planning: `${
+              formatNumberForDisplayDynamic(result?.detil?.planSolarPV) || 0
+            } (${result?.detil?.percentagePlanSolarPV || 0}%)`,
+            actual: `${
+              formatNumberForDisplayDynamic(result?.detil?.actSolarPV) || 0
+            } (${result?.detil?.percentageActSolarPV || 0}%)`,
+            eval: result?.detil?.evalValueSolarPV,
+          },
+          {
+            label: "NetZero Emission Net Off",
+            planning: "",
+            actual: "",
+            eval: null,
+          },
+          {
+            label: " • REC",
+            planning: `${
+              formatNumberForDisplayDynamic(result?.detil?.planREC) || 0
+            } (${result?.detil?.percentagePlanREC || 0}%)`,
+            actual: `${
+              formatNumberForDisplayDynamic(result?.detil?.planREC) || 0
+            } (${result?.detil?.percentageActREC || 0}%)`,
+            eval: result?.detil?.evalValueRECexp,
+          },
+        ];
 
-          setData(formattedData);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setData(null);
+        setData(formattedData);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setData(null);
+    }
+  };
 
+  const intervalRef = useRef(null);
+  useEffect(() => {
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
 
   return (
@@ -108,9 +129,15 @@ const TableCostDaily = () => {
       <table className="w-full border-collapse text-sm 4k:text-4xl">
         <thead>
           <tr className="bg-dashboard-table-abu-muda">
-            <th className="py-3 px-4 4k:py-6 4k:px-8 text-left">Energy Source</th>
-            <th className="py-3 px-4 4k:py-6 4k:px-8 text-center">Actual Cost This Year</th>
-            <th className="py-3 px-4 4k:py-6 4k:px-8 text-center">Planning Cost This Year</th>
+            <th className="py-3 px-4 4k:py-6 4k:px-8 text-left">
+              Energy Source
+            </th>
+            <th className="py-3 px-4 4k:py-6 4k:px-8 text-center">
+              Actual Cost This Year
+            </th>
+            <th className="py-3 px-4 4k:py-6 4k:px-8 text-center">
+              Planning Cost This Year
+            </th>
             <th className="py-3 px-4 4k:py-6 4k:px-8 text-center">EVAL</th>
           </tr>
         </thead>
@@ -133,7 +160,9 @@ const TableCostDaily = () => {
                     : "bg-dashboard-table-abu-muda"
                 }`}
               >
-                <td className="py-3 px-4 4k:py-6 4k:px-8 font-semibold">{row?.label}</td>
+                <td className="py-3 px-4 4k:py-6 4k:px-8 font-semibold">
+                  {row?.label}
+                </td>
                 <td className="py-3 px-4 4k:py-6 4k:px-8 text-center">
                   {index === 3 ? "" : `Rp. ${row?.planning}`}
                 </td>
@@ -141,12 +170,12 @@ const TableCostDaily = () => {
                   {index === 3 ? "" : `Rp. ${row?.actual}`}
                 </td>
                 <td className="py-3 px-4 4k:py-6 4k:px-8 text-center">
-                  {row?.eval === 1 ? (
+                  {row?.eval === 0 ? (
                     <Circle
                       className="text-dashboard-gauge-hijau inline"
                       style={{ fontSize: responsive.iconSize }}
                     />
-                  ) : row?.eval === 0 ? (
+                  ) : row?.eval === 1 ? (
                     <Close
                       className="text-dashboard-bar-merah inline"
                       style={{ fontSize: responsive.iconSize }}

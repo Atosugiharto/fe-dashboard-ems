@@ -1,52 +1,68 @@
 import { Cloud } from "@mui/icons-material";
-import { formatNumberForDisplayDynamic } from "../../../share-components/Helper";
+import {
+  fetchTimeApi,
+  formatNumberForDisplayDynamic,
+} from "../../../share-components/Helper";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../../../share-components/api";
+import { useRef } from "react";
 
 const EmissionReductionTable = () => {
   const [data, setData] = useState([]);
+  const fetchData = async () => {
+    try {
+      const [todayRes, monthRes, yearRes] = await Promise.all([
+        axios.get(`${baseApiUrl}/tableDashboardDailyEmisi`),
+        axios.get(`${baseApiUrl}/tableDashboardMonthlyEmisi`),
+        axios.get(`${baseApiUrl}/tableDashboardYearlyEmisi`),
+      ]);
 
+      const formattedData = [
+        {
+          label: "Today",
+          remaining: todayRes?.data?.data?.remaining || 0,
+          nettoff: todayRes?.data?.data?.netOff || 0,
+          nettoffPercentage: todayRes?.data?.data?.percentageNettoff || 0,
+          total: todayRes?.data?.data?.total || 0,
+        },
+        {
+          label: "This Month",
+          remaining: monthRes?.data?.data?.remaining || 0,
+          nettoff: monthRes?.data?.data?.netOff || 0,
+          nettoffPercentage: monthRes?.data?.data?.percentageNettoff || 0,
+          total: monthRes?.data?.data?.total || 0,
+        },
+        {
+          label: "This Year",
+          remaining: yearRes?.data?.data?.remaining || 0,
+          nettoff: yearRes?.data?.data?.netOff || 0,
+          nettoffPercentage: yearRes?.data?.data?.percentageNettoff || 0,
+          total: yearRes?.data?.data?.total || 0,
+        },
+      ];
+
+      setData(formattedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const intervalRef = useRef(null);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [todayRes, monthRes, yearRes] = await Promise.all([
-          axios.get(`${baseApiUrl}/tableDashboardDailyEmisi`),
-          axios.get(`${baseApiUrl}/tableDashboardMonthlyEmisi`),
-          axios.get(`${baseApiUrl}/tableDashboardYearlyEmisi`),
-        ]);
-
-        const formattedData = [
-          {
-            label: "Today",
-            remaining: todayRes?.data?.data?.remaining || 0,
-            nettoff: todayRes?.data?.data?.netOff || 0,
-            nettoffPercentage: todayRes?.data?.data?.percentageNettoff || 0,
-            total: todayRes?.data?.data?.total || 0,
-          },
-          {
-            label: "This Month",
-            remaining: monthRes?.data?.data?.remaining || 0,
-            nettoff: monthRes?.data?.data?.netOff || 0,
-            nettoffPercentage: monthRes?.data?.data?.percentageNettoff || 0,
-            total: monthRes?.data?.data?.total || 0,
-          },
-          {
-            label: "This Year",
-            remaining: yearRes?.data?.data?.remaining || 0,
-            nettoff: yearRes?.data?.data?.netOff || 0,
-            nettoffPercentage: yearRes?.data?.data?.percentageNettoff || 0,
-            total: yearRes?.data?.data?.total || 0,
-          },
-        ];
-
-        setData(formattedData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
 
   return (

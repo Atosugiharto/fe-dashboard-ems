@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
@@ -5,8 +6,10 @@ import Chart from "react-apexcharts";
 import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import GlobalVariable from "../../share-components/GlobalVariable";
 import { formatNumberForDisplayDynamic } from "../../share-components/Helper";
+import * as XLSX from "xlsx";
 
-const EachFloorChart = ({ data }) => {
+const EachEquipmentChart = ({ data = [], dateStart = "", dateEnd = "" }) => {
+  const actualData = data?.map((item) => item?.total_kW) || [];
   const [responsive, setResponsive] = useState({
     chartHeight: 250,
     xaxis: "12px",
@@ -47,9 +50,26 @@ const EachFloorChart = ({ data }) => {
   const series = [
     {
       name: "Consumption",
-      data: data?.map((item) => item?.total_kW) || [],
+      data: actualData,
     },
   ];
+
+  const downloadExcel = () => {
+    const formattedData =
+      data?.map((item, index) => ({
+        Floor: item?.floor || "Unknown",
+        "Consumption (kWh)": actualData[index] ?? 0,
+      })) || [];
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      `${dateStart}-${dateEnd}`
+    );
+    XLSX.writeFile(workbook, `Summary_Each_Floor.xlsx`);
+  };
 
   const options = {
     chart: {
@@ -109,7 +129,10 @@ const EachFloorChart = ({ data }) => {
         <h3 className="text-white font-bold">
           Electricity Consumption Each Floors
         </h3>
-        <button className="bg-latar-icon-hijau text-white rounded p-1">
+        <button
+          onClick={downloadExcel}
+          className="bg-latar-icon-hijau text-white rounded p-1"
+        >
           <DocumentArrowDownIcon className="h-4 w-auto 4k:h-14" />
         </button>
       </div>
@@ -123,4 +146,4 @@ const EachFloorChart = ({ data }) => {
   );
 };
 
-export default EachFloorChart;
+export default EachEquipmentChart;

@@ -49,9 +49,13 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="fixed top-0 w-full rounded-md 4k:rounded-xl bg-latar-header shadow-md z-[1000] flex justify-between items-center px-3 text-white mx-auto">
-      <div className="flex items-center gap-2 bg-white">
-        <img src={logo} alt="Toyota Indonesia" className="h-16 4k:h-32" />
+    <header className="fixed top-0 w-full rounded-md 4k:rounded-xl bg-latar-header shadow-md z-[1000] flex justify-between items-center pr-3 text-white mx-auto">
+      <div className="flex items-center gap-2">
+        <img
+          src={logo}
+          alt="Toyota Indonesia"
+          className="h-16 4k:h-32 rounded-l-md 4k:rounded-l-xl"
+        />
       </div>
       <h1 className="text-xl 4k:text-5xl font-bold hidden lg:block absolute left-1/2 transform -translate-x-1/2">
         ENERGY MONITORING SYSTEM
@@ -145,6 +149,7 @@ const Layout = () => {
                   "2nd Floor",
                   "2nd Floor Annex",
                   "3rd Floor",
+                  "3rd Floor Annex",
                   "4th Floor",
                   "5th Floor",
                   "6th Floor",
@@ -169,11 +174,33 @@ const Layout = () => {
                 icon={ClipboardDocumentIcon}
                 to="/summary-all-equipment"
               />
-              <MenuItem
-                label="Detail Each Equipment"
-                icon={WrenchIcon}
-                to="/detail-each-equipment"
-              />
+              <MenuItem label="Detail Each Equipment" icon={WrenchIcon}>
+                {[
+                  "Chiller",
+                  "Lampu",
+                  "Socket",
+                  "AHU",
+                  "Lift",
+                  // "Mezzanine",
+                  "AC Server",
+                  "CHWP",
+                  "Motor Pump",
+                  "Press Fan",
+                  "PABX",
+                  "Eksternal",
+                ].map((equipment) => (
+                  <li key={equipment}>
+                    <Link
+                      to={`/detail-each-equipment/${equipment
+                        .toLowerCase()
+                        .replace(/ /g, "-")}`}
+                      className="block px-4 py-2 hover:bg-latar-header bg-kartu"
+                    >
+                      {equipment}
+                    </Link>
+                  </li>
+                ))}
+              </MenuItem>
               <MenuItem
                 label="Input Setting"
                 icon={CogIcon}

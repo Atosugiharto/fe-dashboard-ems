@@ -8,6 +8,8 @@ import TableEachFloor from "./TableEachFloor";
 import axios from "axios";
 import { baseApiUrl } from "../../share-components/api";
 import moment from "moment";
+import { fetchTimeApi } from "../../share-components/Helper";
+import { useRef } from "react";
 
 export const SummaryAllFloors = () => {
   const today = moment().format("YYYY-MM-DD");
@@ -39,7 +41,7 @@ export const SummaryAllFloors = () => {
       console.error("Error fetching data:", error);
     }
   };
-  
+
   const fetchDataTotalFloor = async () => {
     try {
       const response = await axios.post(
@@ -59,15 +61,33 @@ export const SummaryAllFloors = () => {
     }
   };
 
+  const intervalRef = useRef(null);
+
   useEffect(() => {
     if (new Date(dateStart) > new Date(dateEnd)) {
       setError("Start date cannot be later than end date!");
       return;
     }
     setError("");
-
     fetchDataEachFloor();
     fetchDataTotalFloor();
+
+    const delay = fetchTimeApi(); // Hitung delay ke jam XX:01 berikutnya
+
+    const timeoutId = setTimeout(() => {
+      fetchDataEachFloor();
+      fetchDataTotalFloor();
+
+      intervalRef.current = setInterval(() => {
+        fetchDataEachFloor();
+        fetchDataTotalFloor();
+      }, 60 * 60 * 1000); // Setiap 1 jam
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [dateStart, dateEnd]);
 
   useEffect(() => {
@@ -137,10 +157,18 @@ export const SummaryAllFloors = () => {
 
       <div className="w-full lg:flex gap-4 my-4">
         <div className="lg:w-1/3 p-4 rounded-md 4k:rounded-xl bg-kartu mb-4 lg:mb-0">
-          <TotalAllFloors data={dataTotalFloor} />
+          <TotalAllFloors
+            data={dataTotalFloor}
+            dateStart={dateStart}
+            dateEnd={dateEnd}
+          />
         </div>
         <div className="lg:w-2/3 p-4 rounded-md 4k:rounded-xl bg-kartu">
-          <EachFloorChart data={dataEachFloor} />
+          <EachFloorChart
+            data={dataEachFloor}
+            dateStart={dateStart}
+            dateEnd={dateEnd}
+          />
         </div>
       </div>
 

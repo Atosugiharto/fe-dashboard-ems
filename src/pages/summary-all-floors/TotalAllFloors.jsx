@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-binary-expression */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
@@ -5,8 +6,10 @@ import Chart from "react-apexcharts";
 import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import GlobalVariable from "../../share-components/GlobalVariable";
 import { formatNumberForDisplayDynamic } from "../../share-components/Helper";
+import * as XLSX from "xlsx";
 
-const TotalAllFloors = ({ data }) => {
+const TotalAllFloors = ({ data = [], dateStart = "", dateEnd = "" }) => {
+  console.log(data, "total");
   const [responsive, setResponsive] = useState({
     chartHeight: 250,
     xaxis: "12px",
@@ -47,9 +50,28 @@ const TotalAllFloors = ({ data }) => {
   const series = [
     {
       name: "Consumption",
-      data: [data?.total_kW_all || 0, 0],
+      data: [data?.data?.total_kW_all || 0, data?.planKWH || 0],
     },
   ];
+
+  const downloadExcel = () => {
+    const formattedData =
+      [
+        {
+          "Actual (kWh)": data?.data?.total_kW_all ?? 0,
+          "Planning (kWh)": data?.planKWH ?? 0,
+        },
+      ] || [];
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      `${dateStart}-${dateEnd}`
+    );
+    XLSX.writeFile(workbook, `Summary_All_Floors.xlsx`);
+  };
 
   const options = {
     chart: {
@@ -113,7 +135,10 @@ const TotalAllFloors = ({ data }) => {
         <h3 className="text-white font-bold">
           Total Electricity Consumption of All Floors
         </h3>
-        <button className="bg-latar-icon-hijau text-white rounded p-1">
+        <button
+          onClick={downloadExcel}
+          className="bg-latar-icon-hijau text-white rounded p-1"
+        >
           <DocumentArrowDownIcon className="h-4 w-auto 4k:h-14" />
         </button>
       </div>

@@ -3,12 +3,14 @@ import axios from "axios";
 import Chart from "react-apexcharts";
 import * as XLSX from "xlsx";
 import {
+  fetchTimeApi,
   formatFiscalYears,
   formatNumberForDisplayDynamic,
 } from "../../share-components/Helper";
 import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import { baseApiUrl } from "../../share-components/api";
 import GlobalVariable from "../../share-components/GlobalVariable";
+import { useRef } from "react";
 
 const YearlySupply = () => {
   const [selectedYear, setSelectedYear] = useState("FY'20-FY'24");
@@ -82,9 +84,21 @@ const YearlySupply = () => {
     }
   };
 
-  // Fetch data saat pertama kali render dan saat selectedYear berubah
+  const intervalRef = useRef(null);
   useEffect(() => {
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [selectedYear]);
 
   const planningExcessData = planningData?.map((plan, index) =>

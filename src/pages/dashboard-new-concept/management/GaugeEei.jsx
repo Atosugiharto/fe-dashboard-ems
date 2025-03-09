@@ -3,7 +3,11 @@ import axios from "axios";
 import { EmojiObjectsOutlined } from "@mui/icons-material";
 import GaugeComponent from "react-gauge-component";
 import { baseApiUrl } from "../../../share-components/api";
-import { formatNumberForDisplayDynamic } from "../../../share-components/Helper";
+import {
+  fetchTimeApi,
+  formatNumberForDisplayDynamic,
+} from "../../../share-components/Helper";
+import { useRef } from "react";
 // import { formatNumberForDisplayDynamic } from "../../../share-components/Helper";
 
 const GaugeEei = () => {
@@ -12,24 +16,36 @@ const GaugeEei = () => {
   const [midValue, setMidValue] = useState(250); // Mid limit
   const [maxValue, setMaxValue] = useState(500);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseApiUrl}/gaugesDashboardEEI`);
-        const data = response?.data?.data;
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${baseApiUrl}/gaugesDashboardEEI`);
+      const data = response?.data?.data;
 
-        if (data) {
-          setCurrentValue(data?.EEI ?? 0);
-          setMinValue(data?.limitStart ?? 0);
-          setMidValue(data?.limitAtas ?? (minValue + maxValue) / 2);
-          setMaxValue(data?.limitMaks ?? 500);
-        }
-      } catch (error) {
-        console.error("Error fetching EEI data:", error);
+      if (data) {
+        setCurrentValue(data?.EEI ?? 0);
+        setMinValue(data?.limitStart ?? 0);
+        setMidValue(data?.limitAtas ?? (minValue + maxValue) / 2);
+        setMaxValue(data?.limitMaks ?? 500);
       }
-    };
-
+    } catch (error) {
+      console.error("Error fetching EEI data:", error);
+    }
+  };
+  const intervalRef = useRef(null);
+  useEffect(() => {
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
 
   return (

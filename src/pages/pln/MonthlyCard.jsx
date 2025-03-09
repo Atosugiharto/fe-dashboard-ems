@@ -3,7 +3,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { baseApiUrl } from "../../share-components/api";
 import axios from "axios";
-import { formatNumberForDisplayDynamic } from "../../share-components/Helper";
+import {
+  fetchTimeApi,
+  formatNumberForDisplayDynamic,
+} from "../../share-components/Helper";
+import { useRef } from "react";
 
 export const MonthlyCard = () => {
   const [responsive, setResponsive] = useState({ iconSize: 25 });
@@ -64,11 +68,31 @@ export const MonthlyCard = () => {
     }
   };
 
-  // Fetch data saat pertama kali render dan saat selectedYear berubah
+  const intervalRef = useRef(null);
+
   useEffect(() => {
     fetchDataSupply();
     fetchDataCost();
     fetchDataEmission();
+
+    const delay = fetchTimeApi(); // Hitung delay ke jam XX:01 berikutnya
+
+    const timeoutId = setTimeout(() => {
+      fetchDataSupply();
+      fetchDataCost();
+      fetchDataEmission();
+
+      intervalRef.current = setInterval(() => {
+        fetchDataSupply();
+        fetchDataCost();
+        fetchDataEmission();
+      }, 60 * 60 * 1000); // Setiap 1 jam
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
   return (
     <div className="flex flex-col gap-4 4k:gap-8 text-sm 4k:text-4xl font-bold">

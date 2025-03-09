@@ -52,3 +52,24 @@ export const formatFiscalYears = (fiscalYearsArray) => {
     return `FY'${yearPart.slice(2)}`; // Ambil 2 digit terakhir
   });
 };
+
+export const replaceString = (data) => {
+  return data?.replace(/"/g, "");
+};
+
+export const splitHour = (data) => {
+  return data?.split(".")[0];
+};
+
+export const fetchTimeApi = () => {
+  const now = new Date();
+  const nextRun = new Date();
+
+  nextRun.setHours(now.getHours() + 1); // Tambah 1 jam
+  nextRun.setMinutes(1); // Set ke menit ke-1
+  nextRun.setSeconds(0); // Set ke detik 0
+
+  const delay = nextRun - now;
+
+  return delay;
+};

@@ -3,7 +3,11 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { baseApiUrl } from "../../share-components/api";
-import { formatNumberForDisplayDynamic } from "../../share-components/Helper";
+import {
+  fetchTimeApi,
+  formatNumberForDisplayDynamic,
+} from "../../share-components/Helper";
+import { useRef } from "react";
 
 export const YearlyCard = () => {
   const [responsive, setResponsive] = useState({ iconSize: 25 });
@@ -28,7 +32,7 @@ export const YearlyCard = () => {
   const fetchDataSupply = async () => {
     try {
       const response = await axios.get(`${baseApiUrl}/tableSolarPVYearly`);
-      
+
       if (response?.data) {
         const data = response?.data?.data;
         setSupply(data?.totalPVKWH);
@@ -37,11 +41,11 @@ export const YearlyCard = () => {
       console.error("Error fetching data:", error);
     }
   };
-  
+
   const fetchDataCost = async () => {
     try {
       const response = await axios.get(`${baseApiUrl}/tableSolarPVYearlyCost`);
-      
+
       if (response?.data) {
         const data = response?.data?.data;
         setCost(data?.totalPVIncome);
@@ -50,7 +54,7 @@ export const YearlyCard = () => {
       console.error("Error fetching data:", error);
     }
   };
-  
+
   const fetchDataEmission = async () => {
     try {
       const response = await axios.get(`${baseApiUrl}/tableSolarPVYearlyEmisi`);
@@ -64,11 +68,31 @@ export const YearlyCard = () => {
     }
   };
 
-  // Fetch data saat pertama kali render dan saat selectedYear berubah
+  const intervalRef = useRef(null);
+
   useEffect(() => {
     fetchDataSupply();
     fetchDataCost();
     fetchDataEmission();
+
+    const delay = fetchTimeApi(); // Hitung delay ke jam XX:01 berikutnya
+
+    const timeoutId = setTimeout(() => {
+      fetchDataSupply();
+      fetchDataCost();
+      fetchDataEmission();
+
+      intervalRef.current = setInterval(() => {
+        fetchDataSupply();
+        fetchDataCost();
+        fetchDataEmission();
+      }, 60 * 60 * 1000); // Setiap 1 jam
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
   return (
     <div className="flex flex-col gap-4 4k:gap-8 text-sm 4k:text-4xl font-bold">

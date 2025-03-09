@@ -28,6 +28,7 @@ export default {
         "tulisan-tombol-abu-tua": "#71708F",
         "dashboard-bar-kuning": "#deff1c",
         "dashboard-bar-abu": "#626367",
+        "dashboard-bar-ungu": "#7440d3",
         "dashboard-bar-merah": "#f11607",
         "dashboard-gauge-hijau": "#03cd1e",
         "dashboard-line-abu": "#bcbdbf",

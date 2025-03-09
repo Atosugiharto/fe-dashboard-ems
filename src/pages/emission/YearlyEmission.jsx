@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Chart from "react-apexcharts";
 import * as XLSX from "xlsx";
 import {
+  fetchTimeApi,
   formatFiscalYears,
   formatNumberForDisplay,
   formatNumberForDisplayDynamic,
@@ -10,6 +12,7 @@ import {
 import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import GlobalVariable from "../../share-components/GlobalVariable";
 import { baseApiUrl } from "../../share-components/api";
+import { useRef } from "react";
 
 const YearlyEmission = () => {
   const [selectedYear, setSelectedYear] = useState("FY'20-FY'24");
@@ -87,9 +90,21 @@ const YearlyEmission = () => {
     }
   };
 
-  // Fetch data saat pertama kali render dan saat selectedYear berubah
+  const intervalRef = useRef(null);
   useEffect(() => {
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [selectedYear]);
 
   const planningExcessData = planningData?.map((plan, index) =>
@@ -142,11 +157,17 @@ const YearlyEmission = () => {
     },
     xaxis: {
       categories: dataYear,
-      labels: { style: { colors: "#fff", fontSize: responsive.xaxis, } },
+      labels: { style: { colors: "#fff", fontSize: responsive.xaxis } },
     },
     yaxis: {
-      title: { text: "Ton CO2e", style: { color: "#fff", fontSize: responsive.yaxis } },
-      labels: { formatter: formatNumberForDisplayDynamic, style: { colors: "#fff", fontSize: responsive.yaxis } },
+      title: {
+        text: "Ton CO2e",
+        style: { color: "#fff", fontSize: responsive.yaxis },
+      },
+      labels: {
+        formatter: formatNumberForDisplayDynamic,
+        style: { colors: "#fff", fontSize: responsive.yaxis },
+      },
     },
     grid: { show: true, strokeDashArray: 2 },
     markers: { size: 4, shape: "circle", strokeWidth: 0 },
@@ -196,7 +217,12 @@ const YearlyEmission = () => {
           </button>
         </div>
       </div>
-      <Chart options={options} series={series} type="bar" height={responsive.chartHeight} />
+      <Chart
+        options={options}
+        series={series}
+        type="bar"
+        height={responsive.chartHeight}
+      />
     </div>
   );
 };

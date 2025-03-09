@@ -3,12 +3,14 @@ import axios from "axios";
 import Chart from "react-apexcharts";
 import * as XLSX from "xlsx";
 import {
+  fetchTimeApi,
   formatMonth,
   formatNumberForDisplayDynamic,
 } from "../../../share-components/Helper";
 import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import GlobalVariable from "../../../share-components/GlobalVariable";
 import { baseApiUrl } from "../../../share-components/api";
+import { useRef } from "react";
 
 const MonthlyElectricity = () => {
   const [selectedYear, setSelectedYear] = useState("2024-2025");
@@ -96,9 +98,21 @@ const MonthlyElectricity = () => {
     }
   };
 
-  // Fetch data saat pertama kali render dan saat selectedYear berubah
+  const intervalRef = useRef(null);
   useEffect(() => {
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [selectedYear]);
 
   const planningExcessData = planningData?.map((plan, index) =>

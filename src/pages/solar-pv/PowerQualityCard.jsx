@@ -2,7 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { baseApiUrl } from "../../share-components/api";
 import dayjs from "dayjs";
-import { formatNumberForDisplayDynamic } from "../../share-components/Helper";
+import {
+  fetchTimeApi,
+  formatNumberForDisplayDynamic,
+} from "../../share-components/Helper";
+import { useRef } from "react";
 
 const PowerQualityCard = () => {
   const todayDate = dayjs().format("YYYY-MM-DD");
@@ -31,8 +35,21 @@ const PowerQualityCard = () => {
     }
   };
 
+  const intervalRef = useRef(null);
   useEffect(() => {
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [todayDate]);
 
   const defaultData = [

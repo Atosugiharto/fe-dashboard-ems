@@ -3,6 +3,7 @@ import axios from "axios";
 import Chart from "react-apexcharts";
 import * as XLSX from "xlsx";
 import {
+  fetchTimeApi,
   formatMonth,
   formatNumberForDisplay,
   formatNumberForDisplayDynamic,
@@ -10,6 +11,7 @@ import {
 import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import GlobalVariable from "../../share-components/GlobalVariable";
 import { baseApiUrl } from "../../share-components/api";
+import { useRef } from "react";
 
 const MonthlyCost = () => {
   const [selectedYear, setSelectedYear] = useState("2024-2025");
@@ -99,8 +101,21 @@ const MonthlyCost = () => {
     }
   };
 
+  const intervalRef = useRef(null);
   useEffect(() => {
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [selectedYear]);
 
   const SolarPVBase = solarPVData?.map((plan, index) =>
@@ -128,9 +143,9 @@ const MonthlyCost = () => {
     plotOptions: { bar: { horizontal: false, columnWidth: "80%" } },
     dataLabels: { enabled: false },
     tooltip: {
-        style: {
-            fontSize: responsive.xaxis,
-          },
+      style: {
+        fontSize: responsive.xaxis,
+      },
       y: {
         formatter: (val, { seriesIndex, dataPointIndex }) => {
           if (seriesIndex === 0)
@@ -152,13 +167,16 @@ const MonthlyCost = () => {
     },
     xaxis: {
       categories: formatMonth(dataMonth),
-      labels: { style: { colors: "#fff", fontSize: responsive.xaxis, } },
+      labels: { style: { colors: "#fff", fontSize: responsive.xaxis } },
     },
     yaxis: {
-      title: { text: "Rupiah", style: { color: "#fff", fontSize: responsive.yaxis } },
+      title: {
+        text: "Rupiah",
+        style: { color: "#fff", fontSize: responsive.yaxis },
+      },
       labels: {
         formatter: formatNumberForDisplayDynamic,
-        style: { colors: "#fff", fontSize: responsive.yaxis, },
+        style: { colors: "#fff", fontSize: responsive.yaxis },
       },
     },
     grid: { show: true, strokeDashArray: 2 },
@@ -208,7 +226,12 @@ const MonthlyCost = () => {
           </button>
         </div>
       </div>
-      <Chart options={options} series={series} type="bar" height={responsive.chartHeight} />
+      <Chart
+        options={options}
+        series={series}
+        type="bar"
+        height={responsive.chartHeight}
+      />
     </div>
   );
 };

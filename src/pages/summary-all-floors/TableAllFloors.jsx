@@ -38,24 +38,24 @@ const TableAllFloors = ({ data }) => {
     const formattedData = [
       {
         label: "Total Consumption (kWh)",
-        planning: formatNumberForDisplayDynamic(data?.total_plan_kW_all) || 0,
-        actual: formatNumberForDisplayDynamic(data?.total_kW_all) || 0,
+        planning: formatNumberForDisplayDynamic(data?.planKWH) || 0,
+        actual:
+          formatNumberForDisplayDynamic(data?.data?.total_plan_kW_all) || 0,
       },
       {
         label: "Total Cost (IDR)",
-        planning: formatNumberForDisplayDynamic(data?.total_plan_cost_all) || 0,
-        actual: formatNumberForDisplayDynamic(data?.total_cost_all) || 0,
+        planning: formatNumberForDisplayDynamic(data?.planCost) || 0,
+        actual: formatNumberForDisplayDynamic(data?.data?.total_cost_all) || 0,
       },
       {
         label: "Total Emission (Ton CO2e)",
-        planning:
-          formatNumberForDisplayDynamic(data?.total_plan_emisi_all) || 0,
-        actual: formatNumberForDisplayDynamic(data?.total_emisi_all) || 0,
+        planning: formatNumberForDisplayDynamic(data?.planEmisi) || 0,
+        actual: formatNumberForDisplayDynamic(data?.data?.total_emisi_all) || 0,
       },
       {
         label: "Evaluation",
         planning: null,
-        actual: data?.eval,
+        actual: data?.data?.total_kW_all > data?.planKWH ? 1 : 0,
       },
     ];
     setDatas(formattedData);
@@ -87,12 +87,12 @@ const TableAllFloors = ({ data }) => {
               </td>
               <td className="py-6 px-4 text-center">
                 {row.label === "Evaluation" ? (
-                  row.actual === 1 ? (
+                  row.actual === 0 ? (
                     <Circle
                       className="text-dashboard-gauge-hijau inline"
                       style={{ fontSize: responsive.iconSize }}
                     />
-                  ) : row.actual === 0 ? (
+                  ) : row.actual === 1 ? (
                     <Close
                       className="text-dashboard-bar-merah inline"
                       style={{ fontSize: responsive.iconSize }}

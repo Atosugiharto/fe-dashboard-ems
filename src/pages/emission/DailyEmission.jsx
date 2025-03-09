@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
 import {
+  fetchTimeApi,
   formatNumberForDisplay,
   formatNumberForDisplayDynamic,
 } from "../../share-components/Helper";
@@ -10,6 +11,7 @@ import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import { baseApiUrl } from "../../share-components/api";
 import axios from "axios";
 import GlobalVariable from "../../share-components/GlobalVariable";
+import { useRef } from "react";
 
 const DailyEmission = () => {
   const currentYear = dayjs().year();
@@ -120,9 +122,21 @@ const DailyEmission = () => {
     }
   };
 
-  
+  const intervalRef = useRef(null);
   useEffect(() => {
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [selectedMonth]);
 
   const series = [
@@ -169,11 +183,17 @@ const DailyEmission = () => {
     },
     xaxis: {
       categories: days,
-      labels: { style: { colors: "#fff", fontSize: responsive.xaxis, } },
-      title: { text: "Date", style: { color: "#fff", fontSize: responsive.xaxis } },
+      labels: { style: { colors: "#fff", fontSize: responsive.xaxis } },
+      title: {
+        text: "Date",
+        style: { color: "#fff", fontSize: responsive.xaxis },
+      },
     },
     yaxis: {
-      title: { text: "Ton CO2e", style: { color: "#fff", fontSize: responsive.yaxis, } },
+      title: {
+        text: "Ton CO2e",
+        style: { color: "#fff", fontSize: responsive.yaxis },
+      },
       labels: {
         style: { colors: "#fff", fontSize: responsive.yaxis },
         formatter: (value) => formatNumberForDisplayDynamic(value),
@@ -245,7 +265,12 @@ const DailyEmission = () => {
         </div>
       </div>
 
-      <Chart options={options} series={series} type="line" height={responsive.chartHeight} />
+      <Chart
+        options={options}
+        series={series}
+        type="line"
+        height={responsive.chartHeight}
+      />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import * as XLSX from "xlsx";
 import {
+  fetchTimeApi,
   formatMonth,
   formatNumberForDisplayDynamic,
 } from "../../share-components/Helper";
@@ -9,6 +10,7 @@ import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import GlobalVariable from "../../share-components/GlobalVariable";
 import axios from "axios";
 import { baseApiUrl } from "../../share-components/api";
+import { useRef } from "react";
 
 const MonthlyEmission = () => {
   const [selectedYear, setSelectedYear] = useState("2024-2025");
@@ -121,12 +123,29 @@ const MonthlyEmission = () => {
     }
   };
 
+  const intervalRef = useRef(null);
+
   useEffect(() => {
     fetchDataTotal();
     fetchDataAcc();
+
+    const delay = fetchTimeApi(); // Hitung delay ke jam XX:01 berikutnya
+
+    const timeoutId = setTimeout(() => {
+      fetchDataTotal();
+      fetchDataAcc(); // Panggil setelah delay
+
+      intervalRef.current = setInterval(() => {
+        fetchDataTotal();
+        fetchDataAcc();
+      }, 60 * 60 * 1000); // Setiap 1 jam
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [selectedYear]);
-  console.log(accActualData, "accact");
-  console.log(accPlanningData, "accplan");
 
   const planningExcessData = planningData.map((plan, index) =>
     plan > actualData[index] ? plan - actualData[index] : 0
@@ -210,7 +229,10 @@ const MonthlyEmission = () => {
       labels: { style: { colors: "#fff", fontSize: responsive.xaxis } },
     },
     yaxis: {
-      title: { text: "Ton CO2e", style: { color: "#fff", fontSize: responsive.yaxis } },
+      title: {
+        text: "Ton CO2e",
+        style: { color: "#fff", fontSize: responsive.yaxis },
+      },
       labels: {
         formatter: formatNumberForDisplayDynamic,
         style: { colors: "#fff", fontSize: responsive.yaxis },
@@ -267,7 +289,12 @@ const MonthlyEmission = () => {
           </button>
         </div>
       </div>
-      <Chart options={options} series={series} type="bar" height={responsive.chartHeight} />
+      <Chart
+        options={options}
+        series={series}
+        type="bar"
+        height={responsive.chartHeight}
+      />
     </div>
   );
 };

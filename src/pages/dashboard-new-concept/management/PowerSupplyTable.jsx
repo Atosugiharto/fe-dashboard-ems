@@ -1,58 +1,74 @@
 import { Power } from "@mui/icons-material";
-import { formatNumberForDisplayDynamic } from "../../../share-components/Helper";
+import {
+  fetchTimeApi,
+  formatNumberForDisplayDynamic,
+} from "../../../share-components/Helper";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../../../share-components/api";
+import { useRef } from "react";
 
 const PowerSupplyTable = () => {
   const [data, setData] = useState([]);
 
+  const fetchData = async () => {
+    try {
+      // Ambil data dari tiga endpoint secara bersamaan
+      const [todayRes, monthRes, yearRes] = await Promise.all([
+        axios.get(`${baseApiUrl}/tableDashboardDailyPLN`),
+        axios.get(`${baseApiUrl}/tableDashboardMonthlyPLN`),
+        axios.get(`${baseApiUrl}/tableDashboardYearlyPLN`),
+      ]);
+
+      // Format data agar sesuai dengan struktur API terbaru
+      const formattedData = [
+        {
+          label: "Today",
+          plnPercentage: todayRes?.data?.data?.percentagePLN || 0,
+          pln: todayRes?.data?.data?.totalPLNKWH || 0,
+          nettoffPercentage: todayRes?.data?.data?.percentageNetOff || 0,
+          nettoff: todayRes?.data?.data?.nettoff || 0,
+          total: todayRes?.data?.data?.total || 0,
+        },
+        {
+          label: "This Month",
+          plnPercentage: monthRes?.data?.data?.percentagePLN || 0,
+          pln: monthRes?.data?.data?.totalPLNKWH || 0,
+          nettoffPercentage: monthRes?.data?.data?.percentageNetOff || 0,
+          nettoff: monthRes?.data?.data?.nettoff || 0,
+          total: monthRes?.data?.data?.total || 0,
+        },
+        {
+          label: "This Year",
+          plnPercentage: yearRes?.data?.data?.percentagePLN || 0,
+          pln: yearRes?.data?.data?.totalPLNKWH || 0,
+          nettoffPercentage: yearRes?.data?.data?.percentageNetOff || 0,
+          nettoff: yearRes?.data?.data?.nettoff || 0,
+          total: yearRes?.data?.data?.total || 0,
+        },
+      ];
+
+      // Simpan data ke dalam state
+      setData(formattedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const intervalRef = useRef(null);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Ambil data dari tiga endpoint secara bersamaan
-        const [todayRes, monthRes, yearRes] = await Promise.all([
-          axios.get(`${baseApiUrl}/tableDashboardDailyPLN`),
-          axios.get(`${baseApiUrl}/tableDashboardMonthlyPLN`),
-          axios.get(`${baseApiUrl}/tableDashboardYearlyPLN`),
-        ]);
-
-        // Format data agar sesuai dengan struktur API terbaru
-        const formattedData = [
-          {
-            label: "Today",
-            plnPercentage: todayRes?.data?.data?.percentagePLN || 0,
-            pln: todayRes?.data?.data?.totalPLNKWH || 0,
-            nettoffPercentage: todayRes?.data?.data?.percentageNetOff || 0,
-            nettoff: todayRes?.data?.data?.nettoff || 0,
-            total: todayRes?.data?.data?.total || 0,
-          },
-          {
-            label: "This Month",
-            plnPercentage: monthRes?.data?.data?.percentagePLN || 0,
-            pln: monthRes?.data?.data?.totalPLNKWH || 0,
-            nettoffPercentage: monthRes?.data?.data?.percentageNetOff || 0,
-            nettoff: monthRes?.data?.data?.nettoff || 0,
-            total: monthRes?.data?.data?.total || 0,
-          },
-          {
-            label: "This Year",
-            plnPercentage: yearRes?.data?.data?.percentagePLN || 0,
-            pln: yearRes?.data?.data?.totalPLNKWH || 0,
-            nettoffPercentage: yearRes?.data?.data?.percentageNetOff || 0,
-            nettoff: yearRes?.data?.data?.nettoff || 0,
-            total: yearRes?.data?.data?.total || 0,
-          },
-        ];
-
-        // Simpan data ke dalam state
-        setData(formattedData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
 
   return (

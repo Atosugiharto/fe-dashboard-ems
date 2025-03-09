@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import dayjs from "dayjs";
-import { formatNumberForDisplay } from "../../share-components/Helper";
+import {
+  fetchTimeApi,
+  formatNumberForDisplay,
+} from "../../share-components/Helper";
 import { utils, writeFile } from "xlsx";
 import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import { baseApiUrl } from "../../share-components/api";
 import axios from "axios";
 import GlobalVariable from "../../share-components/GlobalVariable";
+import { useRef } from "react";
 
 const HourlySupply = () => {
-  const [selectedDate, setSelectedDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [selectedDate, setSelectedDate] = useState(
+    dayjs().format("YYYY-MM-DD")
+  );
   const [actualData, setActualData] = useState([]);
 
   const [responsive, setResponsive] = useState({
@@ -43,8 +49,9 @@ const HourlySupply = () => {
     return () => window.removeEventListener("resize", updateResponsiveSettings);
   }, []);
 
-  const hours = Array.from({ length: 24 }, (_, i) => dayjs().hour(i).format("HH.00"));
-
+  const hours = Array.from({ length: 24 }, (_, i) =>
+    dayjs().hour(i).format("HH.00")
+  );
 
   const fetchData = async () => {
     try {
@@ -66,17 +73,28 @@ const HourlySupply = () => {
     }
   };
 
+  const intervalRef = useRef(null);
   useEffect(() => {
     fetchData();
+
+    const delay = fetchTimeApi();
+
+    const timeoutId = setTimeout(() => {
+      fetchData();
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [selectedDate]);
 
-  const series = [
-    { name: "Solar PV Actual", data: actualData },
-  ];
+  const series = [{ name: "Solar PV Actual", data: actualData }];
 
   const options = {
-    chart: { 
-      type: "line", 
+    chart: {
+      type: "line",
       toolbar: {
         show: true,
         tools: {
@@ -94,13 +112,19 @@ const HourlySupply = () => {
     stroke: { curve: "smooth", width: 2 },
     xaxis: {
       categories: hours,
-      labels: { 
-        style: { colors: "#fff", fontSize: responsive.xaxis }
+      labels: {
+        style: { colors: "#fff", fontSize: responsive.xaxis },
       },
-      title: { text: "Hour", style: { color: "#fff", fontSize: responsive.xaxis } },
+      title: {
+        text: "Hour",
+        style: { color: "#fff", fontSize: responsive.xaxis },
+      },
     },
     yaxis: {
-      title: { text: "kWh", style: { color: "#fff", fontSize: responsive.yaxis } },
+      title: {
+        text: "kWh",
+        style: { color: "#fff", fontSize: responsive.yaxis },
+      },
       labels: {
         style: { colors: "#fff", fontSize: responsive.yaxis },
         formatter: (value) => formatNumberForDisplay(value),
@@ -111,7 +135,7 @@ const HourlySupply = () => {
       size: 4,
     },
   };
-  
+
   const downloadExcel = () => {
     const data = hours.map((hour, index) => ({
       Date: selectedDate,
@@ -146,7 +170,12 @@ const HourlySupply = () => {
           </button>
         </div>
       </div>
-      <Chart options={options} series={series} type="line" height={responsive.chartHeight} />
+      <Chart
+        options={options}
+        series={series}
+        type="line"
+        height={responsive.chartHeight}
+      />
     </div>
   );
 };

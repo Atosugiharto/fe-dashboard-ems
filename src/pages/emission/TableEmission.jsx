@@ -1,31 +1,48 @@
 import { Cloud } from "@mui/icons-material";
-import { formatNumberForDisplayDynamic } from "../../share-components/Helper";
+import {
+  fetchTimeApi,
+  formatNumberForDisplayDynamic,
+} from "../../share-components/Helper";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../../share-components/api";
+import { useRef } from "react";
 
 const TableEmission = () => {
   const [data, setData] = useState(null);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${baseApiUrl}/tableMonthlyEmisi`);
+      const result = response?.data?.data;
+
+      setData({
+        label: "This Month",
+        remaining: result?.remaining || 0,
+        nettoff: result?.netOff || 0,
+        nettoffPercentage: result?.percentageNettoff || 0,
+        total: result?.total || 0,
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const intervalRef = useRef(null);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseApiUrl}/tableMonthlyEmisi`);
-        const result = response?.data?.data;
+    fetchData(); // Panggil langsung saat pertama kali mount
 
-        setData({
-          label: "This Month",
-          remaining: result?.remaining || 0,
-          nettoff: result?.netOff || 0,
-          nettoffPercentage: result?.percentageNettoff || 0,
-          total: result?.total || 0,
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+    const delay = fetchTimeApi(); // Hitung delay ke jam XX:01 berikutnya
+
+    const timeoutId = setTimeout(() => {
+      fetchData(); // Panggil setelah delay
+      intervalRef.current = setInterval(fetchData, 60 * 60 * 1000); // Setiap 1 jam
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
-
-    fetchData();
   }, []);
 
   return (
@@ -45,13 +62,17 @@ const TableEmission = () => {
               <p>Net Off</p>
               <p className="text-[9px]">(Solar PV + REC)</p>
             </th>
-            <th className="py-2 px-4 text-dashboard-text-table-biru">Remaining</th>
+            <th className="py-2 px-4 text-dashboard-text-table-biru">
+              Remaining
+            </th>
           </tr>
         </thead>
         <tbody>
           {data && (
             <tr className="bg-dashboard-table-abu-tua">
-              <td className="py-2 px-4 font-semibold text-white">{data.label}</td>
+              <td className="py-2 px-4 font-semibold text-white">
+                {data.label}
+              </td>
               <td className="py-2 px-4 text-center text-dashboard-bar-kuning">
                 {formatNumberForDisplayDynamic(data.total)}
               </td>
