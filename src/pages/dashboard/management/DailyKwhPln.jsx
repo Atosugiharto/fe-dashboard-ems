@@ -6,7 +6,6 @@ import { formatNumberForDisplay } from "../../../share-components/Helper";
 
 const DailyKwhPln = () => {
   const { items, status, error } = useDashboard();
-  console.log(items, "data");
 
   const options = {
     chart: {

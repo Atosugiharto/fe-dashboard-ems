@@ -81,11 +81,11 @@ const TableAllEquipments = ({ data }) => {
                   : "bg-dashboard-table-abu"
               }
             >
-              <td className="py-6 px-4 font-semibold">{row?.label}</td>
-              <td className="py-6 px-4 text-center">
+              <td className="py-5 px-4 font-semibold">{row?.label}</td>
+              <td className="py-5 px-4 text-center">
                 {row?.planning !== null ? row?.planning : ""}
               </td>
-              <td className="py-6 px-4 text-center">
+              <td className="py-5 px-4 text-center">
                 {row?.label === "Evaluation" ? (
                   row?.actual === 0 ? (
                     <Circle

@@ -43,7 +43,7 @@ const DailyConsumption = ({
     Mar: 3,
   };
   const [responsive, setResponsive] = useState({
-    chartHeight: 250,
+    chartHeight: 225,
     xaxis: "10px",
     yaxis: "12px",
     annotations: "10px",
@@ -66,7 +66,7 @@ const DailyConsumption = ({
       } else {
         // Default settings for smaller screens
         setResponsive({
-          chartHeight: 250,
+          chartHeight: 225,
           xaxis: "10px",
           yaxis: "12px",
           annotations: "10px",
@@ -91,23 +91,23 @@ const DailyConsumption = ({
       const response = await axios.post(`${baseApiUrl}/${apiUrl}`, {
         date: selectedMoment.format("YYYY-MM-DD"),
       });
-  
-      const data = response?.data?.data || {};
+
+      const data = response?.data?.data[0]?.daily || {};
       let firstDataArr = [];
-  
+
       days.forEach((day) => {
         const formattedDate = dayjs()
           .year(currentYear)
           .month(selectedMonth - 1)
           .date(day)
           .format("YYYY-MM-DD");
-  
+
         // Ambil nilai totalKWh jika tersedia untuk tanggal tersebut
-        const totalKw = data[formattedDate]?.totalKWh || 0;
-        
+        const totalKw = data[formattedDate]?.total_kW || 0;
+
         firstDataArr.push(totalKw);
       });
-  
+
       setFirstData(firstDataArr);
     } catch (error) {
       setFirstData([]);

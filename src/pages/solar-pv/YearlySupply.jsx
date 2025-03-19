@@ -6,25 +6,33 @@ import {
   fetchTimeApi,
   formatFiscalYears,
   formatNumberForDisplayDynamic,
+  getCurrentFiscalRange,
 } from "../../share-components/Helper";
 import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import { baseApiUrl } from "../../share-components/api";
 import GlobalVariable from "../../share-components/GlobalVariable";
 import { useRef } from "react";
+import useFiscalYear from "../../share-components/useFiscalYear";
 
 const YearlySupply = () => {
-  const [selectedYear, setSelectedYear] = useState("FY'20-FY'24");
+  const { yearsRangeOption } = useFiscalYear();
+  const currentRange = getCurrentFiscalRange(yearsRangeOption);
+  const [selectedYear, setSelectedYear] = useState(currentRange);
   const [actualData, setActualData] = useState([]);
   const [planningData, setPlanningData] = useState([]);
   const [dataYear, setDataYear] = useState([]);
   const [responsive, setResponsive] = useState({
-    chartHeight: 250,
+    chartHeight: 225,
     xaxis: "12px",
     yaxis: "12px",
     annotations: "10px",
     iconSize: 25,
     title: "text-lg",
   });
+
+  useEffect(() => {
+    setSelectedYear(currentRange);
+  }, [yearsRangeOption]);
 
   useEffect(() => {
     const updateResponsiveSettings = () => {
@@ -41,7 +49,7 @@ const YearlySupply = () => {
       } else {
         // Default settings for smaller screens
         setResponsive({
-          chartHeight: 250,
+          chartHeight: 225,
           xaxis: "12px",
           yaxis: "12px",
           annotations: "10px",
@@ -197,12 +205,15 @@ const YearlySupply = () => {
         <h3 className="text-white font-bold">Yearly Solar PV Supply</h3>
         <div className="flex gap-2">
           <select
-            id="year"
-            className="text-xs px-3 py-1 4k:text-3xl 4k:px-6 4k:py-2 bg-latar-select text-white rounded-md 4k:rounded-xl cursor-pointer font-medium"
+            className="bg-latar-select text-white px-3 py-1 rounded-md 4k:rounded-xl text-xs 4k:text-3xl 4k:py-2 4k:px-6 font-medium"
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
           >
-            <option value={"FY'20-FY'24"}>FY&lsquo;20-FY&lsquo;24</option>
+            {yearsRangeOption?.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
           </select>
           <button
             onClick={downloadExcel}

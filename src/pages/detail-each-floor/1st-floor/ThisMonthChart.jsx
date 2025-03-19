@@ -17,16 +17,11 @@ const ThisMonthChart = ({
   apiUrl = "",
   selectedDate = dayjs().format("YYYY-MM-DD"),
 }) => {
-  const colorData1 = GlobalVariable.dashboardColor.lineOren;
-  const colorData2 = GlobalVariable.dashboardColor.barBiru;
   const title = "Electricity Consumption This Month";
   const [data, setData] = useState([]);
-  const year = dayjs(selectedDate).year();
 
-  // Buat fiscal year berdasarkan tahun berjalan
-  const selectedFiscalYear = `${year}-${year + 1}`;
   const [responsive, setResponsive] = useState({
-    chartHeight: 250,
+    chartHeight: 225,
     xaxis: "12px",
     yaxis: "12px",
     annotations: "10px",
@@ -47,7 +42,7 @@ const ThisMonthChart = ({
               title: "text-3xl",
             }
           : {
-              chartHeight: 250,
+              chartHeight: 225,
               xaxis: "12px",
               yaxis: "12px",
               annotations: "10px",
@@ -64,13 +59,13 @@ const ThisMonthChart = ({
   const fetchData = async () => {
     try {
       const response = await axios.post(`${baseApiUrl}/${apiUrl}`, {
-        fisqalReq: selectedFiscalYear,
+        date: selectedDate,
       });
       if (response?.data?.data) {
-        const firstData = response?.data?.data[0] || {};
+        const firstData = response?.data?.data?.floorDatax;
 
-        const podoTotalKW = firstData?.PODO?.total_kW ?? 0;
-        const yosTotalKW = firstData?.YOS?.total_kW ?? 0;
+        const podoTotalKW = firstData["PODO"]?.total_kW ?? 0;
+        const yosTotalKW = firstData["YOS"]?.total_kW ?? 0;
 
         setData([
           { name: "YOS", kW: yosTotalKW },
@@ -98,12 +93,11 @@ const ThisMonthChart = ({
 
   const series = [
     {
-      name: "YOS",
-      data: [data[0]?.kW ?? 0],
-    },
-    {
-      name: "PODO",
-      data: [data[1]?.kW ?? 0],
+      name: "Consumption (kWh)",
+      data: [
+        data.find((d) => d.name === "YOS")?.kW ?? 0,
+        data.find((d) => d.name === "PODO")?.kW ?? 0,
+      ],
     },
   ];
 
@@ -122,19 +116,33 @@ const ThisMonthChart = ({
   const options = {
     chart: {
       type: "bar",
-      toolbar: { show: true },
+      toolbar: {
+        show: true,
+        tools: {
+          download: true,
+          selection: false,
+          zoom: false,
+          zoomin: false,
+          zoomout: false,
+          pan: false,
+          reset: false,
+        },
+      },
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "60%",
+        columnWidth: "80%",
         distributed: true,
       },
     },
-    colors: [colorData1, colorData2],
+    colors: [
+      GlobalVariable.dashboardColor.barBiru,
+      GlobalVariable.dashboardColor.lineOren,
+    ],
     dataLabels: { enabled: false },
     xaxis: {
-      categories: data?.map((item) => item.name),
+      categories: ["YOS", "PODO"],
       labels: { style: { colors: "#fff", fontSize: responsive.xaxis } },
     },
     tooltip: {

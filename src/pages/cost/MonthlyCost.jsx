@@ -12,9 +12,15 @@ import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import GlobalVariable from "../../share-components/GlobalVariable";
 import { baseApiUrl } from "../../share-components/api";
 import { useRef } from "react";
+import TableCostMonthly from "./TableCostMonthly";
+import moment from "moment";
+import useFiscalYear from "../../share-components/useFiscalYear";
 
 const MonthlyCost = () => {
-  const [selectedYear, setSelectedYear] = useState("2024-2025");
+  const { yearsFYOption } = useFiscalYear();
+  const dafaultDate = moment().format("YYYY");
+  const defaultYear = `${dafaultDate - 1}-${Number(dafaultDate)}`;
+  const [selectedYear, setSelectedYear] = useState(defaultYear);
   const [plnData, setplnData] = useState([]);
   const [solarPVData, setsolarPVData] = useState([]);
   const [planningData, setPlanningData] = useState([]);
@@ -204,34 +210,43 @@ const MonthlyCost = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-1">
-        <h3 className="text-white font-bold">Monthly Electricity Cost</h3>
-        <div className="flex gap-2">
-          <select
-            id="year"
-            className="text-xs px-3 py-1 4k:text-3xl 4k:px-6 4k:py-2 bg-latar-select text-white rounded-md 4k:rounded-xl cursor-pointer font-medium"
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-          >
-            <option value={"2023-2024"}>FY&lsquo;23</option>
-            <option value={"2024-2025"}>FY&lsquo;24</option>
-            <option value={"2025-2026"}>FY&lsquo;25</option>
-          </select>
-          <button
-            onClick={downloadExcel}
-            className="bg-latar-icon-hijau text-white rounded p-1"
-          >
-            <DocumentArrowDownIcon className="h-4 w-auto 4k:h-14" />
-          </button>
+    <div className="mt-4 lg:flex gap-4 p-4 rounded-md 4k:rounded-xl bg-kartu">
+      <div className="lg:w-1/2 mb-4 lg:mb-0">
+        <div>
+          <div className="flex justify-between items-center mb-1">
+            <h3 className="text-white font-bold">Monthly Electricity Cost</h3>
+            <div className="flex gap-2">
+              <select
+                className="bg-latar-select text-white px-3 py-1 rounded-md 4k:rounded-xl text-xs 4k:text-3xl 4k:py-2 4k:px-6 font-medium"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+              >
+                {yearsFYOption?.map((year) => (
+                  <option key={year?.value} value={year?.value}>
+                    {year?.label}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={downloadExcel}
+                className="bg-latar-icon-hijau text-white rounded p-1"
+              >
+                <DocumentArrowDownIcon className="h-4 w-auto 4k:h-14" />
+              </button>
+            </div>
+          </div>
+          <Chart
+            options={options}
+            series={series}
+            type="bar"
+            height={responsive.chartHeight}
+          />
         </div>
       </div>
-      <Chart
-        options={options}
-        series={series}
-        type="bar"
-        height={responsive.chartHeight}
-      />
+
+      <div className="lg:w-1/2">
+        <TableCostMonthly filterDate={selectedYear} />
+      </div>
     </div>
   );
 };

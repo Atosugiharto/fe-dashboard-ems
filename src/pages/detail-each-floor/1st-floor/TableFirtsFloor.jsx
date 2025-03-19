@@ -5,9 +5,16 @@ import dayjs from "dayjs";
 import { baseApiUrl } from "../../../share-components/api";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
-import { fetchTimeApi } from "../../../share-components/Helper";
+import {
+  fetchTimeApi,
+  filterText,
+  formatNumberForDisplayDynamic,
+} from "../../../share-components/Helper";
 
-const TableFirtsFloor = ({ apiUrl = "", selectedDate = dayjs().format("YYYY-MM-DD") }) => {
+const TableFirtsFloor = ({
+  apiUrl = "",
+  selectedDate = dayjs().format("YYYY-MM-DD"),
+}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,35 +27,54 @@ const TableFirtsFloor = ({ apiUrl = "", selectedDate = dayjs().format("YYYY-MM-D
 
       if (response?.data?.data?.length > 0) {
         const firstData = response.data.data[0] || {};
+        const mergedData = new Map(); // Untuk menggabungkan data berdasarkan namapanel
 
-        const rows = [
-          ...(firstData?.YOS?.detilPanel?.map((item) => ({
-            equipment: item?.namapanel,
-            kwh1: item?.kW ?? 0,
-            cost1: item?.cost ?? 0,
-            emission1: item?.emisi ?? 0,
-            kwh2: 0,
-            cost2: 0,
-            emission2: 0,
-          })) || []),
-          ...(firstData?.PODO?.detilPanel?.map((item) => ({
-            equipment: item?.namapanel,
-            kwh1: 0,
-            cost1: 0,
-            emission1: 0,
-            kwh2: item?.kW ?? 0,
-            cost2: item?.cost ?? 0,
-            emission2: item?.emisi ?? 0,
-          })) || []),
-        ];
+        // Proses data YOS
+        firstData?.YOS?.detilPanel?.forEach((item) => {
+          if (!mergedData.has(item.namapanel)) {
+            mergedData.set(item.namapanel, {
+              equipment: item.namapanel,
+              kwh1: item.kW ?? 0,
+              cost1: item.cost ?? 0,
+              emission1: item.emisi ?? 0,
+              kwh2: 0, // Default kosong untuk PODO
+              cost2: 0,
+              emission2: 0,
+            });
+          } else {
+            mergedData.get(item.namapanel).kwh1 = item.kW ?? 0;
+            mergedData.get(item.namapanel).cost1 = item.cost ?? 0;
+            mergedData.get(item.namapanel).emission1 = item.emisi ?? 0;
+          }
+        });
 
-        setData(rows);
+        // Proses data PODO
+        firstData?.PODO?.detilPanel?.forEach((item) => {
+          if (!mergedData.has(item.namapanel)) {
+            mergedData.set(item.namapanel, {
+              equipment: item.namapanel,
+              kwh1: 0, // Default kosong untuk YOS
+              cost1: 0,
+              emission1: 0,
+              kwh2: item.kW ?? 0,
+              cost2: item.cost ?? 0,
+              emission2: item.emisi ?? 0,
+            });
+          } else {
+            mergedData.get(item.namapanel).kwh2 = item.kW ?? 0;
+            mergedData.get(item.namapanel).cost2 = item.cost ?? 0;
+            mergedData.get(item.namapanel).emission2 = item.emisi ?? 0;
+          }
+        });
+
+        // Ubah hasil Map ke dalam array
+        setData(Array.from(mergedData.values()));
       } else {
-        setData([]); // Set empty array jika tidak ada data
+        setData([]); // Jika tidak ada data, set array kosong
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-      setData([]); // Set empty array jika terjadi error
+      setData([]); // Set array kosong jika terjadi error
     } finally {
       setLoading(false);
     }
@@ -69,13 +95,19 @@ const TableFirtsFloor = ({ apiUrl = "", selectedDate = dayjs().format("YYYY-MM-D
   }, [selectedDate]);
 
   return (
-    <div className="text-white text-sm 4k:text-3xl">
+    <div className="text-white text-sm 4k:text-3xl lg:max-w-screen-lg 4k:max-w-screen-4k overflow-x-auto max-h-[250px] 4k:max-h-full">
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-dashboard-table-abu">
-            <th rowSpan="2" className="p-2 text-left">Equipment</th>
-            <th colSpan="3" className="p-2 border-r border-white">Yos Sudarso Side</th>
-            <th colSpan="3" className="p-2">Podomoro Side</th>
+            <th rowSpan="2" className="p-2 text-left">
+              Equipment
+            </th>
+            <th colSpan="3" className="p-2 border-r border-white">
+              Yos Sudarso Side
+            </th>
+            <th colSpan="3" className="p-2">
+              Podomoro Side
+            </th>
           </tr>
           <tr className="bg-dashboard-table-abu">
             <th className="p-2">kWh</th>
@@ -86,25 +118,48 @@ const TableFirtsFloor = ({ apiUrl = "", selectedDate = dayjs().format("YYYY-MM-D
             <th className="p-2">Emission (TonCO2e)</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="max-h-[200px] overflow-y-auto 4k:max-h-full">
           {loading ? (
             <tr>
-              <td colSpan="7" className="p-4 text-center">Loading data...</td>
+              <td colSpan="7" className="p-4 text-center">
+                Loading data...
+              </td>
             </tr>
           ) : data.length === 0 ? (
             <tr>
-              <td colSpan="7" className="p-4 text-center">No Data Found</td>
+              <td colSpan="7" className="p-4 text-center">
+                No Data Found
+              </td>
             </tr>
           ) : (
-            data.map((row, index) => (
-              <tr key={index} className={`${index % 2 === 0 ? "bg-dashboard-table-abu" : "bg-dashboard-table-abu-tua"} text-center`}>
-                <td className="p-2 text-left">{row.equipment}</td>
-                <td className="p-2">{row.kwh1}</td>
-                <td className="p-2">{row.cost1}</td>
-                <td className="p-2 border-r border-white">{row.emission1}</td>
-                <td className="p-2">{row.kwh2}</td>
-                <td className="p-2">{row.cost2}</td>
-                <td className="p-2">{row.emission2}</td>
+            data?.map((row, index) => (
+              <tr
+                key={index}
+                className={`${
+                  index % 2 === 0
+                    ? "bg-dashboard-table-abu"
+                    : "bg-dashboard-table-abu-tua"
+                } text-center`}
+              >
+                <td className="p-2 text-left">{filterText(row?.equipment)}</td>
+                <td className="p-2">
+                  {formatNumberForDisplayDynamic(row?.kwh1)}
+                </td>
+                <td className="p-2">
+                  {formatNumberForDisplayDynamic(row?.cost1)}
+                </td>
+                <td className="p-2 border-r border-white">
+                  {formatNumberForDisplayDynamic(row?.emission1)}
+                </td>
+                <td className="p-2">
+                  {formatNumberForDisplayDynamic(row?.kwh2)}
+                </td>
+                <td className="p-2">
+                  {formatNumberForDisplayDynamic(row?.cost2)}
+                </td>
+                <td className="p-2">
+                  {formatNumberForDisplayDynamic(row?.emission2)}
+                </td>
               </tr>
             ))
           )}

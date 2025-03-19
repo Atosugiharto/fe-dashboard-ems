@@ -49,13 +49,9 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="fixed top-0 w-full rounded-md 4k:rounded-xl bg-latar-header shadow-md z-[1000] flex justify-between items-center pr-3 text-white mx-auto">
+    <header className="fixed top-0 w-full bg-latar-header shadow-md z-[1000] flex justify-between items-center pr-3 text-white mx-auto">
       <div className="flex items-center gap-2">
-        <img
-          src={logo}
-          alt="Toyota Indonesia"
-          className="h-16 4k:h-32 rounded-l-md 4k:rounded-l-xl"
-        />
+        <img src={logo} alt="Toyota Indonesia" className="h-16 4k:h-32" />
       </div>
       <h1 className="text-xl 4k:text-5xl font-bold hidden lg:block absolute left-1/2 transform -translate-x-1/2">
         ENERGY MONITORING SYSTEM
@@ -68,7 +64,7 @@ const Header = () => {
   );
 };
 
-const MenuItem = ({ label, icon: Icon, to, children }) => {
+const MenuItem = ({ label, icon: Icon, to, children, onClick }) => {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -76,29 +72,45 @@ const MenuItem = ({ label, icon: Icon, to, children }) => {
   };
 
   return (
-    <li>
-      <div className="flex justify-between items-center w-full px-4 4k:px-8 py-2 4k:py-6 hover:bg-latar-header bg-kartu">
-        <div className="flex items-center">
-          <Icon className="h-6 w-auto 4k:h-12 mr-2" />
-          {to ? (
-            <Link to={to} className="flex-grow">
-              {label}
-            </Link>
-          ) : (
-            <span className="flex-grow" onClick={handleClick}>
-              {label}
-            </span>
-          )}
-        </div>
+    <li className="w-full">
+      <div
+        className="flex justify-between items-center w-full px-4 4k:px-8 py-2 4k:py-6 hover:bg-latar-header bg-kartu cursor-pointer"
+        onClick={handleClick}
+      >
+        {to ? (
+          <Link to={to} className="flex items-center w-full" onClick={onClick}>
+            <Icon className="h-6 w-auto 4k:h-12 mr-2" />
+            <span className="flex-grow">{label}</span>
+          </Link>
+        ) : (
+          <div className="flex items-center w-full">
+            <Icon className="h-6 w-auto 4k:h-12 mr-2" />
+            <span className="flex-grow">{label}</span>
+          </div>
+        )}
         {children && (
-          <button onClick={handleClick}>
+          <button onClick={handleClick} className="ml-2">
             <ChevronDownIcon
-              className={`h-5 w-auto 4k:h-12 ${open ? "rotate-180" : ""}`}
+              className={`h-5 w-auto 4k:h-12 transition-transform ${
+                open ? "rotate-180" : ""
+              }`}
             />
           </button>
         )}
       </div>
-      {children && open && <ul className="ml-6 bg-latar-header">{children}</ul>}
+      {children && open && (
+        <ul className="ml-6 bg-latar-header w-full">
+          {children.map((child, index) => (
+            <li
+              key={index}
+              className="w-full hover:bg-latar-header"
+              onClick={onClick}
+            >
+              {child}
+            </li>
+          ))}
+        </ul>
+      )}
     </li>
   );
 };
@@ -130,22 +142,43 @@ const Layout = () => {
                 label="Dashboard"
                 icon={HomeIcon}
                 to="/dashboard-management"
+                onClick={() => setMenuOpen(false)}
               />
-              <MenuItem label="PLN" icon={PowerIcon} to="/pln" />
-              <MenuItem label="Solar PV" icon={SunIcon} to="/solar-pv" />
-              <MenuItem label="Emission" icon={CloudIcon} to="/emission" />
-              <MenuItem label="Cost" icon={CurrencyDollarIcon} to="/cost" />
+              <MenuItem
+                label="PLN"
+                icon={PowerIcon}
+                to="/pln"
+                onClick={() => setMenuOpen(false)}
+              />
+              <MenuItem
+                label="Solar PV"
+                icon={SunIcon}
+                to="/solar-pv"
+                onClick={() => setMenuOpen(false)}
+              />
+              <MenuItem
+                label="Emission"
+                icon={CloudIcon}
+                to="/emission"
+                onClick={() => setMenuOpen(false)}
+              />
+              <MenuItem
+                label="Cost"
+                icon={CurrencyDollarIcon}
+                to="/cost"
+                onClick={() => setMenuOpen(false)}
+              />
               <MenuItem
                 label="Summary All Floors"
                 icon={BuildingOfficeIcon}
                 to="/summary-all-floors"
+                onClick={() => setMenuOpen(false)}
               />
               <MenuItem label="Detail Each Floor" icon={CubeIcon}>
                 {[
                   "1st Floor",
                   "1st Floor Annex",
                   "Mezzanine",
-                  "Mosque",
                   "2nd Floor",
                   "2nd Floor Annex",
                   "3rd Floor",
@@ -162,6 +195,7 @@ const Layout = () => {
                       to={`/detail-each-floor/${floor
                         .toLowerCase()
                         .replace(/ /g, "-")}`}
+                      onClick={() => setMenuOpen(false)}
                       className="block px-4 py-2 hover:bg-latar-header bg-kartu"
                     >
                       {floor}
@@ -181,7 +215,6 @@ const Layout = () => {
                   "Socket",
                   "AHU",
                   "Lift",
-                  // "Mezzanine",
                   "AC Server",
                   "CHWP",
                   "Motor Pump",
@@ -194,6 +227,7 @@ const Layout = () => {
                       to={`/detail-each-equipment/${equipment
                         .toLowerCase()
                         .replace(/ /g, "-")}`}
+                      onClick={() => setMenuOpen(false)}
                       className="block px-4 py-2 hover:bg-latar-header bg-kartu"
                     >
                       {equipment}
@@ -205,6 +239,7 @@ const Layout = () => {
                 label="Input Setting"
                 icon={CogIcon}
                 to="/input-setting"
+                onClick={() => setMenuOpen(false)}
               />
             </ul>
           </div>

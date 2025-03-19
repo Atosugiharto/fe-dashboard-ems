@@ -7,7 +7,7 @@ import {
 import axios from "axios";
 import { baseApiUrl } from "../../share-components/api";
 
-const InputSetting = () => {
+const InputSettingOld = () => {
   const [holidays, setHolidays] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedFiscalYear, setSelectedFiscalYear] = useState("");
@@ -204,8 +204,6 @@ const InputSetting = () => {
     return monthRows;
   };
 
-  console.log(holidays, "holidays");
-
   return (
     <div className="p-6 bg-gray-100">
       <h2 className="text-2xl font-bold mb-4">Input Setting</h2>
@@ -307,4 +305,4 @@ const InputSetting = () => {
   );
 };
 
-export default InputSetting;
+export default InputSettingOld;

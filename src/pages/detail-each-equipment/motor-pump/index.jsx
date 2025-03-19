@@ -8,7 +8,7 @@ export const MotorPump = () => {
         apiMonthly={"chartMonthlyMotorPump"}
         apiHourly={"chartHourlyMotorPump"}
         apiTable={"tabelDataEquipmentMotorPump"}
-        isMotorPomp={true}
+        isMotorPump={true}
         menu={"Motor Pump"}
       />
     </>

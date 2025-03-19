@@ -12,11 +12,14 @@ import { baseApiUrl } from "../../share-components/api";
 import axios from "axios";
 import GlobalVariable from "../../share-components/GlobalVariable";
 import { useRef } from "react";
+import useFiscalYear from "../../share-components/useFiscalYear";
+import moment from "moment";
 
 const DailySupply = () => {
+  const { monthsOptionWithPayloadYYYYMM } = useFiscalYear();
   const currentYear = dayjs().year();
-  const currentMonth = dayjs().format("MMM");
-  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  const dafaultDate = moment().startOf("month").format("YYYY-MM");
+  const [selectedMonth, setSelectedMonth] = useState(dafaultDate);
   const [actualData, setActualData] = useState([]);
   const [planningData, setPlanningData] = useState([]);
 
@@ -46,7 +49,7 @@ const DailySupply = () => {
   );
 
   const [responsive, setResponsive] = useState({
-    chartHeight: 250,
+    chartHeight: 225,
     xaxis: "12px",
     yaxis: "12px",
     annotations: "10px",
@@ -69,7 +72,7 @@ const DailySupply = () => {
       } else {
         // Default settings for smaller screens
         setResponsive({
-          chartHeight: 250,
+          chartHeight: 225,
           xaxis: "12px",
           yaxis: "12px",
           annotations: "10px",
@@ -91,14 +94,8 @@ const DailySupply = () => {
 
   const fetchData = async () => {
     try {
-      const formattedDate = dayjs()
-        .year(currentYear)
-        .month(monthMap[selectedMonth] - 1)
-        .date(1)
-        .format("YYYY-MM");
-
       const response = await axios.post(`${baseApiUrl}/chartSolarPVDaily`, {
-        date: formattedDate,
+        date: selectedMonth,
       });
 
       let actual = {};
@@ -223,11 +220,7 @@ const DailySupply = () => {
 
   const downloadExcel = () => {
     const data = days.map((day, index) => ({
-      Date: dayjs()
-        .year(currentYear)
-        .month(monthMap[selectedMonth] - 1)
-        .date(day)
-        .format("YYYY-MM"),
+      Date: selectedMonth,
       "PV Actual": series[0].data[index],
       "PV Planning": series[1].data[index],
     }));
@@ -250,9 +243,9 @@ const DailySupply = () => {
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
           >
-            {Object.keys(monthMap).map((month) => (
-              <option key={month} value={month}>
-                {month}
+            {monthsOptionWithPayloadYYYYMM?.map((month) => (
+              <option key={month?.value} value={month?.value}>
+                {month?.label}
               </option>
             ))}
           </select>

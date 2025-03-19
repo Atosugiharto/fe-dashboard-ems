@@ -73,3 +73,36 @@ export const fetchTimeApi = () => {
 
   return delay;
 };
+
+export const getCurrentFiscalRange = (ranges) => {
+  const currentYear = new Date().getFullYear();
+
+  for (const range of ranges) {
+    const [start, end] = range
+      .match(/\d+/g)
+      .map((num) => 2000 + parseInt(num, 10));
+    if (start <= currentYear && currentYear <= end) {
+      return range;
+    }
+  }
+  return null;
+};
+
+export const filterText = (text) => {
+  return text
+    .replace(/[^a-zA-Z0-9\s-_]/g, "") // Hapus karakter selain huruf, angka, spasi, -, _
+    .replace(/[-_]+/g, " ") // Ganti semua - dan _ dengan spasi
+    .replace(/([a-zA-Z])(\d)/g, "$1 $2") // Tambahkan spasi antara huruf dan angka jika angka muncul setelah huruf
+    .trim(); // Hapus spasi di awal & akhir
+};
+
+export const filterArrayText = (arr) => {
+  return arr?.map(
+    (text) =>
+      text
+        .replace(/[^a-zA-Z0-9\s-_]/g, "") // Hapus karakter selain huruf, angka, spasi, -, _
+        .replace(/[-_]+/g, " ") // Ganti semua - dan _ dengan spasi
+        .replace(/([a-zA-Z])(\d)/g, "$1 $2") // Tambahkan spasi antara huruf dan angka jika angka muncul setelah huruf
+        .trim() // Hapus spasi di awal & akhir
+  );
+};

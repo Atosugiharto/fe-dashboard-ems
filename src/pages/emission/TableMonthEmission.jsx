@@ -133,7 +133,7 @@ const TableMonthEmission = () => {
   return (
     <div className="w-full mx-auto text-white font-semibold">
       <h2 className="mb-4">This Month</h2>
-      <table className="w-full border-collapse text-sm 4k:text-4xl">
+      <table className="w-full border-collapse text-xs 4k:text-4xl">
         <thead>
           <tr className="bg-dashboard-table-abu-muda">
             <th className="py-3 px-4 4k:py-6 4k:px-8 text-left"></th>

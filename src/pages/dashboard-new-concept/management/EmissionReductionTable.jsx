@@ -10,6 +10,36 @@ import { useRef } from "react";
 
 const EmissionReductionTable = () => {
   const [data, setData] = useState([]);
+
+  const [responsive, setResponsive] = useState({
+    iconSize: 18,
+  });
+
+  useEffect(() => {
+    const updateResponsiveSettings = () => {
+      if (window.innerWidth >= 3840) {
+        // For 4K resolution
+        setResponsive({
+          iconSize: 60,
+        });
+      } else {
+        // Default settings for smaller screens
+        setResponsive({
+          iconSize: 18,
+        });
+      }
+    };
+
+    // Initial check
+    updateResponsiveSettings();
+
+    // Add resize listener
+    window.addEventListener("resize", updateResponsiveSettings);
+
+    // Cleanup listener on unmount
+    return () => window.removeEventListener("resize", updateResponsiveSettings);
+  }, []);
+
   const fetchData = async () => {
     try {
       const [todayRes, monthRes, yearRes] = await Promise.all([
@@ -67,22 +97,22 @@ const EmissionReductionTable = () => {
 
   return (
     <div>
-      <h2 className="text-white text-lg 4k:text-4xl font-semibold flex items-center mb-3">
+      <h2 className="text-white text-[10px] 4k:text-4xl font-semibold flex items-center mb-1">
         <span className="mr-2">
-          <Cloud />
+          <Cloud style={{ fontSize: responsive.iconSize }} />
         </span>{" "}
         Emission Reduction (Ton CO2e)
       </h2>
-      <table className="w-full border-collapse">
+      <table className="w-full border-collapse text-[9px] 4k:text-3xl font-medium">
         <thead>
           <tr className="bg-dashboard-table-abu-muda text-white">
-            <th className="py-2 px-4 text-left"></th>
-            <th className="py-2 px-4 text-dashboard-bar-kuning">Total</th>
-            <th className="py-2 px-4 text-dashboard-gauge-hijau">
+            <th className="py-0.5 px-2 text-left"></th>
+            <th className="py-0.5 px-2 text-dashboard-bar-kuning">Total</th>
+            <th className="py-0.5 px-2 text-dashboard-gauge-hijau">
               <p>Net Off</p>
               <p className="text-[9px]">(Solar PV + REC)</p>
             </th>
-            <th className="py-2 px-4 text-dashboard-text-table-biru">
+            <th className="py-0.5 px-2 text-dashboard-text-table-biru">
               Remaining
             </th>
           </tr>
@@ -97,17 +127,17 @@ const EmissionReductionTable = () => {
                   : "bg-dashboard-table-abu-muda"
               }
             >
-              <td className="py-2 px-4 font-semibold text-white">
+              <td className="py-0.5 px-2 font-semibold text-white">
                 {row?.label}
               </td>
-              <td className="py-2 px-4 text-center text-dashboard-bar-kuning">
+              <td className="py-0.5 px-2 text-center text-dashboard-bar-kuning">
                 {formatNumberForDisplayDynamic(row?.total)}
               </td>
-              <td className="py-2 px-4 text-center text-dashboard-gauge-hijau border-gray-700">
+              <td className="py-0.5 px-2 text-center text-dashboard-gauge-hijau border-gray-700">
                 <p>{formatNumberForDisplayDynamic(row?.nettoff)}</p>
                 <p className="font-semibold">{`(${row?.nettoffPercentage}%)`}</p>
               </td>
-              <td className="py-2 px-4 text-center text-dashboard-text-table-biru">
+              <td className="py-0.5 px-2 text-center text-dashboard-text-table-biru">
                 <p>{formatNumberForDisplayDynamic(row?.remaining)}</p>
               </td>
             </tr>

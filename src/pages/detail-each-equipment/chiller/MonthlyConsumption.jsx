@@ -14,9 +14,14 @@ import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import GlobalVariable from "../../../share-components/GlobalVariable";
 import { baseApiUrl } from "../../../share-components/api";
 import { useRef } from "react";
+import moment from "moment";
+import useFiscalYear from "../../../share-components/useFiscalYear";
 
 const MonthlyConsumption = ({ apiUrl = "", menu = "" }) => {
-  const [selectedYear, setSelectedYear] = useState("2024-2025");
+  const { yearsFYOption } = useFiscalYear();
+  const dafaultDate = moment().format("YYYY");
+  const defaultYear = `${dafaultDate - 1}-${Number(dafaultDate)}`;
+  const [selectedYear, setSelectedYear] = useState(defaultYear);
   const [firtsData, setfirtsData] = useState([]);
   const [secondData, setsecondData] = useState([]);
   const [dataMonth, setDataMonth] = useState([
@@ -178,7 +183,6 @@ const MonthlyConsumption = ({ apiUrl = "", menu = "" }) => {
     { name: "Total", data: firtsBase },
     { name: "V Avg", data: secondBase },
   ];
-  console.log(secondBase, "sss");
 
   const options = {
     chart: { type: "bar", stacked: true },
@@ -256,14 +260,15 @@ const MonthlyConsumption = ({ apiUrl = "", menu = "" }) => {
         </h3>
         <div className="flex gap-2">
           <select
-            id="year"
-            className="text-xs px-3 py-1 4k:text-3xl 4k:px-6 4k:py-2 bg-latar-select text-white rounded-md 4k:rounded-xl cursor-pointer font-medium"
+            className="bg-latar-select text-white px-3 py-1 rounded-md 4k:rounded-xl text-xs 4k:text-3xl 4k:py-2 4k:px-6 font-medium"
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
           >
-            <option value={"2023-2024"}>FY&lsquo;23</option>
-            <option value={"2024-2025"}>FY&lsquo;24</option>
-            <option value={"2025-2026"}>FY&lsquo;25</option>
+            {yearsFYOption?.map((year) => (
+              <option key={year?.value} value={year?.value}>
+                {year?.label}
+              </option>
+            ))}
           </select>
           <button
             onClick={downloadExcel}

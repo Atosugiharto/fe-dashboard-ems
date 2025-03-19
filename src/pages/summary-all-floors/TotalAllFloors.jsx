@@ -9,9 +9,8 @@ import { formatNumberForDisplayDynamic } from "../../share-components/Helper";
 import * as XLSX from "xlsx";
 
 const TotalAllFloors = ({ data = [], dateStart = "", dateEnd = "" }) => {
-  console.log(data, "total");
   const [responsive, setResponsive] = useState({
-    chartHeight: 250,
+    chartHeight: 230,
     xaxis: "12px",
     yaxis: "12px",
     annotations: "10px",
@@ -32,7 +31,7 @@ const TotalAllFloors = ({ data = [], dateStart = "", dateEnd = "" }) => {
         });
       } else {
         setResponsive({
-          chartHeight: 250,
+          chartHeight: 230,
           xaxis: "12px",
           yaxis: "12px",
           annotations: "10px",
@@ -50,7 +49,7 @@ const TotalAllFloors = ({ data = [], dateStart = "", dateEnd = "" }) => {
   const series = [
     {
       name: "Consumption",
-      data: [data?.data?.total_kW_all || 0, data?.planKWH || 0],
+      data: [data?.total_kW_all || 0, data?.planKWH || 0],
     },
   ];
 

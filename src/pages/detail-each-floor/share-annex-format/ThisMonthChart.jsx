@@ -20,11 +20,9 @@ const ThisMonthChart = ({
   const colorData1 = GlobalVariable.dashboardColor.lineOren;
   const title = "Electricity Consumption This Month";
   const [data, setData] = useState([]);
-  const year = dayjs(selectedDate).year();
-  const selectedFiscalYear = `${year}-${year + 1}`;
 
   const [responsive, setResponsive] = useState({
-    chartHeight: 250,
+    chartHeight: 225,
     xaxis: "12px",
     yaxis: "12px",
     annotations: "10px",
@@ -45,7 +43,7 @@ const ThisMonthChart = ({
               title: "text-3xl",
             }
           : {
-              chartHeight: 250,
+              chartHeight: 225,
               xaxis: "12px",
               yaxis: "12px",
               annotations: "10px",
@@ -62,12 +60,12 @@ const ThisMonthChart = ({
   const fetchData = async () => {
     try {
       const response = await axios.post(`${baseApiUrl}/${apiUrl}`, {
-        fisqalReq: selectedFiscalYear,
+        date: selectedDate,
       });
       if (response?.data?.data) {
-        const extractedData = response.data.data.map((item) => ({
-          name: item.floor,
-          total_kW: item.total_kW,
+        const extractedData = response?.data?.data?.map((item) => ({
+          name: item?.floor,
+          total_kW: item?.total_kW,
         }));
         setData(extractedData);
       }

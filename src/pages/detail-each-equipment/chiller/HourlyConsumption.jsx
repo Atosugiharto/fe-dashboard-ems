@@ -12,13 +12,19 @@ import { baseApiUrl } from "../../../share-components/api";
 import axios from "axios";
 import GlobalVariable from "../../../share-components/GlobalVariable";
 import { useRef } from "react";
+import useFiscalYear from "../../../share-components/useFiscalYear";
+import TableEquipment from "./TableEquipment";
 
 const HourlyConsumption = ({
   apiUrl = "",
   menu = "",
   isChwp = false,
   isMotorPump = false,
+  apiTable = "",
+  isPressFan = false,
+  isEksternal = false,
 }) => {
+  const { tglStart, tglEnd } = useFiscalYear();
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format("YYYY-MM-DD")
   );
@@ -61,7 +67,7 @@ const HourlyConsumption = ({
   }, []);
 
   const hours = Array.from({ length: 24 }, (_, i) =>
-    dayjs().hour(i).format("HH.00")
+    dayjs().hour(i).format("HH:00")
   );
 
   const fetchData = async () => {
@@ -233,32 +239,50 @@ const HourlyConsumption = ({
   };
 
   return (
-    <div className="h-full">
-      <div className="flex justify-between items-center">
-        <h2 className="text-white text-lg 4k:text-4xl font-semibold mb-2">
-          Hourly Equipment Consumption
-        </h2>
-        <div className="flex items-center gap-2">
-          <input
-            type="date"
-            className="bg-latar-select text-white px-3 py-1 rounded-md 4k:rounded-xl text-xs 4k:text-3xl 4k:py-2 4k:px-6 font-medium"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
+    <div className="lg:flex gap-4 p-4 rounded-md 4k:rounded-xl bg-kartu">
+      <div className="lg:w-1/2 mb-4 lg:mb-0">
+        <div className="h-full">
+          <div className="flex justify-between items-center">
+            <h2 className="text-white text-lg 4k:text-4xl font-semibold mb-2">
+              Hourly Equipment Consumption
+            </h2>
+            <div className="flex items-center gap-2">
+              <input
+                type="date"
+                className="bg-latar-select text-white px-3 py-1 rounded-md 4k:rounded-xl text-xs 4k:text-3xl 4k:py-2 4k:px-6 font-medium"
+                value={selectedDate}
+                min={tglStart}
+                max={tglEnd}
+                onChange={(e) => setSelectedDate(e.target.value)}
+              />
+              <button
+                onClick={downloadExcel}
+                className="bg-latar-icon-hijau text-white rounded p-1"
+              >
+                <DocumentArrowDownIcon className="h-4 w-auto 4k:h-14" />
+              </button>
+            </div>
+          </div>
+          <Chart
+            options={options}
+            series={series}
+            type="line"
+            height={responsive.chartHeight}
           />
-          <button
-            onClick={downloadExcel}
-            className="bg-latar-icon-hijau text-white rounded p-1"
-          >
-            <DocumentArrowDownIcon className="h-4 w-auto 4k:h-14" />
-          </button>
         </div>
       </div>
-      <Chart
-        options={options}
-        series={series}
-        type="line"
-        height={responsive.chartHeight}
-      />
+
+      <div className="lg:w-1/2">
+        <TableEquipment
+          selectedDate={selectedDate}
+          apiUrl={apiTable}
+          isChwp={isChwp}
+          menu={menu}
+          isMotorPump={isMotorPump}
+          isPressFan={isPressFan}
+          isEksternal={isEksternal}
+        />
+      </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 const EqualizerBarChart = () => {
   // Data penjualan per bulan
   const salesData = [
-    18000, 14000, 12000, 16000, 25000, 23000, 24000, 17000, 30000, 26000, 21000,
+    18000, 14000, 12000, 16000, 25000, 22500, 24000, 17000, 30000, 26000, 21000,
     15000,
   ];
 

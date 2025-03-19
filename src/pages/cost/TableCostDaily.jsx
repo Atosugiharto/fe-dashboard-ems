@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Circle, Close } from "@mui/icons-material";
 import axios from "axios";
 import { useEffect } from "react";
@@ -7,12 +8,12 @@ import {
   fetchTimeApi,
   formatNumberForDisplayDynamic,
 } from "../../share-components/Helper";
-import moment from "moment";
+// import moment from "moment";
 import { useRef } from "react";
 
-const TableCostDaily = () => {
+const TableCostDaily = ({ filterDate }) => {
   const [data, setData] = useState(null);
-  const today = moment().format("YYYY-MM");
+  // const today = moment().format("YYYY-MM");
   const [responsive, setResponsive] = useState({
     iconSize: 25,
   });
@@ -45,7 +46,7 @@ const TableCostDaily = () => {
   const fetchData = async () => {
     try {
       const response = await axios.post(`${baseApiUrl}/tableDailyCost`, {
-        date: today,
+        date: filterDate,
       });
       const result = response?.data?.data;
 
@@ -122,7 +123,7 @@ const TableCostDaily = () => {
       clearTimeout(timeoutId);
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, []);
+  }, [filterDate]);
 
   return (
     <div className="w-full mx-auto text-white font-semibold">

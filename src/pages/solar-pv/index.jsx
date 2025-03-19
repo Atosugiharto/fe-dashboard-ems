@@ -56,7 +56,7 @@ export const SolarPv = () => {
       </div>
 
       <button
-        className="my-4 flex items-center justify-center py-1 px-2 4k:py-2 4k:px-4 rounded-md 4k:rounded-xl bg-latar-huruf text-white font-bold text-lg 4k:text-4xl"
+        className="my-2 mx-auto flex items-center justify-center py-0.5 px-1 4k:py-2 4k:px-4 rounded-md 4k:rounded-xl bg-latar-huruf text-white font-bold text-sm 4k:text-4xl"
         onClick={() => setShowMore((prev) => !prev)}
       >
         <span>{showMore ? "See Less" : "See More"}</span>
@@ -73,7 +73,9 @@ export const SolarPv = () => {
             <div className="w-full lg:w-2/3">
               <MonthlySupply />
             </div>
-            <div className="w-full lg:w-1/3"><YearlyCard /></div>
+            <div className="w-full lg:w-1/3">
+              <YearlyCard />
+            </div>
           </div>
           <div className="p-4 rounded-md 4k:rounded-xl bg-kartu w-full lg:w-1/3">
             <YearlySupply />

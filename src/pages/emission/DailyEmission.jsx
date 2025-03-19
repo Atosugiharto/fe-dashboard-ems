@@ -12,10 +12,13 @@ import { baseApiUrl } from "../../share-components/api";
 import axios from "axios";
 import GlobalVariable from "../../share-components/GlobalVariable";
 import { useRef } from "react";
+import moment from "moment";
+import useFiscalYear from "../../share-components/useFiscalYear";
 
 const DailyEmission = () => {
+  const { monthsOptionWithPayloadYYYYMM } = useFiscalYear();
   const currentYear = dayjs().year();
-  const currentMonth = dayjs().format("MMM");
+  const currentMonth = moment().startOf("month").format("YYYY-MM");
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [actualData, setActualData] = useState([]);
   const [planningData, setPlanningData] = useState([]);
@@ -46,7 +49,7 @@ const DailyEmission = () => {
   );
 
   const [responsive, setResponsive] = useState({
-    chartHeight: 350,
+    chartHeight: 250,
     xaxis: "12px",
     yaxis: "12px",
     annotations: "10px",
@@ -69,7 +72,7 @@ const DailyEmission = () => {
       } else {
         // Default settings for smaller screens
         setResponsive({
-          chartHeight: 350,
+          chartHeight: 250,
           xaxis: "12px",
           yaxis: "12px",
           annotations: "10px",
@@ -91,14 +94,8 @@ const DailyEmission = () => {
 
   const fetchData = async () => {
     try {
-      const formattedDate = dayjs()
-        .year(currentYear)
-        .month(monthMap[selectedMonth] - 1)
-        .date(1)
-        .format("YYYY-MM");
-
       const response = await axios.post(`${baseApiUrl}/chartEmisiDaily`, {
-        date: formattedDate,
+        date: selectedMonth,
       });
 
       let actual = {};
@@ -223,11 +220,7 @@ const DailyEmission = () => {
 
   const downloadExcel = () => {
     const data = days.map((day, index) => ({
-      Date: dayjs()
-        .year(currentYear)
-        .month(monthMap[selectedMonth] - 1)
-        .date(day)
-        .format("YYYY-MM"),
+      Date: selectedMonth,
       "Emission Act": series[0].data[index],
       "Emission Plan": series[1].data[index],
     }));
@@ -250,9 +243,9 @@ const DailyEmission = () => {
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
           >
-            {Object.keys(monthMap).map((month) => (
-              <option key={month} value={month}>
-                {month}
+            {monthsOptionWithPayloadYYYYMM?.map((month) => (
+              <option key={month?.value} value={month?.value}>
+                {month?.label}
               </option>
             ))}
           </select>

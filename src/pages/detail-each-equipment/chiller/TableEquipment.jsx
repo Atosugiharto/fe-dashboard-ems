@@ -195,7 +195,7 @@ const TableEquipment = ({
   }, [chiller1Data, chiller2Data, chiller3Data]);
 
   return (
-    <div className="w-full mx-auto text-white font-semibold rounded-lg text-sm 4k:text-4xl">
+    <div className="w-full mx-auto text-white font-semibold rounded-lg text-sm 4k:text-4xl lg:max-w-screen-lg 4k:max-w-screen-4k overflow-x-auto">
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-latar-header-table-input-setting">

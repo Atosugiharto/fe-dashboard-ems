@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Circle, Close } from "@mui/icons-material";
 import axios from "axios";
 import { useEffect } from "react";
@@ -9,10 +10,8 @@ import {
 } from "../../share-components/Helper";
 import { useRef } from "react";
 
-const TableCostMonthly = () => {
+const TableCostMonthly = ({ filterDate }) => {
   const [data, setData] = useState(null);
-  const currentYear = new Date().getFullYear();
-  const selectedYear = `${currentYear - 1}-${currentYear}`;
   const [responsive, setResponsive] = useState({
     iconSize: 25,
   });
@@ -45,7 +44,7 @@ const TableCostMonthly = () => {
   const fetchData = async () => {
     try {
       const response = await axios.post(`${baseApiUrl}/tableMonthlyCost`, {
-        fiscalReq: selectedYear,
+        fiscalReq: filterDate,
       });
       const result = response?.data?.data;
 
@@ -122,7 +121,7 @@ const TableCostMonthly = () => {
       clearTimeout(timeoutId);
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, []);
+  }, [filterDate]);
 
   return (
     <div className="w-full mx-auto text-white font-semibold">

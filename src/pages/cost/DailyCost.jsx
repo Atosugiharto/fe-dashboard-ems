@@ -12,12 +12,16 @@ import GlobalVariable from "../../share-components/GlobalVariable";
 import { baseApiUrl } from "../../share-components/api";
 import dayjs from "dayjs";
 import { useRef } from "react";
+import TableCostDaily from "./TableCostDaily";
+import moment from "moment";
+import useFiscalYear from "../../share-components/useFiscalYear";
 
 const DailyCost = () => {
+  const { monthsOptionWithPayloadYYYYMM } = useFiscalYear();
   const [plnData, setplnData] = useState([]);
   const [solarPVData, setsolarPVData] = useState([]);
   const currentYear = dayjs().year();
-  const currentMonth = dayjs().format("MMM");
+  const currentMonth = moment().startOf("month").format("YYYY-MM");
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const monthMap = {
     Apr: 4,
@@ -89,15 +93,9 @@ const DailyCost = () => {
 
   const fetchData = async () => {
     try {
-      const formattedDate = dayjs()
-        .year(currentYear)
-        .month(monthMap[selectedMonth] - 1)
-        .date(1)
-        .format("YYYY-MM");
       const response = await axios.post(`${baseApiUrl}/chartDailyCost`, {
-        date: formattedDate,
+        date: selectedMonth,
       });
-      //   console.log(response?.data?.data, "res");
 
       let pln = {};
       let solarPV = {};
@@ -199,11 +197,7 @@ const DailyCost = () => {
 
   const downloadExcel = () => {
     const data = days.map((day, index) => ({
-      Date: dayjs()
-        .year(currentYear)
-        .month(monthMap[selectedMonth] - 1)
-        .date(day)
-        .format("YYYY-MM"),
+      Date: selectedMonth,
       PLN: series[0].data[index],
       "Solar PV": series[1].data[index],
     }));
@@ -215,35 +209,43 @@ const DailyCost = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-1">
-        <h3 className="text-white font-bold">Daily Electricity Cost</h3>
-        <div className="flex items-center gap-2">
-          <select
-            className="bg-latar-select text-white px-3 py-1 rounded-md 4k:rounded-xl text-xs 4k:text-3xl 4k:py-2 4k:px-6 font-medium"
-            value={selectedMonth}
-            onChange={(e) => setSelectedMonth(e.target.value)}
-          >
-            {Object.keys(monthMap).map((month) => (
-              <option key={month} value={month}>
-                {month}
-              </option>
-            ))}
-          </select>
-          <button
-            onClick={downloadExcel}
-            className="bg-latar-icon-hijau text-white rounded p-1"
-          >
-            <DocumentArrowDownIcon className="h-4 w-auto 4k:h-14" />
-          </button>
+    <div className="lg:flex gap-4 p-4 rounded-md 4k:rounded-xl bg-kartu">
+      <div className="lg:w-1/2 mb-4 lg:mb-0">
+        <div>
+          <div className="flex justify-between items-center mb-1">
+            <h3 className="text-white font-bold">Daily Electricity Cost</h3>
+            <div className="flex items-center gap-2">
+              <select
+                className="bg-latar-select text-white px-3 py-1 rounded-md 4k:rounded-xl text-xs 4k:text-3xl 4k:py-2 4k:px-6 font-medium"
+                value={selectedMonth}
+                onChange={(e) => setSelectedMonth(e.target.value)}
+              >
+                {monthsOptionWithPayloadYYYYMM?.map((month) => (
+                  <option key={month?.value} value={month?.value}>
+                    {month?.label}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={downloadExcel}
+                className="bg-latar-icon-hijau text-white rounded p-1"
+              >
+                <DocumentArrowDownIcon className="h-4 w-auto 4k:h-14" />
+              </button>
+            </div>
+          </div>
+          <Chart
+            options={options}
+            series={series}
+            type="bar"
+            height={responsive.chartHeight}
+          />
         </div>
       </div>
-      <Chart
-        options={options}
-        series={series}
-        type="bar"
-        height={responsive.chartHeight}
-      />
+
+      <div className="lg:w-1/2">
+        <TableCostDaily filterDate={selectedMonth} />
+      </div>
     </div>
   );
 };

@@ -5,12 +5,19 @@ import dayjs from "dayjs";
 import { baseApiUrl } from "../../../share-components/api";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
-import { fetchTimeApi, formatNumberForDisplayDynamic } from "../../../share-components/Helper";
+import {
+  fetchTimeApi,
+  filterText,
+  formatNumberForDisplayDynamic,
+} from "../../../share-components/Helper";
 
-const TableFirtsFloor = ({ apiUrl = "", selectedDate = dayjs().format("YYYY-MM-DD") }) => {
+const TableFirtsFloor = ({
+  apiUrl = "",
+  selectedDate = dayjs().format("YYYY-MM-DD"),
+}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -22,12 +29,12 @@ const TableFirtsFloor = ({ apiUrl = "", selectedDate = dayjs().format("YYYY-MM-D
         const firstData = response.data.data[0] || {};
         const panelData = firstData?.panel?.aggregatedByPanelName || [];
 
-      const rows = panelData.map((item) => ({
-        equipment: item?.namapanel,
-        kwh1: item?.total_kW ?? 0,
-        cost1: item?.total_cost ?? 0,
-        emission1: item?.total_emisi ?? 0,
-      }));
+        const rows = panelData.map((item) => ({
+          equipment: item?.namapanel,
+          kwh1: item?.total_kW ?? 0,
+          cost1: item?.total_cost ?? 0,
+          emission1: item?.total_emisi ?? 0,
+        }));
 
         setData(rows);
       } else {
@@ -56,12 +63,16 @@ const TableFirtsFloor = ({ apiUrl = "", selectedDate = dayjs().format("YYYY-MM-D
   }, [selectedDate]);
 
   return (
-    <div className="text-white text-sm 4k:text-3xl">
+    <div className="text-white text-sm 4k:text-3xl lg:max-w-screen-lg 4k:max-w-screen-4k overflow-x-auto max-h-[250px] 4k:max-h-full">
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-dashboard-table-abu">
-            <th rowSpan="2" className="p-2 text-left">Equipment</th>
-            <th colSpan="3" className="p-2">Total</th>
+            <th rowSpan="2" className="p-2 text-left">
+              Equipment
+            </th>
+            <th colSpan="3" className="p-2">
+              Total
+            </th>
           </tr>
           <tr className="bg-dashboard-table-abu">
             <th className="p-2">kWh</th>
@@ -69,23 +80,39 @@ const TableFirtsFloor = ({ apiUrl = "", selectedDate = dayjs().format("YYYY-MM-D
             <th className="p-2">Emission (TonCO2e)</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="max-h-[225px] 4k:max-h-full overflow-y-auto">
           {loading ? (
             <tr>
-              <td colSpan="7" className="p-4 text-center">Loading data...</td>
+              <td colSpan="7" className="p-4 text-center">
+                Loading data...
+              </td>
             </tr>
           ) : data.length === 0 ? (
             <tr>
-              <td colSpan="7" className="p-4 text-center">No Data Found</td>
+              <td colSpan="7" className="p-4 text-center">
+                No Data Found
+              </td>
             </tr>
           ) : (
             data.map((row, index) => (
-              <tr key={index} className={`${index % 2 === 0 ? "bg-dashboard-table-abu" : "bg-dashboard-table-abu-tua"} text-center`}>
-                <td className="p-2 text-left">{row.equipment}</td>
-                <td className="p-2">{formatNumberForDisplayDynamic(row.kwh1)}</td>
-                <td className="p-2">{formatNumberForDisplayDynamic(row.cost1)}</td>
-                <td className="p-2">{formatNumberForDisplayDynamic(row.emission1)}</td>
-                
+              <tr
+                key={index}
+                className={`${
+                  index % 2 === 0
+                    ? "bg-dashboard-table-abu"
+                    : "bg-dashboard-table-abu-tua"
+                } text-center`}
+              >
+                <td className="p-2 text-left">{filterText(row.equipment)}</td>
+                <td className="p-2">
+                  {formatNumberForDisplayDynamic(row.kwh1)}
+                </td>
+                <td className="p-2">
+                  {formatNumberForDisplayDynamic(row.cost1)}
+                </td>
+                <td className="p-2">
+                  {formatNumberForDisplayDynamic(row.emission1)}
+                </td>
               </tr>
             ))
           )}

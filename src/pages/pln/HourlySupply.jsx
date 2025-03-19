@@ -11,15 +11,17 @@ import { baseApiUrl } from "../../share-components/api";
 import axios from "axios";
 import GlobalVariable from "../../share-components/GlobalVariable";
 import { useRef } from "react";
+import useFiscalYear from "../../share-components/useFiscalYear";
 
 const HourlySupply = () => {
+  const { tglStart, tglEnd } = useFiscalYear();
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format("YYYY-MM-DD")
   );
   const [actualData, setActualData] = useState([]);
 
   const [responsive, setResponsive] = useState({
-    chartHeight: 250,
+    chartHeight: 225,
     xaxis: "12px",
     yaxis: "12px",
     title: "text-lg",
@@ -36,7 +38,7 @@ const HourlySupply = () => {
         });
       } else {
         setResponsive({
-          chartHeight: 250,
+          chartHeight: 225,
           xaxis: "12px",
           yaxis: "12px",
           title: "text-lg",
@@ -58,15 +60,14 @@ const HourlySupply = () => {
       const response = await axios.post(`${baseApiUrl}/chartPLNHourly`, {
         date: selectedDate,
       });
+      const result = response?.data?.data;
 
-      let actual = {};
-      if (response?.data?.data) {
-        response.data.data.forEach((data) => {
-          const hour = dayjs(data.date).hour();
-          actual[hour] = data?.totalLVMDPKWH ?? 0;
-        });
-      }
-      setActualData(hours.map((hour) => actual[hour] || 0));
+      let actual = Array(24).fill(0);
+      result?.forEach((data) => {
+        const hour = dayjs(data.date, "YYYY-MM-DD HH:mm").hour();
+        actual[hour] = data?.totalLVMDPKWH ?? 0;
+      });
+      setActualData(actual);
     } catch (error) {
       setActualData(hours.map(() => 0));
       console.error("Error fetching data:", error);
@@ -160,6 +161,8 @@ const HourlySupply = () => {
             type="date"
             className="bg-latar-select text-white px-3 py-1 rounded-md 4k:rounded-xl text-xs 4k:text-3xl 4k:py-2 4k:px-6 font-medium"
             value={selectedDate}
+            min={tglStart}
+            max={tglEnd}
             onChange={(e) => setSelectedDate(e.target.value)}
           />
           <button

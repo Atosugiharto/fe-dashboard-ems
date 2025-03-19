@@ -21,7 +21,7 @@ export const ShareIndexComponent = ({
   isHourlyTwoData = false,
   isPanelAc = false,
   isChwp = false,
-  isMotorPomp = false,
+  isMotorPump = false,
   isPressFan = false,
   isPabx = false,
   isEksternal = false,
@@ -52,51 +52,35 @@ export const ShareIndexComponent = ({
         </div>
       </div>
 
-      <div className="lg:flex gap-4 p-4 rounded-md 4k:rounded-xl bg-kartu">
-        <div className="lg:w-1/2 mb-4 lg:mb-0">
-          {isSingleData ? (
-            <HourlyConsumptionSingleData
-              apiUrl={apiHourly}
-              menu={menu}
-              isPanelAc={isPanelAc}
-              isPabx={isPabx}
-            />
-          ) : isHourlyTwoData ? (
-            <HourlyConsumptionTwoData
-              apiUrl={apiHourly}
-              isPressFan={isPressFan}
-              menu={menu}
-              isEksternal={isEksternal}
-            />
-          ) : (
-            <HourlyConsumption
-              apiUrl={apiHourly}
-              menu={menu}
-              isChwp={isChwp}
-              isMotorPump={isMotorPomp}
-            />
-          )}
-        </div>
-
-        <div className="lg:w-1/2">
-          {isSingleData ? (
-            <TableEquipmentSingleData
-              apiUrl={apiTable}
-              isPanelAC={isPanelAc}
-              isPabx={isPabx}
-            />
-          ) : (
-            <TableEquipment
-              apiUrl={apiTable}
-              isChwp={isChwp}
-              menu={menu}
-              isMotorPump={isMotorPomp}
-              isPressFan={isPressFan}
-              isEksternal={isEksternal}
-            />
-          )}
-        </div>
-      </div>
+      {isSingleData ? (
+        <HourlyConsumptionSingleData
+          apiUrl={apiHourly}
+          menu={menu}
+          isPanelAc={isPanelAc}
+          isPabx={isPabx}
+          apiTable={apiTable}
+        />
+      ) : isHourlyTwoData ? (
+        <HourlyConsumptionTwoData
+          apiUrl={apiHourly}
+          isPressFan={isPressFan}
+          menu={menu}
+          isEksternal={isEksternal}
+          apiTable={apiTable}
+          isChwp={isChwp}
+          isMotorPump={isMotorPump}
+        />
+      ) : (
+        <HourlyConsumption
+          apiUrl={apiHourly}
+          menu={menu}
+          isChwp={isChwp}
+          isMotorPump={isMotorPump}
+          apiTable={apiTable}
+          isEksternal={isEksternal}
+          isPressFan={isPressFan}
+        />
+      )}
 
       <div className="lg:flex gap-4 mt-4">
         <div className="lg:w-1/2 p-4 rounded-md 4k:rounded-xl bg-kartu mb-4 lg:mb-0">

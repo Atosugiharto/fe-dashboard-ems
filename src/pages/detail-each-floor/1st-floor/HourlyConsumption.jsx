@@ -14,14 +14,16 @@ import GlobalVariable from "../../../share-components/GlobalVariable";
 import { baseApiUrl } from "../../../share-components/api";
 import dayjs from "dayjs";
 import { useRef } from "react";
+import useFiscalYear from "../../../share-components/useFiscalYear";
 
 const HourlyConsumption = ({
   menu = "",
   apiUrl = "",
   //   selectedDate = dayjs().format("YYYY-MM-DD"),
 }) => {
-  const colorData1 = GlobalVariable.dashboardColor.lineOren;
-  const colorData2 = GlobalVariable.dashboardColor.barBiru;
+  const { tglStart, tglEnd } = useFiscalYear();
+  const colorData1 = GlobalVariable.dashboardColor.barBiru;
+  const colorData2 = GlobalVariable.dashboardColor.lineOren;
   const [firtsData, setfirtsData] = useState([]);
   const [secondData, setsecondData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(
@@ -29,7 +31,7 @@ const HourlyConsumption = ({
   );
   const title = "Hourly Electricity Consumption";
   const [responsive, setResponsive] = useState({
-    chartHeight: 250,
+    chartHeight: 225,
     xaxis: "10px",
     yaxis: "12px",
     annotations: "10px",
@@ -52,7 +54,7 @@ const HourlyConsumption = ({
       } else {
         // Default settings for smaller screens
         setResponsive({
-          chartHeight: 250,
+          chartHeight: 225,
           xaxis: "10px",
           yaxis: "12px",
           annotations: "10px",
@@ -75,6 +77,11 @@ const HourlyConsumption = ({
   const hours = Array.from(
     { length: 24 },
     (_, i) => `${i.toString().padStart(2, "0")}.00`
+  );
+
+  const hoursSlice = Array.from(
+    { length: 24 },
+    (_, i) => `${i.toString().padStart(2, "0")}`
   );
 
   const fetchData = async () => {
@@ -161,7 +168,7 @@ const HourlyConsumption = ({
       position: "bottom",
     },
     xaxis: {
-      categories: hours,
+      categories: hoursSlice,
       labels: { style: { colors: "#fff", fontSize: responsive.xaxis } },
       title: {
         text: "Hour",
@@ -204,6 +211,8 @@ const HourlyConsumption = ({
             type="date"
             className="bg-latar-select text-white px-3 py-1 rounded-md font-medium text-xs 4k:text-3xl"
             value={selectedDate}
+            max={tglEnd}
+            min={tglStart}
             onChange={(e) => setSelectedDate(e.target.value)}
           />
           <button

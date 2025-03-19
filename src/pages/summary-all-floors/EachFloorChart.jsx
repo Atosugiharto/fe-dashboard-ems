@@ -5,13 +5,16 @@ import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import GlobalVariable from "../../share-components/GlobalVariable";
-import { formatNumberForDisplayDynamic } from "../../share-components/Helper";
+import {
+  filterArrayText,
+  formatNumberForDisplayDynamic,
+} from "../../share-components/Helper";
 import * as XLSX from "xlsx";
 
 const EachEquipmentChart = ({ data = [], dateStart = "", dateEnd = "" }) => {
   const actualData = data?.map((item) => item?.total_kW) || [];
   const [responsive, setResponsive] = useState({
-    chartHeight: 250,
+    chartHeight: 230,
     xaxis: "12px",
     yaxis: "12px",
     annotations: "10px",
@@ -32,7 +35,7 @@ const EachEquipmentChart = ({ data = [], dateStart = "", dateEnd = "" }) => {
         });
       } else {
         setResponsive({
-          chartHeight: 250,
+          chartHeight: 230,
           xaxis: "12px",
           yaxis: "12px",
           annotations: "10px",
@@ -96,7 +99,7 @@ const EachEquipmentChart = ({ data = [], dateStart = "", dateEnd = "" }) => {
     colors: [GlobalVariable.dashboardColor.lineOren],
     dataLabels: { enabled: false },
     xaxis: {
-      categories: data?.map((item) => item?.floor) || [],
+      categories: filterArrayText(data?.map((item) => item?.floor)) || [],
       labels: { style: { colors: "#fff", fontSize: responsive.xaxis } },
     },
     tooltip: {

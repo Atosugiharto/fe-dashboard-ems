@@ -28,8 +28,10 @@
     "react-dom": "^18.3.1",
     "react-gauge-chart": "^0.5.1",
     "react-gauge-component": "^1.2.64",
+    "react-hot-toast": "^2.5.2",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.0.2",
+    "sweetalert2": "^11.17.2",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

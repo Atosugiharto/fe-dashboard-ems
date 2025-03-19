@@ -39,23 +39,22 @@ const TableAllFloors = ({ data }) => {
       {
         label: "Total Consumption (kWh)",
         planning: formatNumberForDisplayDynamic(data?.planKWH) || 0,
-        actual:
-          formatNumberForDisplayDynamic(data?.data?.total_plan_kW_all) || 0,
+        actual: formatNumberForDisplayDynamic(data?.total_kW_all) || 0,
       },
       {
         label: "Total Cost (IDR)",
         planning: formatNumberForDisplayDynamic(data?.planCost) || 0,
-        actual: formatNumberForDisplayDynamic(data?.data?.total_cost_all) || 0,
+        actual: formatNumberForDisplayDynamic(data?.total_cost_all) || 0,
       },
       {
         label: "Total Emission (Ton CO2e)",
         planning: formatNumberForDisplayDynamic(data?.planEmisi) || 0,
-        actual: formatNumberForDisplayDynamic(data?.data?.total_emisi_all) || 0,
+        actual: formatNumberForDisplayDynamic(data?.total_emisi_all) || 0,
       },
       {
         label: "Evaluation",
         planning: null,
-        actual: data?.data?.total_kW_all > data?.planKWH ? 1 : 0,
+        actual: data?.eval,
       },
     ];
     setDatas(formattedData);
@@ -81,11 +80,11 @@ const TableAllFloors = ({ data }) => {
                   : "bg-dashboard-table-abu"
               }
             >
-              <td className="py-6 px-4 font-semibold">{row.label}</td>
-              <td className="py-6 px-4 text-center">
+              <td className="py-5 px-4 font-semibold">{row.label}</td>
+              <td className="py-5 px-4 text-center">
                 {row.planning !== null ? row.planning : ""}
               </td>
-              <td className="py-6 px-4 text-center">
+              <td className="py-5 px-4 text-center">
                 {row.label === "Evaluation" ? (
                   row.actual === 0 ? (
                     <Circle

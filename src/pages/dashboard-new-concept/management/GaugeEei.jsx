@@ -16,6 +16,35 @@ const GaugeEei = () => {
   const [midValue, setMidValue] = useState(250); // Mid limit
   const [maxValue, setMaxValue] = useState(500);
 
+  const [responsive, setResponsive] = useState({
+    iconSize: 18,
+  });
+
+  useEffect(() => {
+    const updateResponsiveSettings = () => {
+      if (window.innerWidth >= 3840) {
+        // For 4K resolution
+        setResponsive({
+          iconSize: 60,
+        });
+      } else {
+        // Default settings for smaller screens
+        setResponsive({
+          iconSize: 18,
+        });
+      }
+    };
+
+    // Initial check
+    updateResponsiveSettings();
+
+    // Add resize listener
+    window.addEventListener("resize", updateResponsiveSettings);
+
+    // Cleanup listener on unmount
+    return () => window.removeEventListener("resize", updateResponsiveSettings);
+  }, []);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${baseApiUrl}/gaugesDashboardEEI`);
@@ -51,14 +80,17 @@ const GaugeEei = () => {
   return (
     <div className="rounded-lg relative">
       {/* Title */}
-      <p className="text-white text-lg 4k:text-4xl font-semibold flex items-center">
-        <EmojiObjectsOutlined className="mr-2" />
+      <p className="text-white text-[12px] 4k:text-4xl font-semibold flex items-center">
+        <EmojiObjectsOutlined
+          style={{ fontSize: responsive.iconSize }}
+          className="mr-2"
+        />
         EEI (Energy Efficiency Index) kWh/m²/Year
       </p>
-      <p className="text-white text-sm 4k:text-4xl italic pl-8">{`Standard GBCI < 300 kWh/m²/year`}</p>
+      <p className="text-white text-[9px] 4k:text-4xl italic pl-6">{`Standard GBCI < 300 kWh/m²/year`}</p>
 
       {/* Angka di atas chart */}
-      <div className="flex justify-between text-white text-lg 4k:text-4xl font-semibold mt-2">
+      <div className="flex justify-between text-white text-[11px] 4k:text-4xl font-semibold mt-1 -mb-4">
         <span>{formatNumberForDisplayDynamic(minValue)}</span>
         <span className="text-merah">
           {formatNumberForDisplayDynamic(midValue)}

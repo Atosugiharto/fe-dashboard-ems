@@ -10,8 +10,10 @@ import { baseApiUrl } from "../../share-components/api";
 import moment from "moment";
 import { fetchTimeApi } from "../../share-components/Helper";
 import { useRef } from "react";
+import useFiscalYear from "../../share-components/useFiscalYear";
 
 export const SummaryAllFloors = () => {
+  const { tglStart, tglEnd } = useFiscalYear();
   const today = moment().format("YYYY-MM-DD");
   const [dateStart, setDateStart] = useState(today);
   const [dateEnd, setDateEnd] = useState(today);
@@ -133,6 +135,8 @@ export const SummaryAllFloors = () => {
             type="date"
             id="startDate"
             value={dateStart}
+            min={tglStart}
+            max={tglEnd}
             onChange={(e) => setDateStart(e.target.value)}
             style={{ WebkitAppearance: "none", colorScheme: "dark" }}
           />
@@ -144,6 +148,8 @@ export const SummaryAllFloors = () => {
             type="date"
             id="endDate"
             value={dateEnd}
+            min={tglStart}
+            max={tglEnd}
             onChange={(e) => setDateEnd(e.target.value)}
             style={{ WebkitAppearance: "none", colorScheme: "dark" }}
           />

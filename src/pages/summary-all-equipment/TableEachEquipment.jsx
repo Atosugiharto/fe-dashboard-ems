@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { formatNumberForDisplayDynamic } from "../../share-components/Helper";
+import {
+  filterText,
+  formatNumberForDisplayDynamic,
+} from "../../share-components/Helper";
 
 const TableEachEquipment = ({ data }) => {
   const [equipments, setEquipments] = useState([]);
@@ -22,7 +25,7 @@ const TableEachEquipment = ({ data }) => {
   }, [data]);
 
   return (
-    <div className="w-full mx-auto text-white font-semibold rounded-md 4k:rounded-xl text-sm 4k:text-3xl max-h-96 4k:max-h-full overflow-y-auto">
+    <div className="w-full mx-auto text-white font-semibold rounded-md 4k:rounded-xl text-sm 4k:text-3xl max-h-72 4k:max-h-full overflow-y-auto">
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-latar-header-table-input-setting">
@@ -39,10 +42,14 @@ const TableEachEquipment = ({ data }) => {
               <tr
                 key={index}
                 className={
-                  index % 2 === 0 ? "bg-dashboard-table-abu-tua" : "bg-dashboard-table-abu"
+                  index % 2 === 0
+                    ? "bg-dashboard-table-abu-tua"
+                    : "bg-dashboard-table-abu"
                 }
               >
-                <td className="py-3 px-4 font-semibold">{item?.name}</td>
+                <td className="py-3 px-4 font-semibold">
+                  {filterText(item?.name)}
+                </td>
                 <td className="py-3 px-4 text-center">{item?.consumption}</td>
                 <td className="py-3 px-4 text-center">Rp. {item?.cost}</td>
                 <td className="py-3 px-4 text-center">{item?.emission}</td>

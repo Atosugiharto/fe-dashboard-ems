@@ -13,10 +13,14 @@ import { baseApiUrl } from "../../../share-components/api";
 import axios from "axios";
 import GlobalVariable from "../../../share-components/GlobalVariable";
 import { useRef } from "react";
+import moment from "moment";
+import useFiscalYear from "../../../share-components/useFiscalYear";
 
 const DailyConsumption = ({ apiUrl, menu }) => {
+  const { monthsFYOption } = useFiscalYear();
   const currentYear = dayjs().year();
-  const currentMonth = dayjs().format("MMM");
+  const currentMonth = moment().startOf("month").format("YYYY-MM-DD");
+
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [actualData, setActualData] = useState([]);
 
@@ -91,14 +95,8 @@ const DailyConsumption = ({ apiUrl, menu }) => {
 
   const fetchData = async () => {
     try {
-      const formattedDate = dayjs()
-        .year(currentYear)
-        .month(monthMap[selectedMonth] - 1)
-        .date(1)
-        .format("YYYY-MM-DD");
-
       const response = await axios.post(`${baseApiUrl}/${apiUrl}`, {
-        date: formattedDate,
+        date: selectedMonth,
       });
 
       let actual = {};
@@ -202,11 +200,7 @@ const DailyConsumption = ({ apiUrl, menu }) => {
 
   const downloadExcel = () => {
     const data = days.map((day, index) => ({
-      Date: dayjs()
-        .year(currentYear)
-        .month(monthMap[selectedMonth] - 1)
-        .date(day)
-        .format("YYYY-MM"),
+      Date: selectedMonth,
       Consumption: series[0].data[index],
     }));
 
@@ -228,9 +222,9 @@ const DailyConsumption = ({ apiUrl, menu }) => {
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
           >
-            {Object.keys(monthMap).map((month) => (
-              <option key={month} value={month}>
-                {month}
+            {monthsFYOption?.map((month) => (
+              <option key={month?.value} value={month?.value}>
+                {month?.label}
               </option>
             ))}
           </select>

@@ -7,6 +7,7 @@ import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import GlobalVariable from "../../../share-components/GlobalVariable";
 import {
   fetchTimeApi,
+  filterArrayText,
   formatNumberForDisplayDynamic,
 } from "../../../share-components/Helper";
 import * as XLSX from "xlsx";
@@ -21,11 +22,13 @@ const ThisMonthComparison = ({
   selectedDate = dayjs().format("YYYY-MM-DD"),
   isYos = true,
 }) => {
-  const colorData = isYos ? GlobalVariable.dashboardColor.barBiru : GlobalVariable.dashboardColor.lineOren;
+  const colorData = isYos
+    ? GlobalVariable.dashboardColor.barBiru
+    : GlobalVariable.dashboardColor.lineOren;
   const title = "Electricity Consumption This Month";
   const [actualData, setActualData] = useState([]);
   const [responsive, setResponsive] = useState({
-    chartHeight: 300,
+    chartHeight: 225,
     xaxis: "12px",
     yaxis: "12px",
     annotations: "10px",
@@ -46,7 +49,7 @@ const ThisMonthComparison = ({
         });
       } else {
         setResponsive({
-          chartHeight: 300,
+          chartHeight: 225,
           xaxis: "12px",
           yaxis: "12px",
           annotations: "10px",
@@ -69,7 +72,9 @@ const ThisMonthComparison = ({
 
       if (response?.data?.data) {
         const firstData = response?.data?.data[0];
-        const dataPanel = isYos ? firstData?.YOS?.detilPanel : firstData?.PODO?.detilPanel ?? [];
+        const dataPanel = isYos
+          ? firstData?.YOS?.detilPanel
+          : firstData?.PODO?.detilPanel ?? [];
 
         const formattedData = dataPanel?.map((panel) => ({
           name: panel?.namapanel,
@@ -96,7 +101,6 @@ const ThisMonthComparison = ({
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [selectedDate]);
-
 
   const seriesName = isYos ? "YOS" : "PODO";
   const series = [
@@ -143,7 +147,7 @@ const ThisMonthComparison = ({
     colors: [colorData],
     dataLabels: { enabled: false },
     xaxis: {
-      categories: actualData?.map((item) => item.name),
+      categories: filterArrayText(actualData?.map((item) => item.name)),
       labels: { style: { colors: "#fff", fontSize: responsive.xaxis } },
       title: {
         text: isYos ? "Yos Sudarso Side" : "Podomoro Side",

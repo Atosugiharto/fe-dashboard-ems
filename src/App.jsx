@@ -9,6 +9,7 @@ import Login from "./pages/auth/Login";
 import NotFoundPage from "./pages/404/NotFoundPage";
 import { DashboardOperator } from "./pages/dashboard/operator";
 import InputSetting from "./pages/input-setting";
+import InputSettingOld from "./pages/input-setting-old";
 import Layout from "./share-components/MenuDate";
 import { DashboardManagement } from "./pages/dashboard-new-concept/management";
 import { Emission } from "./pages/emission";
@@ -41,10 +42,13 @@ import { Lt8 } from "./pages/detail-each-floor/lt-8";
 import { LtAnnex2 } from "./pages/detail-each-floor/lt-2-annex";
 import { LtAnnex3 } from "./pages/detail-each-floor/lt-3-annex";
 import { LtEksternal } from "./pages/detail-each-floor/lt-eksternal";
+import { Toaster } from "react-hot-toast";
+import { LtMezzanine } from "./pages/detail-each-floor/mezzanine";
 
 function App() {
   return (
     <div>
+      <Toaster />
       <Router>
         <Routes>
           <Route path="login" element={<Login />} />
@@ -56,6 +60,7 @@ function App() {
             />
             <Route path="dashboard-operator" element={<DashboardOperator />} />
             <Route path="input-setting" element={<InputSetting />} />
+            <Route path="input-setting-old" element={<InputSettingOld />} />
             <Route path="emission" element={<Emission />} />
             <Route path="cost" element={<Cost />} />
             <Route path="pln" element={<Pln />} />
@@ -121,6 +126,10 @@ function App() {
             <Route
               path="detail-each-floor/external"
               element={<LtEksternal />}
+            />
+            <Route
+              path="detail-each-floor/mezzanine"
+              element={<LtMezzanine />}
             />
 
             <Route path="*" element={<NotFoundPage />} />

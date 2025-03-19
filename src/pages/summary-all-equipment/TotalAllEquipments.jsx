@@ -10,7 +10,7 @@ import * as XLSX from "xlsx";
 
 const TotalAllEquipments = ({ data = [], dateStart = "", dateEnd = "" }) => {
   const [responsive, setResponsive] = useState({
-    chartHeight: 250,
+    chartHeight: 230,
     xaxis: "12px",
     yaxis: "12px",
     annotations: "10px",
@@ -31,7 +31,7 @@ const TotalAllEquipments = ({ data = [], dateStart = "", dateEnd = "" }) => {
         });
       } else {
         setResponsive({
-          chartHeight: 250,
+          chartHeight: 230,
           xaxis: "12px",
           yaxis: "12px",
           annotations: "10px",

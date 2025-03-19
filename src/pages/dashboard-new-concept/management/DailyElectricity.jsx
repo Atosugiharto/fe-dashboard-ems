@@ -11,10 +11,13 @@ import { DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import { baseApiUrl } from "../../../share-components/api";
 import axios from "axios";
 import { useRef } from "react";
+import useFiscalYear from "../../../share-components/useFiscalYear";
+import moment from "moment";
 
 const DailyElectricity = () => {
+  const { monthsOptionWithPayloadYYYYMM } = useFiscalYear();
   const currentYear = dayjs().year();
-  const currentMonth = dayjs().format("MMM"); // Ambil nama bulan saat ini
+  const currentMonth = moment().startOf("month").format("YYYY-MM");
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [actualData, setActualData] = useState([]);
   const [planningData, setPlanningData] = useState([]);
@@ -35,7 +38,7 @@ const DailyElectricity = () => {
   };
 
   const [responsive, setResponsive] = useState({
-    chartHeight: 550,
+    chartHeight: 250,
     xaxis: "12px",
     yaxis: "12px",
     annotations: "10px",
@@ -58,7 +61,7 @@ const DailyElectricity = () => {
       } else {
         // Default settings for smaller screens
         setResponsive({
-          chartHeight: 550,
+          chartHeight: 250,
           xaxis: "12px",
           yaxis: "12px",
           annotations: "10px",
@@ -90,14 +93,8 @@ const DailyElectricity = () => {
 
   const fetchData = async () => {
     try {
-      const formattedDate = dayjs()
-        .year(currentYear)
-        .month(monthMap[selectedMonth] - 1)
-        .date(1)
-        .format("YYYY-MM");
-
       const response = await axios.post(`${baseApiUrl}/chartDashboardDaily`, {
-        date: formattedDate,
+        date: selectedMonth,
       });
 
       let actual = {};
@@ -215,11 +212,7 @@ const DailyElectricity = () => {
 
   const downloadExcel = () => {
     const data = days.map((day, index) => ({
-      Date: dayjs()
-        .year(currentYear)
-        .month(monthMap[selectedMonth] - 1)
-        .date(day)
-        .format("YYYY-MM"),
+      Date: selectedMonth,
       "Total Consumption Actual": series[0].data[index],
       "Total Consumption Plan": series[1].data[index],
     }));
@@ -242,9 +235,9 @@ const DailyElectricity = () => {
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
           >
-            {Object.keys(monthMap).map((month) => (
-              <option key={month} value={month}>
-                {month}
+            {monthsOptionWithPayloadYYYYMM?.map((month) => (
+              <option key={month?.value} value={month?.value}>
+                {month?.label}
               </option>
             ))}
           </select>

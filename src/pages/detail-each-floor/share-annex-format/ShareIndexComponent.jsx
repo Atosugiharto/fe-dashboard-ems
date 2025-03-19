@@ -7,6 +7,7 @@ import HourlyConsumption from "./HourlyConsumption";
 import ThisMonthComparison from "./ThisMonthComparison";
 import TableFirtsFloor from "./TableFirtsFloor";
 import moment from "moment";
+import useFiscalYear from "../../../share-components/useFiscalYear";
 
 export const ShareIndexComponent = ({
   menu = "",
@@ -16,8 +17,9 @@ export const ShareIndexComponent = ({
   apiThisMonthComparison = "",
   apiTable = "",
 }) => {
-  const today = moment().format("YYYY-MM-DD");
-  const [selectedDate, setselectedDate] = useState(today);
+  const { monthsFYOption } = useFiscalYear();
+  const dafaultDate = moment().startOf("month").format("YYYY-MM-DD");
+  const [selectedDate, setselectedDate] = useState(dafaultDate);
   const [responsive, setResponsive] = useState({ iconSize: 25 });
 
   useEffect(() => {
@@ -47,14 +49,17 @@ export const ShareIndexComponent = ({
 
       <div className="bg-kartu p-3 flex items-center justify-center gap-4 rounded-md 4k:rounded-xl text-white font-medium text-xs 4k:text-2xl mb-4">
         <div className="flex items-center gap-2">
-          <input
-            className="bg-latar-select rounded-md p-1"
-            type="date"
-            id="startDate"
+          <select
+            className="bg-latar-select text-white px-3 py-1 rounded-md 4k:rounded-xl text-xs 4k:text-3xl 4k:py-2 4k:px-6 font-medium"
             value={selectedDate}
             onChange={(e) => setselectedDate(e.target.value)}
-            style={{ WebkitAppearance: "none", colorScheme: "dark" }}
-          />
+          >
+            {monthsFYOption?.map((month) => (
+              <option key={month?.value} value={month?.value}>
+                {month?.label}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -73,7 +78,7 @@ export const ShareIndexComponent = ({
       </div>
 
       <div className="lg:flex gap-4 mt-4">
-        <div className="lg:w-2/3 p-4 rounded-md 4k:rounded-xl bg-kartu mb-4 lg:mb-0 lg:flex gap-2">
+        <div className="lg:w-3/5 p-4 rounded-md 4k:rounded-xl bg-kartu mb-4 lg:mb-0 lg:flex gap-2">
           <div className="w-full">
             <ThisMonthComparison
               selectedDate={selectedDate}
@@ -82,7 +87,7 @@ export const ShareIndexComponent = ({
           </div>
         </div>
 
-        <div className="lg:w-1/3 p-4 rounded-md 4k:rounded-xl bg-kartu">
+        <div className="lg:w-2/5 p-4 rounded-md 4k:rounded-xl bg-kartu">
           <TableFirtsFloor apiUrl={apiTable} selectedDate={selectedDate} />
         </div>
       </div>
